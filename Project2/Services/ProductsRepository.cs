@@ -36,14 +36,14 @@ namespace Project2.Services
             return await _context.Products.AnyAsync(c => c.Id == productId);
         }
 
-        public Task Remove(Product product)
+        public void DeleteProduct(Product product)
         {
-            throw new NotImplementedException();
+            _context.Products.Remove(product);
         }
 
-        public Task Update(Product product)
+        public async Task Update(Product product)
         {
-            throw new NotImplementedException();
+            _context.Entry(product).State = EntityState.Modified;
         }
         public async Task<bool> SaveChangesAsync()
         {

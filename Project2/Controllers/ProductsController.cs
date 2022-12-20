@@ -59,31 +59,26 @@ namespace Project2.Controllers
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        [HttpPut("{productid}")]
+        public async Task<IActionResult> PutProduct(int productid, ProductForUpdateDto productDto)
         {
-            //if (id != product.Id)
-            //{
-            //    return BadRequest();
-            //}
-            //var finalProduct = _mapper.Map<Models.Product>(product);
-            //await _candyShop.Add(finalProduct);
+         
+            var productToUpdate = await _productRepository.GetProductById(productid);
+            if(productToUpdate == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(productDto, productToUpdate);
 
-            //try
-            //{
-            //    await _candyShop.SaveChangesAsync();
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    if (!ProductExists(id))
-            //    {
-            //        return NotFound();
-            //    }
-            //    else
-            //    {
-            //        throw;
-            //    }
-            //}
+            await _productRepository.Update(productToUpdate);
+            try
+            {
+                await _productRepository.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest();
+            }
 
             return NoContent();
         }
@@ -95,7 +90,7 @@ namespace Project2.Controllers
         {
             Category category = await _categoryRepository.GetCategoryById(productDto.CategoryId);
             Product product = new Product
-            {
+        {
                 Name = productDto.Name,
                 Price = productDto.Price,
                 Quantity = productDto.Quantity,
@@ -121,17 +116,20 @@ namespace Project2.Controllers
         }
 
         // DELETE: api/Products/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        [HttpDelete("{productid}")]
+        public async Task<IActionResult> DeleteProduct(int productid)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
+            if (!await _productRepository.ProductExist(productid))
             {
                 return NotFound();
             }
-
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            var productToDelete = await _productRepository.GetProductById(productid);
+            if (productToDelete == null)
+            {
+                return NotFound();
+            }
+            _productRepository.DeleteProduct(productToDelete);
+            await _productRepository.SaveChangesAsync();
 
             return NoContent();
         }
