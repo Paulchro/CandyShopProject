@@ -15,11 +15,15 @@ namespace Project2.Services
             _context = candyShopContext ?? throw new ArgumentNullException(nameof(candyShopContext));
         }
 
-        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        public async Task<IEnumerable<Product>> GetAllProductsAsync(int categoryid)
         {
-            return await _context.Products.Include(x=>x.Category).ToListAsync();
+            if(categoryid == 0)
+            {
+                return await _context.Products.Include(x => x.Category).ToListAsync();
+            }
+            return await _context.Products.Include(x => x.Category).Where(i=>i.CategoryId == categoryid).ToListAsync();
         }
-
+      
         public async Task<Product?> GetProductById(int productId)
         {
             return await _context.Products.Include(p => p.Category)
@@ -58,5 +62,6 @@ namespace Project2.Services
                 await _context.AddAsync(product);
             }
         }
+
     }
 }
