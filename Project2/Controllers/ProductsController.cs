@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project2.Dto;
+using Project2.Interfaces;
 using Project2.Models;
 using Project2.Services;
 
@@ -18,67 +19,65 @@ namespace Project2.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly CandyShopContext _context;
-        private readonly IProducts _candyShop;
+        private readonly IProductRepository _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
 
-        public ProductsController(CandyShopContext context, IProducts candyShop, IMapper mapper)
+        public ProductsController(CandyShopContext context, IProductRepository productRepository, ICategoryRepository categoryRepository, IMapper mapper)
         {
             _context = context ??
                 throw new ArgumentNullException(nameof(context));
-            _candyShop = candyShop ??
-                throw new ArgumentNullException(nameof(candyShop));
+            _productRepository = productRepository ??
+                throw new ArgumentNullException(nameof(productRepository));
+            _categoryRepository = categoryRepository ??
+                throw new ArgumentNullException(nameof(categoryRepository));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
 
         // GET: api/Products
-        [HttpGet(Name = "GetPointOfInterest")]
+        [HttpGet(Name = "GetProducts")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            var products = await _candyShop.GetAllProductsAsync();
+            var products = await _productRepository.GetAllProductsAsync();
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }
 
         // GET: api/Products/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name ="GetProduct")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await _candyShop.GetProductById(id);
+            var product = await _productRepository.GetProductById(id);
 
             if (product == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<ProductDto>(product));
+            return Ok(product);
         }
 
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        [HttpPut("{productid}")]
+        public async Task<IActionResult> PutProduct(int productid, ProductForUpdateDto productDto)
         {
-            if (id != product.Id)
-            {
-                return BadRequest();
-            }
-            var finalProduct = _mapper.Map<Models.Product>(product);
-            await _candyShop.Add(finalProduct);
          
+            var productToUpdate = await _productRepository.GetProductById(productid);
+            if(productToUpdate == null)
+            {
+                return NotFound();
+            }
+            _mapper.Map(productDto, productToUpdate);
+
+            await _productRepository.Update(productToUpdate);
             try
             {
-                await _candyShop.SaveChangesAsync();
+                await _productRepository.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest();
             }
 
             return NoContent();
@@ -87,14 +86,20 @@ namespace Project2.Controllers
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<ProductDto>> PostProduct(ProductDto productDto)
         {
-            var finalProduct = _mapper.Map<Models.Product>(product);
-            await _candyShop.Add(finalProduct);
-
+            Category category = await _categoryRepository.GetCategoryById(productDto.CategoryId);
+            Product product = new Product
+        {
+                Name = productDto.Name,
+                Price = productDto.Price,
+                Quantity = productDto.Quantity,
+                Category = category
+            };
+            await _productRepository.Add(_mapper.Map<Product>(product));
             try
             {
-                await _candyShop.SaveChangesAsync();
+                await _productRepository.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -111,17 +116,20 @@ namespace Project2.Controllers
         }
 
         // DELETE: api/Products/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        [HttpDelete("{productid}")]
+        public async Task<IActionResult> DeleteProduct(int productid)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
+            if (!await _productRepository.ProductExist(productid))
             {
                 return NotFound();
             }
-
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            var productToDelete = await _productRepository.GetProductById(productid);
+            if (productToDelete == null)
+            {
+                return NotFound();
+            }
+            _productRepository.DeleteProduct(productToDelete);
+            await _productRepository.SaveChangesAsync();
 
             return NoContent();
         }
