@@ -16,6 +16,7 @@ import { BackComponentComponent } from './back-component/back-component.componen
 import {MatIconModule} from '@angular/material/icon';
 import { WelcomeComponentComponent } from './welcome-component/welcome-component.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { WildcardComponent } from './wildcard/wildcard.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     FetchDataComponent,
     FetchProductComponent,
     BackComponentComponent,
-    WelcomeComponentComponent
+    WelcomeComponentComponent,
+    WildcardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -40,6 +42,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'products', component: FetchProductComponent },
+      { path: '**', component: WildcardComponent },
     ]),
     BrowserAnimationsModule
   ],
