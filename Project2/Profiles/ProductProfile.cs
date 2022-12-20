@@ -1,5 +1,7 @@
 ﻿
 using AutoMapper;
+using Project2.Dto;
+using Project2.Models;
 
 namespace Project2.Profiles
 {
@@ -7,7 +9,8 @@ namespace Project2.Profiles
     {
         public ProductProfile()
         {
-            CreateMap<Models.Product, Dto.ProductDto>();
+            CreateMap<Product, ProductDto>();
+            CreateMap<ProductForUpdateDto, Product>();
         }
     }
 }
