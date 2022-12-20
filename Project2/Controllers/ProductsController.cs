@@ -37,9 +37,9 @@ namespace Project2.Controllers
 
         // GET: api/Products
         [HttpGet(Name = "GetProducts")]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts(int categoryid)
         {
-            var products = await _productRepository.GetAllProductsAsync();
+            var products = await _productRepository.GetAllProductsAsync(categoryid);
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }
 
@@ -57,6 +57,7 @@ namespace Project2.Controllers
             return Ok(product);
         }
 
+       
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{productid}")]
