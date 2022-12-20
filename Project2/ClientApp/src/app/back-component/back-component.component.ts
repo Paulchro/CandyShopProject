@@ -14,6 +14,6 @@ export class BackComponentComponent implements OnInit {
   }
 
   public goBack(){
-    this.router.navigate(['/products']);
+    this.router.navigate(['/']);
   }
 }

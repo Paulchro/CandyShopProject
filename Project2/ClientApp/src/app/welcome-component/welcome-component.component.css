@@ -1,0 +1,8 @@
+.mat-button:hover {
+  color: pink;
+}
+
+.align-right{
+  margin-left: auto; 
+  margin-right: 0;
+}
