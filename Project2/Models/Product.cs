@@ -11,7 +11,11 @@ namespace Project2.Models
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public virtual Category Category { get; set; }
+        public int? CategoryId { get; set; }
+
+        [ForeignKey("CategoryId")]
+        public virtual Category? Category { get; set; }
+        
         public virtual Picture? Picture { get; set; }
     }
 }

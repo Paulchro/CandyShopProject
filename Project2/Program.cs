@@ -2,6 +2,9 @@ using Project2.Services;
 using Project2;
 using Microsoft.EntityFrameworkCore;
 using CandyShop2.DAL;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http.Json;
+using Project2.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,8 +14,13 @@ builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<CandyShopContext>(options =>
     options.UseSqlServer(connectionString));
-builder.Services.AddScoped<IProducts, ProductsRepository>();
+builder.Services.AddScoped<IProductRepository, ProductsRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoriesRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
