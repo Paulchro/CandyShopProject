@@ -13,6 +13,7 @@ import { FetchProductComponent } from './products/products.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BackModalComponent } from './back-modal/back-modal.component';
 import {MatDialogModule} from '@angular/material/dialog';
+import { FormCartComponent } from './form-cart/form-cart.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     FetchDataComponent,
     FetchProductComponent,
     BackModalComponent,
+    FormCartComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
