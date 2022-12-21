@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -16,6 +16,7 @@ import { WelcomeComponentComponent } from './welcome-component/welcome-component
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { WildcardComponent } from './wildcard/wildcard.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FormCartComponent } from './form-cart/form-cart.component';
 
 
 
@@ -27,6 +28,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     FetchProductComponent,
     BackComponentComponent,
     WelcomeComponentComponent,
+    FormCartComponent,
     WildcardComponent
   ],
   imports: [
@@ -35,6 +37,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     FormsModule,
     MatIconModule,
     MatToolbarModule,
+    ReactiveFormsModule,
     MatDialogModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
