@@ -3,10 +3,6 @@
   Review your order
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button class = "btn-yellow" (click) = "goToCart()" mat-dialog-close>
-    <mat-icon>shopping_cart</mat-icon>
-    Go Cart</button>
-  <button mat-raised-button color = "accent" (click) = "goToHome()" mat-dialog-close>
-    <mat-icon>home</mat-icon>
-    Go Home</button>
+  <button mat-button mat-dialog-close>Go to Cart</button>
+  <button mat-button mat-dialog-close cdkFocusInitial>Go Back</button>
 </div>
