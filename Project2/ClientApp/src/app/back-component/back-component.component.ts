@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { BackModalComponent } from '../back-modal/back-modal.component';
 
 @Component({
   selector: 'app-back-component',
@@ -8,12 +10,24 @@ import { Router } from '@angular/router';
 })
 export class BackComponentComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  isCartUrl: boolean = false;
+
+  constructor(private router: Router,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.isCartUrl = window.location.href.includes('counter');
   }
 
   public goBack(){
     this.router.navigate(['/']);
+  }
+
+  public openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(BackModalComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 }

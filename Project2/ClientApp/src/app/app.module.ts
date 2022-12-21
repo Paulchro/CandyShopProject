@@ -15,6 +15,9 @@ import {MatIconModule} from '@angular/material/icon';
 import { WelcomeComponentComponent } from './welcome-component/welcome-component.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { WildcardComponent } from './wildcard/wildcard.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
+
 
 @NgModule({
   declarations: [
@@ -30,16 +33,17 @@ import { WildcardComponent } from './wildcard/wildcard.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    MatButtonModule,
     MatIconModule,
     MatToolbarModule,
+    MatDialogModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'products', component: FetchProductComponent },
       { path: '**', component: WildcardComponent },
     ]),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
