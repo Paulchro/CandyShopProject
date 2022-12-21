@@ -1,0 +1,14 @@
+<mat-toolbar color="accent">
+  <mat-toolbar-row>
+    <button mat-icon-button>
+      <!-- <mat-icon (click)="sidenav.toggle()">menu</mat-icon> -->
+    </button>
+    <h1>CandyShop</h1>
+    <span class="menu-spacer"></span>
+    <div class = "align-right">
+      <a mat-button [routerLink]="'/'"> Home </a>
+      <a mat-button [routerLink]="'/products'"> Products </a>
+      <a mat-button [routerLink]="'/counter'"> Counter </a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
