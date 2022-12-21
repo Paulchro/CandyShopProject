@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -9,19 +9,12 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class BackModalComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<BackModalComponent>) { }
+  constructor(public dialogRef: MatDialogRef<BackModalComponent>,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
 
-
   }
 
-//  public openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-//     this.dialog.open(BackModalComponent, {
-//       width: '250px',
-//       enterAnimationDuration,
-//       exitAnimationDuration,
-//     });
-//   }
 }
 
