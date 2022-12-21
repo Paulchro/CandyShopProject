@@ -25,7 +25,7 @@ export class BackComponentComponent implements OnInit {
 
   public openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(BackModalComponent, {
-      width: '250px',
+      width: '350px',
       enterAnimationDuration,
       exitAnimationDuration,
     });
