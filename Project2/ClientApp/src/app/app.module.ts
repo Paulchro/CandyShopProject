@@ -16,6 +16,7 @@ import { WelcomeComponentComponent } from './welcome-component/welcome-component
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { WildcardComponent } from './wildcard/wildcard.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { BackModalComponent } from './back-modal/back-modal.component';
 import { FormCartComponent } from './form-cart/form-cart.component';
 
 
@@ -28,8 +29,9 @@ import { FormCartComponent } from './form-cart/form-cart.component';
     FetchProductComponent,
     BackComponentComponent,
     WelcomeComponentComponent,
-    FormCartComponent,
-    WildcardComponent
+    WildcardComponent,
+    BackModalComponent,
+    FormCartComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
