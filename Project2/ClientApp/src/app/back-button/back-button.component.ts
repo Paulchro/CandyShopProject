@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { BackModalComponent } from '../back-modal/back-modal.component';
 
 @Component({
-  selector: 'app-back-component',
-  templateUrl: './back-component.component.html',
-  styleUrls: ['./back-component.component.css']
+  selector: 'app-back-button',
+  templateUrl: './back-button.component.html',
+  styleUrls: ['./back-button.component.css']
 })
-export class BackComponentComponent implements OnInit {
+export class BackButtonComponent implements OnInit {
 
   isCartUrl: boolean = false;
 
@@ -30,4 +30,5 @@ export class BackComponentComponent implements OnInit {
       exitAnimationDuration,
     });
   }
+
 }
