@@ -3,6 +3,7 @@ using Project2.Models;
 using Microsoft.EntityFrameworkCore;
 using Project2.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 
 namespace Project2.Services
 {
@@ -15,29 +16,24 @@ namespace Project2.Services
             _context = candyShopContext ?? throw new ArgumentNullException(nameof(candyShopContext));
         }
 
-        public async Task<IEnumerable<Product>> GetAllProductsAsync(int categoryid)
-        {
-            if(categoryid == 0)
-            {
-                return await _context.Products.Include(x => x.Category).ToListAsync();
-            }
-            return await _context.Products.Include(x => x.Category).Where(i=>i.CategoryId == categoryid).ToListAsync();
-        }
-      
-        public async Task<Product?> GetProductById(int productId)
-        {
-            return await _context.Products.Include(p => p.Category)
-                                 .FirstOrDefaultAsync(p => p.Id == productId);
-        }
-
-        public async Task<IEnumerable<Product>> GetProductsByCategoryAsync(int categoryid)
-        {
-            return await _context.Products.Where(x => x.Category.Id == categoryid).ToListAsync();
-        }
-
         public async Task<bool> ProductExist(int productId)
         {
             return await _context.Products.AnyAsync(c => c.Id == productId);
+        }
+
+        public async Task<Product?> GetProductById(int productId)
+        {
+            return await _context.Products.Include(p => p.Category)
+                                .FirstOrDefaultAsync(p => p.Id == productId);
+        }
+
+        public async Task<IEnumerable<Product>> GetAllProductsAsync(int categoryId)
+        {
+            if (categoryId == 0)
+            {
+                return await _context.Products.Include(x => x.Category).ToListAsync();
+            }
+            return await _context.Products.Include(x => x.Category).Where(i => i.CategoryId == categoryId).ToListAsync();
         }
 
         public void DeleteProduct(Product product)
