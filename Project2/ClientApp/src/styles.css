@@ -27,3 +27,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: white;
   background-color:#F9DB24;
 }
+
+.btn-purple{
+  color: white;
+  background-color:#a829c3;
+}
+
+.center {
+  margin: auto !important;
+  display: block !important;
+}

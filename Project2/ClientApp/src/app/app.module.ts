@@ -18,7 +18,10 @@ import { CartComponent } from './cart/cart.component';
 import { MainComponent } from './main/main.component';
 import { BackButtonComponent } from './back-button/back-button.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-
+import { ItemComponent } from './item/item.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatInputModule} from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 
 @NgModule({
@@ -31,7 +34,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
     CartComponent,
     MainComponent,
     BackButtonComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    ItemComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -41,6 +45,9 @@ import { WelcomeComponent } from './welcome/welcome.component';
     MatToolbarModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatCardModule,
+    MatInputModule,
+    MatSnackBarModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'sweets/:id', component: MainComponent },
