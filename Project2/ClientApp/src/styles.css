@@ -17,3 +17,13 @@ code {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.btn-green{
+  color: white;
+  background-color: green;
+}
+
+.btn-yellow{
+  color: white;
+  background-color:#F9DB24;
+}

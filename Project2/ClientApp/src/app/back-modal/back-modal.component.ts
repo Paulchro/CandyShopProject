@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,11 +11,21 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 export class BackModalComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<BackModalComponent>,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private router: Router) { }
 
   ngOnInit(): void {
 
   }
+
+  goToCart(){
+
+  }
+
+  goToHome(){
+    this.router.navigate(['/']);
+  }
+
 
 }
 

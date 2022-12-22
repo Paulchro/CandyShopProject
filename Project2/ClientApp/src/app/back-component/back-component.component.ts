@@ -16,7 +16,7 @@ export class BackComponentComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.isCartUrl = window.location.href.includes('counter');
+    this.isCartUrl = window.location.href.includes('cart');
   }
 
   public goBack(){
@@ -25,7 +25,7 @@ export class BackComponentComponent implements OnInit {
 
   public openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(BackModalComponent, {
-      width: '250px',
+      width: '350px',
       enterAnimationDuration,
       exitAnimationDuration,
     });
