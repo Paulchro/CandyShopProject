@@ -16,7 +16,7 @@ export class BackComponentComponent implements OnInit {
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.isCartUrl = window.location.href.includes('counter');
+    this.isCartUrl = window.location.href.includes('cart');
   }
 
   public goBack(){
