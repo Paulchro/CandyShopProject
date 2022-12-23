@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -7,12 +7,19 @@ import { FormControl } from '@angular/forms';
   templateUrl: './form-cart.component.html',
   styleUrls: ['./form-cart.component.css']
 })
-export class FormCartComponent implements OnInit {
+export class FormCartComponent {
+  email = new FormControl('', [Validators.required, Validators.email]);
+
   name = new FormControl('');
 
-  constructor() { }
+  getErrorMessage() {
+    if (this.email.hasError('required')) {
+      return 'You must enter a value';
+    }
 
-  ngOnInit(): void {
-  }
+    return this.email.hasError('email') ? 'Not a valid email' : '';
 
+
+  
+}
 }
