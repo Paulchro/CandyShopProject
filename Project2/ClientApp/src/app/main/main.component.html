@@ -1,2 +1,4 @@
-<app-item></app-item>
+<div *ngFor="let item of itemsList">
+    <app-item [item]="item" (onAddToCart)="addItemToCart($event)" ></app-item>
+</div>  
 <app-back-button></app-back-button>
