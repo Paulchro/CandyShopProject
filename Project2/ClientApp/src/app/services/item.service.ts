@@ -12,8 +12,8 @@ export class ItemService {
   constructor(private http: HttpClient) { }
 
   getItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(environment.base_url).pipe(
-        tap(data => console.log('All: ' + JSON.stringify(data)))
+    return this.http.get<Item[]>(environment.base_url + 'products').pipe(
+      tap(data => console.log('All: ' + JSON.stringify(data)))
     );
 }
 

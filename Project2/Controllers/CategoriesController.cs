@@ -11,7 +11,7 @@ using AutoMapper;
 
 namespace Project2.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")] // http://localhost:12312/anthi/product
     [ApiController]
     public class CategoriesController : ControllerBase
     {
