@@ -8,7 +8,6 @@ namespace CandyShop2.DAL
     {
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
-        public DbSet<Picture> Pictures { get; set; } = null!;
 
         public CandyShopContext(DbContextOptions<CandyShopContext> options)
             : base(options)
