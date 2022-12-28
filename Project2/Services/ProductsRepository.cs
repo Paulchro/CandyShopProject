@@ -5,6 +5,7 @@ using Project2.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using System.Text.Json;
+using System.IO;
 
 namespace Project2.Services
 {
@@ -17,55 +18,51 @@ namespace Project2.Services
             _context = candyShopContext ?? throw new ArgumentNullException(nameof(candyShopContext));
             _webHostEnvironment = webHostEnvironment;
         }
-        private Stream GetJSONPath(string path)
+        private Stream GetJsonStream(string productsStream)
         {
             string contentRootPath = _webHostEnvironment.ContentRootPath;
             string completePath = "";
-            completePath = Path.Combine(contentRootPath, path);
+            completePath = Path.Combine(contentRootPath, productsStream);
             return new FileStream(completePath, FileMode.Open, FileAccess.Read);
         }
 
         public async Task<bool> ProductExist(int productId)
         {
-            return await _context.Products.AnyAsync(c => c.Id == productId);
+            Stream productsStream = GetJsonStream("JSON/Products.json");
+            var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
+            return products.Any(c => c.Id == productId);
         }
 
         public async Task<Product?> GetProductById(int productId)
         {
-            return await _context.Products.Include(p => p.Category)
-                                .FirstOrDefaultAsync(p => p.Id == productId);
-        }
-
-        public async Task<IEnumerable<Product>> GetAllProductsAsync()
-        {
-            Stream path = GetJSONPath("JSON/Products.json");
-            var products =  JsonSerializer.DeserializeAsync<List<Product>>(path);
-
-            return products.Result.ToList();
-        }
-
-        public void DeleteProduct(Product product)
-        {
-            _context.Products.Remove(product);
-        }
-
-        public async Task Update(Product product)
-        {
-            _context.Entry(product).State = EntityState.Modified;
-        }
-        public async Task<bool> SaveChangesAsync()
-        {
-            return (await _context.SaveChangesAsync() >= 0);
-        }
-
-        public async Task Add(Product product)
-        {
-            var productExists = ProductExist(product.Id);
-            if(!await productExists)
+            Stream productsStream = GetJsonStream("JSON/Products.json");
+            Stream categoriesStream = GetJsonStream("JSON/Categories.json");
+            var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
+            var categories = await JsonSerializer.DeserializeAsync<List<Category>>(categoriesStream);
+            foreach (var item in products)
             {
-                await _context.AddAsync(product);
+                item.Category = categories.FirstOrDefault(x => x.Id == item.CategoryId);
             }
+            var productToReturn = products.FirstOrDefault(x => x.Id == productId);
+            if(productToReturn != null)
+            {
+                return productToReturn;
+            }
+            return null;
         }
 
+        public async Task<IEnumerable<Product>?> GetAllProductsAsync()
+        {
+            Stream productsStream = GetJsonStream("JSON/Products.json");
+            Stream categoriesStream = GetJsonStream("JSON/Categories.json");
+            var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
+            var categories = await JsonSerializer.DeserializeAsync<List<Category>>(categoriesStream);
+            foreach (var item in products)
+            {
+                item.Category = categories.FirstOrDefault(x => x.Id == item.CategoryId);
+            }
+            return products.ToList();
+          
+        }
     }
 }
