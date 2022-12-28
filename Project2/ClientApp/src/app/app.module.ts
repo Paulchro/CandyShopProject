@@ -21,7 +21,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { ItemComponent } from './item/item.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
-import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
     MatCardModule,
     MatInputModule,
     MatSnackBarModule,
+    FlexLayoutModule, 
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'sweets/:id', component: MainComponent },
