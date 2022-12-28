@@ -9,7 +9,7 @@ namespace Project2.Profiles
     {
         public CandyProfiles()
         {
-            CreateMap<Product, ProductDto>().ForMember(x => x.CategoryId, d => d.MapFrom(s => s.Category.Id));
+            CreateMap<Product, ProductDto>().ForMember(x => x.Category, d => d.MapFrom(s => s.Category.Name));
             CreateMap<ProductForUpdateDto, Product>();
             CreateMap<Category, CategoryDto>();
         }
