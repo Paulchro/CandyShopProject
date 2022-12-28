@@ -42,6 +42,7 @@ namespace Project2.Controllers
         // GET: api/Products
         [HttpGet(Name = "GetProducts")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
+        
         {
             var products = await _productRepository.GetAllProductsAsync();
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
