@@ -22,22 +22,17 @@ namespace Project2.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly CandyShopContext _context;
+      
         private readonly IProductRepository _productRepository;
-        private readonly ICategoryRepository _categoryRepository;
+    
         private readonly IMapper _mapper;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        public ProductsController(CandyShopContext context, IProductRepository productRepository, ICategoryRepository categoryRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment)
+   
+        public ProductsController( IProductRepository productRepository, IMapper mapper)
         {
-            _context = context ??
-                throw new ArgumentNullException(nameof(context));
             _productRepository = productRepository ??
                 throw new ArgumentNullException(nameof(productRepository));
-            _categoryRepository = categoryRepository ??
-                throw new ArgumentNullException(nameof(categoryRepository));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
-            _webHostEnvironment = webHostEnvironment;
         }
         // GET: api/Products
         [HttpGet(Name = "GetProducts")]
@@ -45,14 +40,6 @@ namespace Project2.Controllers
         {
             var products = await _productRepository.GetAllProductsAsync();
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
-        }
-
-        private string GetJSONPath(string path)
-        {
-            string contentRootPath = _webHostEnvironment.ContentRootPath;
-            string completePath = "";
-            completePath = Path.Combine(contentRootPath, path);
-            return completePath;
         }
 
         // GET: api/Products/5
