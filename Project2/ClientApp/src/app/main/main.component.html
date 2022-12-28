@@ -1,1 +1,6 @@
-<app-back-component></app-back-component>
+<div  fxLayout="row wrap" fxLayoutGap="1px" fxLayoutAlign="left">
+    <div *ngFor="let item of items">
+        <app-item [item]="item" (onAddToCart)="addItemToCart($event)" ></app-item>
+    </div>  
+</div>
+<app-back-button></app-back-button>

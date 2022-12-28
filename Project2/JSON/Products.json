@@ -1,0 +1,82 @@
+﻿[
+  {
+    "Id": 1,
+    "Name": "BirthDay Cake",
+    "Price": 20,
+    "Quantity": 5,
+    "CategoryId": 1,
+    "Image": ""
+  },
+  {
+    "Id": 2,
+    "Name": "Chocolate Cake",
+    "Price": 18,
+    "Quantity": 5,
+    "CategoryId": 1,
+    "Image": ""
+  },
+  {
+    "Id": 3,
+    "Name": "Cinnamon Rolls",
+    "Price": 10,
+    "Quantity": 5,
+    "CategoryId": 1,
+    "Image": ""
+  },
+  {
+    "Id": 4,
+    "Name": "Creme Brulee",
+    "Price": 15,
+    "Quantity": 5,
+    "CategoryId": 1,
+    "Image": ""
+  },
+  {
+    "Id": 5,
+    "Name": "CupCakes",
+    "Price": 10,
+    "Quantity": 5,
+    "CategoryId": 1,
+    "Image": ""
+  },
+  {
+    "Id": 6,
+    "Name": "Donuts",
+    "Price": 5,
+    "Quantity": 5,
+    "CategoryId": 1,
+    "Image": ""
+  },
+  {
+    "Id": 7,
+    "Name": "Macarons",
+    "Price": 3,
+    "Quantity": 10,
+    "CategoryId": 1,
+    "Image": ""
+  },
+  {
+    "Id":8,
+    "Name": "CheeseCake",
+    "Price": 15,
+    "Quantity": 5,
+    "CategoryId": 1,
+    "Image": ""
+  },
+  {
+    "Id": 9,
+    "Name": "Profiterol",
+    "Price": 15,
+    "Quantity": 5,
+    "CategoryId": 1,
+    "Image": ""
+  },
+  {
+    "Id": 10,
+    "Name": "Tart",
+    "Price": 10,
+    "Quantity": 5,
+    "CategoryId": 1,
+    "Image": ""
+  }
+]

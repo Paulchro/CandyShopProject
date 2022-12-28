@@ -13,6 +13,7 @@ namespace Project2.Services
         {
             _context = candyShopContext ?? throw new ArgumentNullException(nameof(candyShopContext));
         }
+
         public Task Add(Category category)
         {
             throw new NotImplementedException();
@@ -28,9 +29,9 @@ namespace Project2.Services
             throw new NotImplementedException();
         }
 
-        public async Task<Category> GetCategoryById(int categoryId)
+        public Task<Category> GetCategoryById(int categoryId)
         {
-            return await _context.Categories.FirstOrDefaultAsync(c => c.Id == categoryId);
+            throw new NotImplementedException();
         }
 
         public Task Remove(Category category)

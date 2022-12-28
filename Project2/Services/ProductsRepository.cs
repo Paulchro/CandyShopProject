@@ -3,41 +3,45 @@ using Project2.Models;
 using Microsoft.EntityFrameworkCore;
 using Project2.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
+using System.Text.Json;
 
 namespace Project2.Services
 {
     public class ProductsRepository : IProductRepository
     {
         private readonly CandyShopContext _context;
-
-        public ProductsRepository(CandyShopContext candyShopContext)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductsRepository(CandyShopContext candyShopContext, IWebHostEnvironment webHostEnvironment)
         {
             _context = candyShopContext ?? throw new ArgumentNullException(nameof(candyShopContext));
+            _webHostEnvironment = webHostEnvironment;
         }
-
-        public async Task<IEnumerable<Product>> GetAllProductsAsync(int categoryid)
+        private Stream GetJSONPath(string path)
         {
-            if(categoryid == 0)
-            {
-                return await _context.Products.Include(x => x.Category).ToListAsync();
-            }
-            return await _context.Products.Include(x => x.Category).Where(i=>i.CategoryId == categoryid).ToListAsync();
-        }
-      
-        public async Task<Product?> GetProductById(int productId)
-        {
-            return await _context.Products.Include(p => p.Category)
-                                 .FirstOrDefaultAsync(p => p.Id == productId);
-        }
-
-        public async Task<IEnumerable<Product>> GetProductsByCategoryAsync(int categoryid)
-        {
-            return await _context.Products.Where(x => x.Category.Id == categoryid).ToListAsync();
+            string contentRootPath = _webHostEnvironment.ContentRootPath;
+            string completePath = "";
+            completePath = Path.Combine(contentRootPath, path);
+            return new FileStream(completePath, FileMode.Open, FileAccess.Read);
         }
 
         public async Task<bool> ProductExist(int productId)
         {
             return await _context.Products.AnyAsync(c => c.Id == productId);
+        }
+
+        public async Task<Product?> GetProductById(int productId)
+        {
+            return await _context.Products.Include(p => p.Category)
+                                .FirstOrDefaultAsync(p => p.Id == productId);
+        }
+
+        public async Task<IEnumerable<Product>> GetAllProductsAsync()
+        {
+            Stream path = GetJSONPath("JSON/Products.json");
+            var products =  JsonSerializer.DeserializeAsync<List<Product>>(path);
+
+            return products.Result.ToList();
         }
 
         public void DeleteProduct(Product product)

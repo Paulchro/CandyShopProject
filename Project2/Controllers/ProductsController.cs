@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using CandyShop2.DAL;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.DotNet.MSIdentity.Shared;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Project2.Dto;
 using Project2.Interfaces;
 using Project2.Models;
@@ -22,8 +26,8 @@ namespace Project2.Controllers
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
-
-        public ProductsController(CandyShopContext context, IProductRepository productRepository, ICategoryRepository categoryRepository, IMapper mapper)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductsController(CandyShopContext context, IProductRepository productRepository, ICategoryRepository categoryRepository, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _context = context ??
                 throw new ArgumentNullException(nameof(context));
@@ -33,14 +37,23 @@ namespace Project2.Controllers
                 throw new ArgumentNullException(nameof(categoryRepository));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
+            _webHostEnvironment = webHostEnvironment;
         }
-
         // GET: api/Products
         [HttpGet(Name = "GetProducts")]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts(int categoryid)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
+        
         {
-            var products = await _productRepository.GetAllProductsAsync(categoryid);
+            var products = await _productRepository.GetAllProductsAsync();
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
+        }
+
+        private string GetJSONPath(string path)
+        {
+            string contentRootPath = _webHostEnvironment.ContentRootPath;
+            string completePath = "";
+            completePath = Path.Combine(contentRootPath, path);
+            return completePath;
         }
 
         // GET: api/Products/5
