@@ -117,7 +117,7 @@
     "Price": 10,
     "Quantity": 5,
     "CategoryId": 2,
-    "Image": "assets/images/veancupcakes.jpg"
+    "Image": "assets/images/vegancupcakes.jpg"
   },
   {
     "Id": 16,
@@ -149,7 +149,7 @@
     "Price": 15,
     "Quantity": 5,
     "CategoryId": 2,
-    "Image": "assets/images/veganprofiterol.jpeg"
+    "Image": "assets/images/veganprofiterol.jpg"
   },
   {
     "Id": 20,
