@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, FormBuilder } from '@angular/forms';
 import {ThemePalette} from '@angular/material/core';
+import {FloatLabelType} from '@angular/material/form-field';
+import {MatRadioModule} from '@angular/material/radio';
 
 @Component({
   selector: 'app-form-cart',
@@ -14,6 +16,15 @@ export class FormCartComponent {
 
   colorControl = new FormControl('primary' as ThemePalette);
 
+  hideRequiredControl = new FormControl(false);
+
+  floatLabelControl = new FormControl('auto' as FloatLabelType);
+
+  options = this._formBuilder.group({
+    hideRequired: this.hideRequiredControl,
+    floatLabel: this.floatLabelControl,
+  });
+
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
@@ -21,8 +32,11 @@ export class FormCartComponent {
     }
 
     return this.email.hasError('email') ? 'Not a valid email' : '';
-
-
   
 }
+constructor(private _formBuilder: FormBuilder) {}
+
+  getFloatLabelValue(): FloatLabelType {
+    return this.floatLabelControl.value || 'auto';
+  }
 }

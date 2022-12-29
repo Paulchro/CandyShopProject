@@ -1,4 +1,6 @@
-<p>
+
+<form [formGroup]="options">
+      <p>
     <mat-form-field appearance="fill">
       <mat-label>Enter your name</mat-label>
       <input matInput placeholder="Name">
@@ -27,4 +29,18 @@
       <input matInput placeholder="name@example.com" [formControl]="email" required>
       <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
+  </div>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Textarea</mat-label>
+    <textarea matInput></textarea>
+  </mat-form-field>
+
+  <div class="example-container">
+    <label>Do you want to recieve newsletters? </label>
+    <mat-radio-group [formControl]="floatLabelControl">
+      <mat-radio-button value="always">Yes</mat-radio-button>
+      <mat-radio-button value="auto">No</mat-radio-button>
+
+    </mat-radio-group>
   </div>
