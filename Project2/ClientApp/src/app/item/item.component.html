@@ -4,6 +4,7 @@
         <mat-card-title style="color: gray;">{{item.name}}</mat-card-title> 
       </mat-card-header>
       <img style="width: 130px;height: 110px;" class="center" src= " {{item.image}}">
+      <mat-card-content class="center" style="text-align: center;color: gray;margin: 10px !important;">{{item.price | currency:'EUR':true}}</mat-card-content>
       <mat-card-actions class="center">
         <button class="center btn-purple" mat-raised-button  (click) = "addToCart()"><mat-icon>shopping_cart</mat-icon> Add to cart</button>
       </mat-card-actions>
