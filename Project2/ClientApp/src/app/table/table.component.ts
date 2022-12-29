@@ -18,6 +18,7 @@ export class TableComponent implements OnInit {
   itemsToCart: Item[] =[];
 
   itemsTocartStr: any;
+  totalAmount: any;
 
   displayedColumns: string[] = ['id', 'image', 'name', 'price', 'quantity'];
   dataSource = new MatTableDataSource<Item>();
@@ -25,9 +26,15 @@ export class TableComponent implements OnInit {
 
   ngOnInit(): void {
     this.itemsTocartStr = localStorage.getItem('ItemsTocart');
+    this.totalAmount = localStorage.getItem('TotalAmount');
     if ( this.itemsTocartStr != null ||  this.itemsTocartStr != ''){
      this.itemsToCart = JSON.parse(this.itemsTocartStr);
     }
     this.dataSource = new MatTableDataSource<Item>(this.itemsToCart);
+  }
+
+  save(){
+    localStorage.removeItem('ItemsTocart');
+    localStorage.removeItem('TotalAmount');
   }
 }

@@ -22,4 +22,8 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row  *matRowDef="let row; columns: displayedColumns;"></tr>
 </table> 
-<mat-paginator class = "center" [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+<h1 style="margin: 10px;text-align: right;">Amount: {{totalAmount | currency:'EUR':true}}</h1> 
+<!-- <mat-paginator class = "center" [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator> -->
+
+<button mat-raised-button color="accent" style = "margin: 15px;" (click) = "save()">Save</button>
+

@@ -12,6 +12,7 @@ export class ItemService {
   cartItemsList: Item[] =[];
   map = new Map();
   productExistInCart?: Item | undefined;
+  totalAmount: number=0;
 
   constructor(private http: HttpClient) { }
 
@@ -26,12 +27,14 @@ export class ItemService {
   addItemsToCart(item:Item): Item[]{
     this.productExistInCart = this.cartItemsList.find(({id}) => id === item.id);
     if (!this.productExistInCart) {
-      this.cartItemsList.push({...item, quantity:1}); 
+      this.cartItemsList.push({...item, quantity:1});
     }else{
       this.productExistInCart.quantity += 1;
     }
+    this.totalAmount += item.price; 
     console.log(this.cartItemsList);
     this.saveData('ItemsTocart', JSON.stringify(this.cartItemsList));
+    this.saveData('TotalAmount', JSON.stringify(this.totalAmount));
     return this.cartItemsList;
   } 
 
