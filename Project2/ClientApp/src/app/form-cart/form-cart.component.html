@@ -1,25 +1,32 @@
 <p>
     <mat-form-field appearance="fill">
-      <mat-label>Fill form field</mat-label>
+      <mat-label>Enter your name</mat-label>
       <input matInput placeholder="Name">
       <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       <mat-hint>Hint</mat-hint>
     </mat-form-field>
   </p>
   <p>
-    <mat-form-field appearance="outline">
-      <mat-label>Outline form field</mat-label>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter your Surname</mat-label>
       <input matInput placeholder="Surname">
       <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       <mat-hint>Hint</mat-hint>
     </mat-form-field>
   </p>
 
+  <mat-form-field appearance="fill" [color]="colorControl.value!">
+    <mat-label>Country</mat-label>
+    <mat-select [formControl]="colorControl">
+      <mat-option value="primary">Greece</mat-option>
+      <mat-option value="accent">Cuprus</mat-option>
+    </mat-select>
+  </mat-form-field>
 
   <div class="example-container">
     <mat-form-field appearance="fill">
       <mat-label>Enter your email</mat-label>
-      <input matInput placeholder="pat@example.com" [formControl]="email" required>
+      <input matInput placeholder="name@example.com" [formControl]="email" required>
       <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
   </div>
