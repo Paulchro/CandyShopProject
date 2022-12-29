@@ -1,5 +1,5 @@
 
-<form [formGroup]="options">
+<form [formGroup]="options" #f="ngForm">
       <p>
     <mat-form-field appearance="fill">
       <mat-label>Enter your name</mat-label>
@@ -32,7 +32,7 @@
   </div>
 
   <mat-form-field appearance="fill">
-    <mat-label>Textarea</mat-label>
+    <mat-label>Write your comments</mat-label>
     <textarea matInput></textarea>
   </mat-form-field>
 
