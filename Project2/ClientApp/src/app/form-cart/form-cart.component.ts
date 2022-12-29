@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormControl, Validators, FormBuilder, NgForm } from '@angular/forms';
 import {ThemePalette} from '@angular/material/core';
 import {FloatLabelType} from '@angular/material/form-field';
 import {MatRadioModule} from '@angular/material/radio';
@@ -19,6 +19,8 @@ export class FormCartComponent {
   hideRequiredControl = new FormControl(false);
 
   floatLabelControl = new FormControl('auto' as FloatLabelType);
+
+  showname: string = '';
 
   options = this._formBuilder.group({
     hideRequired: this.hideRequiredControl,
