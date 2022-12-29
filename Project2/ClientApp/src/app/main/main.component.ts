@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Item } from '../item/item';
 import { ItemService } from '../services/item.service';
 
@@ -11,11 +12,14 @@ export class MainComponent implements OnInit {
 
   onAddToCart!: Item;
   items: Item[] = [];
+  id: any;
   
-  constructor(private itemService: ItemService) { }
+  constructor(private itemService: ItemService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.itemService.getItems().subscribe(
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.itemService.getItemsByCategory(this.id).subscribe(
       items => {
         this.items = items;
         console.log(this.items);
@@ -24,6 +28,6 @@ export class MainComponent implements OnInit {
   }
 
   addItemToCart(item:Item){
-    this.itemService.addItemsToCart(item);  
+    this.itemService.addItemsToCart(item); 
   }
 }

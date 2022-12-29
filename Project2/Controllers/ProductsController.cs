@@ -36,12 +36,12 @@ namespace Project2.Controllers
         }
         // GET: api/Products
         [HttpGet(Name = "GetProducts")]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts(int categoryId)
         {
-            var products = await _productRepository.GetAllProductsAsync();
+            var products = await _productRepository.GetAllProductsAsync(categoryId);
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }
-
+     
         // GET: api/Products/5
         [HttpGet("{id}", Name ="GetProduct")]
         public async Task<ActionResult<Product>> GetProduct(int id)
