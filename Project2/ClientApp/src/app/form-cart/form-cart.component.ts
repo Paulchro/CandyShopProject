@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-
+import {ThemePalette} from '@angular/material/core';
 
 @Component({
   selector: 'app-form-cart',
@@ -11,6 +11,9 @@ export class FormCartComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
 
   name = new FormControl('');
+
+  colorControl = new FormControl('primary' as ThemePalette);
+
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
