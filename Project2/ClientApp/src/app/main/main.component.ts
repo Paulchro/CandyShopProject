@@ -24,6 +24,6 @@ export class MainComponent implements OnInit {
   }
 
   addItemToCart(item:Item){
-    this.itemService.addItemsToCart(item);  
+    /*this.itemService.addItemsToCart(item);  */
   }
 }

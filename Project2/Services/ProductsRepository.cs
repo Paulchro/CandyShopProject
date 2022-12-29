@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
 using System.Text.Json;
 using System.IO;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Project2.Services
 {
@@ -41,7 +42,7 @@ namespace Project2.Services
             var categories = await JsonSerializer.DeserializeAsync<List<Category>>(categoriesStream);
             foreach (var item in products)
             {
-                item.Category = categories.FirstOrDefault(x => x.Id == item.CategoryId);
+                item.Category = categories?.FirstOrDefault(x => x.Id == item.CategoryId);
             }
             var productToReturn = products.FirstOrDefault(x => x.Id == productId);
             if(productToReturn != null)
@@ -51,7 +52,7 @@ namespace Project2.Services
             return null;
         }
 
-        public async Task<IEnumerable<Product>?> GetAllProductsAsync()
+        public async Task<IEnumerable<Product>?> GetAllProductsAsync(int categoryid)
         {
             Stream productsStream = GetJsonStream("JSON/Products.json");
             Stream categoriesStream = GetJsonStream("JSON/Categories.json");
@@ -59,10 +60,19 @@ namespace Project2.Services
             var categories = await JsonSerializer.DeserializeAsync<List<Category>>(categoriesStream);
             foreach (var item in products)
             {
-                item.Category = categories.FirstOrDefault(x => x.Id == item.CategoryId);
+                item.Category = categories?.FirstOrDefault(x => x.Id == item.CategoryId);
             }
-            return products.ToList();
+            if (categoryid != 0)
+            {
+                return products.Where(x => x.CategoryId == categoryid).ToList();
+            }
+            else
+            {
+                return products.ToList();
+            }
           
         }
+
+      
     }
 }
