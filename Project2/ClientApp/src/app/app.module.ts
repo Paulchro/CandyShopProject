@@ -29,6 +29,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import { AdminAllproductsComponent } from './admin-allproducts/admin-allproducts.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { MatRadioModule } from '@angular/material/radio';
     BackButtonComponent,
     WelcomeComponent,
     ItemComponent,
+    AdminAllproductsComponent,
     TableComponent
   ],
   imports: [
