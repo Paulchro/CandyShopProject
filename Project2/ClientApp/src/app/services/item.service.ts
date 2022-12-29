@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable, tap } from 'rxjs';
@@ -15,8 +15,10 @@ export class ItemService {
 
   constructor(private http: HttpClient) { }
 
-  getItems(): Observable<Item[]> {
-    return this.http.get<Item[]>(environment.base_url + 'products').pipe(
+  getItemsByCategory(id: any): Observable<Item[]> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("categoryid",id);
+    return this.http.get<Item[]>(environment.base_url + 'products/',{params:queryParams}).pipe(
       tap(data => console.log('All: ' + JSON.stringify(data)))
     );
   }
