@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable, tap } from 'rxjs';
 import { Item } from '../item/item';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,13 @@ import { Item } from '../item/item';
 export class ItemService {
 
   cartItemsList: Item[] =[];
-  map = new Map();
+  itemsToCartStr: any;
   productExistInCart?: Item | undefined;
-  totalAmount: number=0;
+  totalAmount: number = 0;
+  durationInSeconds = 3;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private _snackBar: MatSnackBar) { }
 
   getItemsByCategory(id: any): Observable<Item[]> {
     let queryParams = new HttpParams();
@@ -32,13 +35,56 @@ export class ItemService {
       this.productExistInCart.quantity += 1;
     }
     this.totalAmount += item.price; 
-    console.log(this.cartItemsList);
-    this.saveData('ItemsTocart', JSON.stringify(this.cartItemsList));
-    this.saveData('TotalAmount', JSON.stringify(this.totalAmount));
+    this.saveDataToLocalStorage('ItemsTocart', JSON.stringify(this.cartItemsList));
+    this.saveDataToLocalStorage('TotalAmount', JSON.stringify(this.totalAmount));
     return this.cartItemsList;
   } 
 
-  public saveData(key: string, value: string) {
+  public saveDataToLocalStorage(key: string, value: string) {
     localStorage.setItem(key, value);
+  }
+
+  getCartItemsFromLocalStorage(){
+    this.itemsToCartStr = localStorage.getItem('ItemsTocart');
+    if (this.itemsToCartStr != null ||  this.itemsToCartStr != ''){
+     this.cartItemsList = JSON.parse(this.itemsToCartStr);
+    }
+    return this.cartItemsList;
+  }
+
+  getTotalAmountFromLocalStorage(){
+    this.totalAmount = Number(localStorage.getItem('TotalAmount'));
+    return this.totalAmount;
+  }
+
+  removeCartItemsFromLocalStorage(){
+    localStorage.removeItem('ItemsTocart');
+  }
+
+  removeTotalAmountFromLocalStorage(){
+    localStorage.removeItem('TotalAmount');
+  }
+
+  deleteCartItem(deletedItem:Item){
+    this.cartItemsList = this.getCartItemsFromLocalStorage();
+    console.log(this.cartItemsList);
+    this.cartItemsList = this.cartItemsList.filter(item => item.id != deletedItem.id);
+    console.log(this.cartItemsList);
+    this.updateTotalAmount(deletedItem, 'delete');
+    this.saveDataToLocalStorage('ItemsTocart', JSON.stringify(this.cartItemsList));
+  }
+
+  updateTotalAmount(item:Item, action:string){
+    if (action == 'delete'){
+      const amount = item.quantity * item.price;
+      this.totalAmount = this.getTotalAmountFromLocalStorage();
+      this.totalAmount = this.totalAmount - amount;
+      this.saveDataToLocalStorage('TotalAmount', JSON.stringify(this.totalAmount));
+    }
+  }
+
+  openSnackBar(message: string){
+    this._snackBar.open(message, 'Close',{
+      duration: this.durationInSeconds * 1000});
   }
 }
