@@ -22,9 +22,8 @@ export class ItemComponent implements OnInit {
 
   addToCart(){
     this.onAddToCart.emit(this.item);
-    this.quantity = 0;
     this._snackBar.open('An item has added to cart.', 'Close',{
-      duration: this.durationInSeconds * 1000});
+    duration: this.durationInSeconds * 1000});
   }
 
 }
