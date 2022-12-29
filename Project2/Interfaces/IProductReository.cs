@@ -6,7 +6,7 @@ namespace Project2
     {
         Task<bool> ProductExist(int productId);
         Task<Product?> GetProductById(int productId);
-        Task<IEnumerable<Product>?> GetAllProductsAsync();
+        Task<IEnumerable<Product>?> GetAllProductsAsync(int categoryid);
 
     }
 }
