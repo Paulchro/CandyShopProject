@@ -16,25 +16,36 @@ export class TableComponent implements OnInit {
   @ViewChild(MatSort) sort?: MatSort;
 
   itemsToCart: Item[] =[];
-
-  itemsTocartStr: any;
   totalAmount: any;
-
-  displayedColumns: string[] = ['id', 'image', 'name', 'price', 'quantity'];
+  displayedColumns: string[] = ['id', 'image', 'name', 'price', 'quantity', 'delete'];
   dataSource = new MatTableDataSource<Item>();
-  constructor() { }
+
+  constructor(private itemService: ItemService) { }
 
   ngOnInit(): void {
-    this.itemsTocartStr = localStorage.getItem('ItemsTocart');
-    this.totalAmount = localStorage.getItem('TotalAmount');
-    if ( this.itemsTocartStr != null ||  this.itemsTocartStr != ''){
-     this.itemsToCart = JSON.parse(this.itemsTocartStr);
-    }
+    this.itemsToCart = this.itemService.getCartItemsFromLocalStorage();
+    this.totalAmount = this.itemService.getTotalAmountFromLocalStorage();
     this.dataSource = new MatTableDataSource<Item>(this.itemsToCart);
   }
 
   save(){
-    localStorage.removeItem('ItemsTocart');
-    localStorage.removeItem('TotalAmount');
+    this.itemService.removeCartItemsFromLocalStorage();
+    this.itemService.removeTotalAmountFromLocalStorage();
   }
+
+  deleteCartItem(item:Item){
+    this.itemService.deleteCartItem(item);
+    this.refreshMatTable();
+    this.refreshTotalAmount();
+  }
+
+  refreshMatTable() {
+    this.itemsToCart = this.itemService.getCartItemsFromLocalStorage();
+    this.dataSource = new MatTableDataSource<Item>(this.itemsToCart);
+  }
+
+  refreshTotalAmount(){
+    this.totalAmount  = this.itemService.getTotalAmountFromLocalStorage();
+  }
+
 }

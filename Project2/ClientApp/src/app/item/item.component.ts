@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ItemService } from '../services/item.service';
 import { Item } from './item';
 
 @Component({
@@ -12,9 +13,8 @@ export class ItemComponent implements OnInit {
   @Input() item!: Item;
   @Output() onAddToCart: EventEmitter<Item> = new EventEmitter();
   quantity: number = 0;
-  durationInSeconds = 3;
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private itemService: ItemService) { }
 
   ngOnInit(): void {
     console.log(this.item);
@@ -22,8 +22,7 @@ export class ItemComponent implements OnInit {
 
   addToCart(){
     this.onAddToCart.emit(this.item);
-    this._snackBar.open('An item has added to cart.', 'Close',{
-    duration: this.durationInSeconds * 1000});
+    this.itemService.openSnackBar('An item added to cart!');
   }
 
 }
