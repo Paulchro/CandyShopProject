@@ -11,8 +11,10 @@ import { ItemService } from '../services/item.service';
 export class MainComponent implements OnInit {
 
   onAddToCart!: Item;
-  items: Item[] = [];
+  items: Item[]= [];
   id: any;
+  items2: Item[] =[];
+
   
   constructor(private itemService: ItemService,
     private route: ActivatedRoute) { }
@@ -22,6 +24,8 @@ export class MainComponent implements OnInit {
     this.itemService.getItems(this.id).subscribe(
       items => {
         this.items = items;
+        this.items2= this.items.filter(item => item.category =="Sweets" )
+         console.log(this.items2);
         console.log(this.items);
       }
   );

@@ -16,16 +16,18 @@ export class ItemService {
   productExistInCart?: Item | undefined;
   totalAmount: number = 0;
   durationInSeconds = 3;
+  listofItems?: Observable<Item[]>;
 
   constructor(private http: HttpClient,
     private _snackBar: MatSnackBar) { }
 
-    getItems(id: any) : Observable<Item[]> {
-      return this.http.get<Item[]>(environment.base_url +'products').pipe(
-        tap(data => console.log('All: ' + JSON.stringify(data)))
-      );
-      //filtering me vash to id ths kathgorias dld if =kannika id2=vegan
-    }
+    getItems(id: any): Observable<Item[]> {
+         return this.listofItems = this.http.get<Item[]>(environment.base_url +'products')
+         .pipe(
+       tap(data => console.log('All: ' + JSON.stringify(data))),
+    
+     );    
+      }
 
   // getItemsByCategory(id: any): Observable<Item[]> {
   //   let queryParams = new HttpParams();

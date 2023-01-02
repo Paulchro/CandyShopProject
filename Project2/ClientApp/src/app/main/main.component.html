@@ -1,5 +1,5 @@
 <div  fxLayout="row wrap" fxLayoutGap="1px" fxLayoutAlign="left">
-    <div *ngFor="let item of items">
+    <div *ngFor="let item of items2">
         <app-item [item]="item" (onAddToCart)="addItemToCart($event)" ></app-item>
     </div>  
 </div>
