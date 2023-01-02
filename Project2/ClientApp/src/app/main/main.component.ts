@@ -19,7 +19,7 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
-    this.itemService.getItemsByCategory(this.id).subscribe(
+    this.itemService.getItems(this.id).subscribe(
       items => {
         this.items = items;
         console.log(this.items);

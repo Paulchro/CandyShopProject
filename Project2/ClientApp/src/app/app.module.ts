@@ -67,6 +67,7 @@ import { AdminAllproductsComponent } from './admin-allproducts/admin-allproducts
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'sweets/:id', component: MainComponent },
+      { path: 'allsweets', component: AdminAllproductsComponent },
       { path: 'cart', component: CartComponent },
       { path: '**', component: WildcardComponent },
     ]),

@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { Observable, tap } from 'rxjs';
 import { Item } from '../item/item';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { getMatFormFieldMissingControlError } from '@angular/material/form-field';
 
 @Injectable({
   providedIn: 'root'
@@ -19,13 +20,20 @@ export class ItemService {
   constructor(private http: HttpClient,
     private _snackBar: MatSnackBar) { }
 
-  getItemsByCategory(id: any): Observable<Item[]> {
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("categoryid",id);
-    return this.http.get<Item[]>(environment.base_url + 'products/',{params:queryParams}).pipe(
-      tap(data => console.log('All: ' + JSON.stringify(data)))
-    );
-  }
+    getItems(id: any) : Observable<Item[]> {
+      return this.http.get<Item[]>(environment.base_url +'products').pipe(
+        tap(data => console.log('All: ' + JSON.stringify(data)))
+      );
+      //filtering me vash to id ths kathgorias dld if =kannika id2=vegan
+    }
+
+  // getItemsByCategory(id: any): Observable<Item[]> {
+  //   let queryParams = new HttpParams();
+  //   queryParams = queryParams.append("categoryid",id);
+  //   return this.http.get<Item[]>(environment.base_url + 'products/',{params:queryParams}).pipe(
+  //     tap(data => console.log('All: ' + JSON.stringify(data)))
+  //   );
+  // }
 
   addItemsToCart(item:Item): Item[]{
     this.productExistInCart = this.cartItemsList.find(({id}) => id === item.id);
