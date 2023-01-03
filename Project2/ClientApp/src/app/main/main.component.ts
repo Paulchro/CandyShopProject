@@ -25,7 +25,7 @@ export class MainComponent implements OnInit {
     ],
   };
 
-  allComplete: boolean = false;
+  allComplete: boolean = true;
 
   
   constructor(private itemService: ItemService,
@@ -38,13 +38,15 @@ export class MainComponent implements OnInit {
       items => {      
         this.items = items;
         console.log('items: ', this.items);
-        this.items2 = this.items.filter(({category}) => category === 'Sweets' );
-        console.log('items2: ', this.items2);
+    //    this.items2 = this.items.filter(({category}) => (category === 'Sweets' || category === 'Vegan-Sweets') );
+     //   console.log('items2: ', this.items2);
       },
   );
 
   
   }
+
+  //result = this.items.includes('Vegan');
 
   addItemToCart(item:Item){
     this.itemService.addItemsToCart(item); 
