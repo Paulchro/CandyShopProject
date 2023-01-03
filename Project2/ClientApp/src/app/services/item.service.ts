@@ -5,6 +5,7 @@ import { Observable, tap } from 'rxjs';
 import { Item } from '../item/item';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { getMatFormFieldMissingControlError } from '@angular/material/form-field';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class ItemService {
   listofItems?: Observable<Item[]>;
 
   constructor(private http: HttpClient,
+    private localStorageService: LocalStorageService,
     private _snackBar: MatSnackBar) { }
 
     getItems(id: any): Observable<Item[]> {
@@ -37,7 +39,22 @@ export class ItemService {
   //   );
   // }
 
-  addItemsToCart(item:Item): Item[]{
+      // return this.http.get<Item[]>(environment.base_url +'products').pipe(
+
+      // tap(data => console.log('All: ' + JSON.stringify(data))),
+
+      // );
+     
+
+  // getItemsByCategory(id: any): Observable<Item[]> {
+  //   let queryParams = new HttpParams();
+  //   queryParams = queryParams.append("categoryid",id);
+  //   return this.http.get<Item[]>(environment.base_url + 'products/',{params:queryParams}).pipe(
+  //     tap(data => console.log('All: ' + JSON.stringify(data)))
+  //   );
+  // }
+
+  addItemsToCart(item:Item){
     this.productExistInCart = this.cartItemsList.find(({id}) => id === item.id);
     if (!this.productExistInCart) {
       this.cartItemsList.push({...item, quantity:1});
@@ -45,51 +62,25 @@ export class ItemService {
       this.productExistInCart.quantity += 1;
     }
     this.totalAmount += item.price; 
-    this.saveDataToLocalStorage('ItemsTocart', JSON.stringify(this.cartItemsList));
-    this.saveDataToLocalStorage('TotalAmount', JSON.stringify(this.totalAmount));
-    return this.cartItemsList;
+    this.localStorageService.setDataToLocalStorage('ItemsToCart', this.cartItemsList);
+    this.localStorageService.setDataToLocalStorage('TotalAmount', this.totalAmount);
   } 
 
-  public saveDataToLocalStorage(key: string, value: string) {
-    localStorage.setItem(key, value);
-  }
-
-  getCartItemsFromLocalStorage(){
-    this.itemsToCartStr = localStorage.getItem('ItemsTocart');
-    if (this.itemsToCartStr != null ||  this.itemsToCartStr != ''){
-     this.cartItemsList = JSON.parse(this.itemsToCartStr);
-    }
-    return this.cartItemsList;
-  }
-
-  getTotalAmountFromLocalStorage(){
-    this.totalAmount = Number(localStorage.getItem('TotalAmount'));
-    return this.totalAmount;
-  }
-
-  removeCartItemsFromLocalStorage(){
-    localStorage.removeItem('ItemsTocart');
-  }
-
-  removeTotalAmountFromLocalStorage(){
-    localStorage.removeItem('TotalAmount');
-  }
-
   deleteCartItem(deletedItem:Item){
-    this.cartItemsList = this.getCartItemsFromLocalStorage();
+    this.cartItemsList = this.localStorageService.getDataFromLocalStorage('ItemsToCart');
     console.log(this.cartItemsList);
     this.cartItemsList = this.cartItemsList.filter(item => item.id != deletedItem.id);
     console.log(this.cartItemsList);
     this.updateTotalAmount(deletedItem, 'delete');
-    this.saveDataToLocalStorage('ItemsTocart', JSON.stringify(this.cartItemsList));
+    this.localStorageService.setDataToLocalStorage('ItemsToCart', this.cartItemsList);
   }
 
   updateTotalAmount(item:Item, action:string){
     if (action == 'delete'){
       const amount = item.quantity * item.price;
-      this.totalAmount = this.getTotalAmountFromLocalStorage();
+      this.totalAmount = this.localStorageService.getDataFromLocalStorage('TotalAmount');
       this.totalAmount = this.totalAmount - amount;
-      this.saveDataToLocalStorage('TotalAmount', JSON.stringify(this.totalAmount));
+      this.localStorageService.setDataToLocalStorage('TotalAmount', this.totalAmount);
     }
   }
 

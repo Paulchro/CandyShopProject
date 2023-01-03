@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -30,6 +30,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { AdminAllproductsComponent } from './admin-allproducts/admin-allproducts.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { CustomHttpInterceptor } from './http-interceptor';
+import { MatSpinnerOverlayComponent } from './mat-spinner-overlay/mat-spinner-overlay.component';
 
 
 @NgModule({
@@ -45,7 +48,8 @@ import { AdminAllproductsComponent } from './admin-allproducts/admin-allproducts
     WelcomeComponent,
     ItemComponent,
     AdminAllproductsComponent,
-    TableComponent
+    TableComponent,
+    MatSpinnerOverlayComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -64,6 +68,7 @@ import { AdminAllproductsComponent } from './admin-allproducts/admin-allproducts
     MatSortModule, 
     MatRadioModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'sweets/:id', component: MainComponent },
@@ -74,7 +79,11 @@ import { AdminAllproductsComponent } from './admin-allproducts/admin-allproducts
     BrowserAnimationsModule,
     MatButtonModule
   ],
-  providers: [],
+  providers:[{
+    provide: HTTP_INTERCEPTORS,
+    useClass: CustomHttpInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
