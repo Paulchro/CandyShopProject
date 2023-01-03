@@ -18,7 +18,7 @@ export class MainComponent implements OnInit {
   task: Task = {
     name: 'All Products',
     completed: false,
-    color: 'primary',
+    color: 'accent',
     subtasks: [
       {name: 'Sweets', completed: false, color: 'accent'},
       {name: 'Vegan Sweets', completed: false, color: 'accent'},
@@ -37,7 +37,7 @@ export class MainComponent implements OnInit {
     this.itemService.getItems(this.id).subscribe(
       items => {      
         this.items = items;
-        console.log('items: ', this.items);
+   //     console.log('items: ', this.items);
     //    this.items2 = this.items.filter(({category}) => (category === 'Sweets' || category === 'Vegan-Sweets') );
      //   console.log('items2: ', this.items2);
       },
@@ -46,29 +46,44 @@ export class MainComponent implements OnInit {
   
   }
 
-  //result = this.items.includes('Vegan');
-
   addItemToCart(item:Item){
     this.itemService.addItemsToCart(item); 
   }
 
   updateAllComplete() {
+    console.log("sweets click")
     this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.itemService.getItems(this.id).subscribe(
+      items => {      
+        this.items = items;})
+     //   console.log('items: ', this.items);
+        this.items = this.items.filter(({category}) => (category === this.task.subtasks?.[0].name) );
+        console.log('items: ', this.items);
   }
 
   someComplete(): boolean {
     if (this.task.subtasks == null) {
       return false;
     }
+
     return this.task.subtasks.filter(t => t.completed).length > 0 && !this.allComplete;
   }
 
   setAll(completed: boolean) {
+    console.log("here")
+    
+
     this.allComplete = completed;
     if (this.task.subtasks == null) {
       return;
     }
     this.task.subtasks.forEach(t => (t.completed = completed));
+    this.id = this.route.snapshot.paramMap.get('id');
+    this.itemService.getItems(this.id).subscribe(
+      items => {      
+        this.items = items;
+      },
+  );
   }
-  
 }
