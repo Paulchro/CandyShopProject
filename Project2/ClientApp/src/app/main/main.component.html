@@ -22,7 +22,7 @@
   </section>
 
 <div  fxLayout="row wrap" fxLayoutGap="1px" fxLayoutAlign="left">
-    <div *ngFor="let item of items2">
+    <div *ngFor="let item of items">
         <app-item [item]="item" (onAddToCart)="addItemToCart($event)" ></app-item>
     </div> 
     <app-mat-spinner-overlay></app-mat-spinner-overlay>
