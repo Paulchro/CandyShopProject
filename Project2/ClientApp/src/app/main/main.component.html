@@ -1,6 +1,10 @@
 <div  fxLayout="row wrap" fxLayoutGap="1px" fxLayoutAlign="left">
     <div *ngFor="let item of items2">
         <app-item [item]="item" (onAddToCart)="addItemToCart($event)" ></app-item>
-    </div>  
+    </div> 
+    <ng-container *ngIf="this.spinnerService.visibility | async">
+    <div class="overlay"></div>
+    <mat-spinner [diameter]="50" style="margin:0 auto;" >
+    </mat-spinner>
+</ng-container> 
 </div>
-<app-back-button></app-back-button>

@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Item } from '../item/item';
 import { ItemService } from '../services/item.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-table',
@@ -20,17 +21,25 @@ export class TableComponent implements OnInit {
   displayedColumns: string[] = ['id', 'image', 'name', 'price', 'quantity', 'delete'];
   dataSource = new MatTableDataSource<Item>();
 
-  constructor(private itemService: ItemService) { }
+
+
+  constructor(private itemService: ItemService, 
+    private localStorageService: LocalStorageService) { }
+
+    totalAmount$ = this.localStorageService.myData$;
 
   ngOnInit(): void {
-    this.itemsToCart = this.itemService.getCartItemsFromLocalStorage();
-    this.totalAmount = this.itemService.getTotalAmountFromLocalStorage();
+    this.itemsToCart = this.localStorageService.getDataFromLocalStorage('ItemsToCart');
+    console.log('ItemsToCart', this.itemsToCart);
+    this.totalAmount = this.localStorageService.getDataFromLocalStorage('TotalAmount');
+    console.log('TotalAmount', this.totalAmount);
     this.dataSource = new MatTableDataSource<Item>(this.itemsToCart);
   }
 
   save(){
-    this.itemService.removeCartItemsFromLocalStorage();
-    this.itemService.removeTotalAmountFromLocalStorage();
+    this.localStorageService.clearDataFromLocalStorage('ItemsToCart');
+    this.localStorageService.clearDataFromLocalStorage('TotalAmount');
+    // this.localStorageService.removeTotalAmountFromLocalStorage();
   }
 
   deleteCartItem(item:Item){
@@ -40,12 +49,12 @@ export class TableComponent implements OnInit {
   }
 
   refreshMatTable() {
-    this.itemsToCart = this.itemService.getCartItemsFromLocalStorage();
+    this.itemsToCart = this.localStorageService.getDataFromLocalStorage('ItemsToCart');
     this.dataSource = new MatTableDataSource<Item>(this.itemsToCart);
   }
 
   refreshTotalAmount(){
-    this.totalAmount  = this.itemService.getTotalAmountFromLocalStorage();
+    // this.totalAmount  = this.itemService.getTotalAmountFromLocalStorage();
   }
 
 }
