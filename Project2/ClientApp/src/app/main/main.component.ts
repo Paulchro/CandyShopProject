@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Item } from '../item/item';
 import { ItemService } from '../services/item.service';
-import { LoaderService } from '../services/loader.service';
 import { Task } from './Task';
 
 @Component({
@@ -30,7 +29,6 @@ export class MainComponent implements OnInit {
 
   
   constructor(private itemService: ItemService,
-    public spinnerService: LoaderService,
     private route: ActivatedRoute) { }
     
 
