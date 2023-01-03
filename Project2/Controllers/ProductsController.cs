@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -36,9 +37,9 @@ namespace Project2.Controllers
         }
         // GET: api/Products
         [HttpGet(Name = "GetProducts")]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts(int categoryId)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
-            var products = await _productRepository.GetAllProductsAsync(categoryId);
+            var products = await _productRepository.GetAllProductsAsync();
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }
      
@@ -55,7 +56,22 @@ namespace Project2.Controllers
 
             return Ok(product);
         }
+        [HttpPost]
+        public async Task<ActionResult<ProductDto>> PostProduct(ProductDto productDto)
+        {
+            Product product = new Product
+            {
+                Id = productDto.Id,
+                Name = productDto.Name,
+                Price = productDto.Price,
+                Quantity = productDto.Quantity,
+                CategoryId = productDto.CategoryId,
+                Image = productDto.Image
 
+            };
+            await _productRepository.AddProduct("JSON/Products.json", _mapper.Map<Product>(product));
+            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+        }
        
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
