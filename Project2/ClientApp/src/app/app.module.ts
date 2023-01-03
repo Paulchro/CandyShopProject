@@ -32,7 +32,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { AdminAllproductsComponent } from './admin-allproducts/admin-allproducts.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CustomHttpInterceptor } from './http-interceptor';
-import { MatSpinnerOverlayComponent } from './mat-spinner-overlay/mat-spinner-overlay.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -49,7 +49,6 @@ import { MatSpinnerOverlayComponent } from './mat-spinner-overlay/mat-spinner-ov
     ItemComponent,
     AdminAllproductsComponent,
     TableComponent,
-    MatSpinnerOverlayComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -69,6 +68,7 @@ import { MatSpinnerOverlayComponent } from './mat-spinner-overlay/mat-spinner-ov
     MatRadioModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatCheckboxModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'sweets/:id', component: MainComponent },
