@@ -21,7 +21,7 @@ export class MainComponent implements OnInit {
     color: 'accent',
     subtasks: [
       {name: 'Sweets', completed: false, color: 'accent'},
-      {name: 'Vegan Sweets', completed: false, color: 'accent'},
+      {name: 'Vegan-Sweets', completed: false, color: 'accent'},
     ],
   };
 
@@ -50,16 +50,28 @@ export class MainComponent implements OnInit {
     this.itemService.addItemsToCart(item); 
   }
 
-  updateAllComplete() {
+  updateAllComplete(subtask : any) {
     console.log("sweets click")
     this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
     this.id = this.route.snapshot.paramMap.get('id');
     this.itemService.getItems(this.id).subscribe(
-      items => {      
-        this.items = items;})
-     //   console.log('items: ', this.items);
-        this.items = this.items.filter(({category}) => (category === this.task.subtasks?.[0].name) );
+      items => {   
+        if (this.allComplete) {
+          this.items = items;
+        }   
+        else {
+          if (subtask.completed) {
+            this.items = this.items.filter(({category}) => (category === subtask.name) );
+
+          }
+console.log(subtask.completed);
+        }
+       // this.items = items;
+       // this.items = this.items.filter(({category}) => (category === subtask.name) );
         console.log('items: ', this.items);
+      })
+     //   console.log('items: ', this.items);
+       
   }
 
   someComplete(): boolean {
