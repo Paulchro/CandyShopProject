@@ -4,8 +4,8 @@ import { environment } from 'src/environments/environment';
 import { Observable, tap } from 'rxjs';
 import { Item } from '../item/item';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { getMatFormFieldMissingControlError } from '@angular/material/form-field';
 import { LocalStorageService } from './local-storage.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +18,10 @@ export class ItemService {
   totalAmount: number = 0;
   durationInSeconds = 3;
   listofItems?: Observable<Item[]>;
+  itemForm: any;
 
   constructor(private http: HttpClient,
-    private localStorageService: LocalStorageService,
+    public localStorageService: LocalStorageService,
     private _snackBar: MatSnackBar) { }
 
     getItems(id: any): Observable<Item[]> {
@@ -30,21 +31,6 @@ export class ItemService {
     
      );    
       }
-
-  // getItemsByCategory(id: any): Observable<Item[]> {
-  //   let queryParams = new HttpParams();
-  //   queryParams = queryParams.append("categoryid",id);
-  //   return this.http.get<Item[]>(environment.base_url + 'products/',{params:queryParams}).pipe(
-  //     tap(data => console.log('All: ' + JSON.stringify(data)))
-  //   );
-  // }
-
-      // return this.http.get<Item[]>(environment.base_url +'products').pipe(
-
-      // tap(data => console.log('All: ' + JSON.stringify(data))),
-
-      // );
-     
 
   // getItemsByCategory(id: any): Observable<Item[]> {
   //   let queryParams = new HttpParams();
@@ -67,7 +53,7 @@ export class ItemService {
   } 
 
   deleteCartItem(deletedItem:Item){
-    this.cartItemsList = this.localStorageService.getDataFromLocalStorage('ItemsToCart');
+    this.cartItemsList = this.localStorageService.getDataFromLocalStorage('ItemsToCart')._value;
     console.log(this.cartItemsList);
     this.cartItemsList = this.cartItemsList.filter(item => item.id != deletedItem.id);
     console.log(this.cartItemsList);
@@ -87,5 +73,16 @@ export class ItemService {
   openSnackBar(message: string){
     this._snackBar.open(message, 'Close',{
       duration: this.durationInSeconds * 1000});
+  }
+
+  initializeItemForm() {
+    this.itemForm = new FormGroup({
+      name: new FormControl('', Validators.required),
+      quantity: new FormControl(0, Validators.required),
+      price: new FormControl(0, Validators.required),
+      category: new FormControl('', Validators.required), 
+      image: new FormControl('', Validators.required) 
+    });
+    return this.itemForm ;
   }
 }

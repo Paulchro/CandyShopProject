@@ -34,6 +34,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { CustomHttpInterceptor } from './http-interceptor';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatSpinnerOverlayComponent } from './mat-spinner-overlay/mat-spinner-overlay.component';
+import { AddProductFormComponent } from './add-product-form/add-product-form.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { MatSpinnerOverlayComponent } from './mat-spinner-overlay/mat-spinner-ov
     ItemComponent,
     AdminAllproductsComponent,
     TableComponent,
-    MatSpinnerOverlayComponent
+    MatSpinnerOverlayComponent,
+    AddProductFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

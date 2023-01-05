@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource " matSort class="mat-elevation-z8">
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Id"> Id </th>
         <td mat-cell *matCellDef="let element; let i = index"> {{element.id}} </td>
@@ -29,8 +29,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row  *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<h1 style="margin: 10px;text-align: right;">Amount: {{totalAmount | currency:'EUR':true}}</h1> 
+<h1 style="margin: 10px;text-align: right;">Amount: {{totalAmount$ | async | currency:'EUR':true}}</h1> 
 <!-- <mat-paginator class = "center" [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator> -->
-
-<button mat-raised-button color="accent" style = "margin: 15px;" (click) = "save()">Save</button>
+<button mat-raised-button color="accent" style = "margin: 15px;" (click) = "pay()">Pay</button>
 
