@@ -24,13 +24,12 @@ export class ItemService {
     public localStorageService: LocalStorageService,
     private _snackBar: MatSnackBar) { }
 
-    getItems(id: any): Observable<Item[]> {
+    getItems(): Observable<Item[]> {
          return this.listofItems = this.http.get<Item[]>(environment.base_url +'products')
          .pipe(
-       tap(data => console.log('All: ' + JSON.stringify(data))),
-    
-     );    
-      }
+      //  tap(data => console.log('All: ' + JSON.stringify(data))),
+      );    
+    }
 
   // getItemsByCategory(id: any): Observable<Item[]> {
   //   let queryParams = new HttpParams();

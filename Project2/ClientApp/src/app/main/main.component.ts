@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Item } from '../item/item';
 import { ItemService } from '../services/item.service';
 import { Task } from './Task';
@@ -18,81 +18,80 @@ export class MainComponent implements OnInit {
   id: any;
   items2: Item[] = [];
   task: Task = {
+    id: 0,
     name: 'All Products',
     completed: false,
     color: 'accent',
     subtasks: [
-      {name: 'Sweets', completed: false, color: 'accent'},
-      {name: 'Vegan-Sweets', completed: false, color: 'accent'},
+      {id: 1, name: 'Sweets', completed: false, color: 'accent'},
+      {id: 2, name: 'Vegan-Sweets', completed: false, color: 'accent'},
     ],
   };
 
   allComplete: boolean = true;
-
   
   constructor(private itemService: ItemService,
     private route: ActivatedRoute,
     _router: Router) { 
       this.router = _router;
-
     }
     
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.itemService.getItems(this.id).subscribe(
+    this.itemService.getItems().subscribe(
       items => {      
         this.items = items;
-   //     console.log('items: ', this.items);
-    //    this.items2 = this.items.filter(({category}) => (category === 'Sweets' || category === 'Vegan-Sweets') );
-     //   console.log('items2: ', this.items2);
       },
-  );
-
-  
+    );
   }
 
   addItemToCart(item:Item){
     this.itemService.addItemsToCart(item); 
   }
 
-  updateAllComplete(subtask : any) {
-  //  console.log("sweets click")
+  updateAllComplete(subtasks : any) {
     this.allComplete = this.task.subtasks != null && this.task.subtasks.every(t => t.completed);
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.itemService.getItems(this.id).subscribe(
+    this.itemService.getItems().subscribe(
       items => {   
         if (this.allComplete) {
           this.items = items;
         }   
         else {
-          if (subtask.completed) {
-            this.items = this.items.filter(({category}) => (category === subtask.name) );
-         }
-         else if ( subtask.completed ==false){
-          if (subtask.name === 'Sweets'){
-            this.items = this.items.filter(({category}) => (category === 'Vegan-Sweets') )
-          }
-          else {
-            this.items = this.items.filter(({category}) => (category === 'Sweets') )
+          subtasks.forEach(
+            (subtask:any) => {
+              if (subtask.completed)
+              {
+                this.items = this.items.filter(({categoryId}) => (categoryId == subtask.id) );
+              }
+            }
+          )
+          // for (){
 
-          }
+          // }
+        //   if (subtask.completed) {
+        //     this.items = this.items.filter(({category}) => (category === subtask.name) );
+        //  }
+        //  else if ( subtask.completed ==false){
+        //   if (subtask.name === 'Sweets'){
+        //     this.items = this.items.filter(({category}) => (category === 'Vegan-Sweets') )
+        //   }
+        //   else {
+        //     this.items = this.items.filter(({category}) => (category === 'Sweets') )
+
+        //   }
          // console.log("swsto")
-         }
+        //  }
 //console.log(subtask.completed);
         }
 
         console.log('items: ', this.items);
-      })
-     //   console.log('items: ', this.items);
-       
+      })    
   }
 
   someComplete(): boolean {
     if (this.task.subtasks == null) {
       return false;
     }
-
     return this.task.subtasks.filter(t => t.completed).length > 0 && !this.allComplete;
   }
 
@@ -107,7 +106,7 @@ export class MainComponent implements OnInit {
     }
     this.task.subtasks.forEach(t => (t.completed = completed));
     this.id = this.route.snapshot.paramMap.get('id');
-    this.itemService.getItems(this.id).subscribe(
+    this.itemService.getItems().subscribe(
       items => {      
         this.items = items;
       },
