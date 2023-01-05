@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { BehaviorSubject } from 'rxjs';
 import { Item } from '../item/item';
 import { ItemService } from '../services/item.service';
 import { LocalStorageService } from '../services/local-storage.service';
@@ -16,45 +17,32 @@ export class TableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
-  itemsToCart: Item[] =[];
-  totalAmount: any;
   displayedColumns: string[] = ['id', 'image', 'name', 'price', 'quantity', 'delete'];
-  dataSource = new MatTableDataSource<Item>();
 
+  data?: Item[];
+  public dataSource = new MatTableDataSource<Item>();
 
+  constructor(public itemService: ItemService, 
+    public localStorageService: LocalStorageService) {     
+      this.itemsToCart$.subscribe((data)=>{
+          this.dataSource.data = data;
+      });
+    }
 
-  constructor(private itemService: ItemService, 
-    private localStorageService: LocalStorageService) { }
-
-    totalAmount$ = this.localStorageService.myData$;
+  totalAmount$ = this.localStorageService._totalAmount$;
+  itemsToCart$ = this.localStorageService._itemsToCart$;
 
   ngOnInit(): void {
-    this.itemsToCart = this.localStorageService.getDataFromLocalStorage('ItemsToCart');
-    console.log('ItemsToCart', this.itemsToCart);
-    this.totalAmount = this.localStorageService.getDataFromLocalStorage('TotalAmount');
-    console.log('TotalAmount', this.totalAmount);
-    this.dataSource = new MatTableDataSource<Item>(this.itemsToCart);
+    this.dataSource = new MatTableDataSource<Item>(this.localStorageService.getDataFromLocalStorage('ItemsToCart')._value);
   }
 
-  save(){
+  pay(){
     this.localStorageService.clearDataFromLocalStorage('ItemsToCart');
     this.localStorageService.clearDataFromLocalStorage('TotalAmount');
-    // this.localStorageService.removeTotalAmountFromLocalStorage();
   }
 
   deleteCartItem(item:Item){
     this.itemService.deleteCartItem(item);
-    this.refreshMatTable();
-    this.refreshTotalAmount();
+    this.itemsToCart$.next(this.localStorageService.getDataFromLocalStorage('ItemsToCart')._value);
   }
-
-  refreshMatTable() {
-    this.itemsToCart = this.localStorageService.getDataFromLocalStorage('ItemsToCart');
-    this.dataSource = new MatTableDataSource<Item>(this.itemsToCart);
-  }
-
-  refreshTotalAmount(){
-    // this.totalAmount  = this.itemService.getTotalAmountFromLocalStorage();
-  }
-
 }

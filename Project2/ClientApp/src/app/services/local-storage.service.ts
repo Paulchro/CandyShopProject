@@ -7,42 +7,43 @@ import { Item } from '../item/item';
 })
 export class LocalStorageService {
 
-  public _myData$ = new BehaviorSubject<Item[] | number>(0);
-  public myData$ = this._myData$.asObservable()
+  public _itemsToCart$ = new BehaviorSubject<Item[]>([]);
+  public _totalAmount$ = new BehaviorSubject<number>(0);
+  public itemsToCart$ = this._itemsToCart$.asObservable();
+  public totalAmount$ = this._totalAmount$.asObservable();
   public dataStr: any;
-  public v: any;
+  public data: any;
 
   constructor() { }
 
-  setDataToLocalStorage(key: string, value: Item[] | number) {
+  public setDataToLocalStorage(key: string, value: Item[] | number) {
     localStorage.setItem(key, JSON.stringify(value))
-    this._myData$.next(value)
- }
-
- getDataFromLocalStorage(key: string) {
-    this.dataStr  = localStorage.getItem(key);
-    console.log('Lalalallal', this.dataStr);
-    // if (this.dataStr != null ||  this.dataStr != '' || this.dataStr != undefined){
-      if (key == 'ItemsToCart'){
-        this.v = JSON.parse(this.dataStr);
-        this._myData$.next(this.v);
-        return this.v;
-      }
-      else{
-        this.v = Number(this.dataStr);
-        this._myData$.next(this.v);
-        return this.v;
-      // }
+    if (typeof value == 'object'){
+      this._itemsToCart$.next(value)
+    }else{
+      this._totalAmount$.next(value)
     }
  }
 
- clearDataFromLocalStorage(key: string) {
-    localStorage.removeItem(key)
-    this._myData$.next(0)
+ public getDataFromLocalStorage(key: string) {
+    this.dataStr  = localStorage.getItem(key);
+      if (key == 'ItemsToCart'){
+        this.data = JSON.parse(this.dataStr);
+        this._itemsToCart$.next(this.data);
+        return this._itemsToCart$;
+      }
+      else{
+        this.data = Number(this.dataStr);
+        this._totalAmount$.next(this.data);
+        console.log(this._totalAmount$)
+        return this.data;
+        // return this._totalAmount$
+    }
  }
 
- clearAllLocalStorage() {
-    localStorage.clear()
-    this._myData$.next(0)
+ public clearDataFromLocalStorage(key: string) {
+    localStorage.removeItem(key)
+    this._itemsToCart$.next([])
+    this._totalAmount$.next(0)
  }
 }
