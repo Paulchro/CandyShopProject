@@ -3,6 +3,7 @@ import {Component} from '@angular/core';
 
 
 export interface Task {
+  id: number;
   name: string;
   completed: boolean;
   color: ThemePalette;
