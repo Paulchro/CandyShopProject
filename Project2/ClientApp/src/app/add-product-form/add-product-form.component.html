@@ -1,0 +1,39 @@
+<mat-card style="text-align: center;">
+    <mat-card-title style="margin: 30px;">Add Product</mat-card-title>
+    <mat-card-content style="margin: 30px;">
+      <form [formGroup]="itemForm">
+        <p>
+          <mat-form-field >
+            <input type="text" matInput placeholder="Name" formControlName="name">
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <input type="number" matInput placeholder="Quantity" formControlName="quantity">
+          </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field>
+              <input type="number" matInput placeholder="Price" formControlName="price">
+            </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <mat-select formControlName="category" placeholder="Category">
+              <mat-option (onSelectionChange)="changeCategory($event)" *ngFor="let category of categoriesList" [value] = "category.id">
+                {{ category.name }} 
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field >
+              <input type="text" matInput placeholder="Image" formControlName="image">
+            </mat-form-field>
+          </p>
+        <div class="button">
+          <button mat-raised-button color="primary" (click)="submit()" style="margin:10px;" [disabled]="!itemForm.valid">Submit</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
