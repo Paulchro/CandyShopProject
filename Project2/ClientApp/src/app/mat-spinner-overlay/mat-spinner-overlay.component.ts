@@ -10,7 +10,7 @@ import { LoaderService } from '../services/loader.service';
 export class MatSpinnerOverlayComponent implements OnInit {
 
   @Input() value : number = 100;
-  @Input() diameter: number = 200;
+  @Input() diameter: number = 100;
   @Input() mode : any ="indeterminate";
   @Input() strokeWidth : number = 10;
   @Input() color: string = "accent";
