@@ -78,6 +78,7 @@ import { AddProductFormComponent } from './add-product-form/add-product-form.com
       { path: 'sweets', component: MainComponent },
       { path: 'allsweets', component: AdminAllproductsComponent },
       { path: 'cart', component: CartComponent },
+      { path: 'admin', component: AdminAllproductsComponent },
       { path: '**', component: WildcardComponent },
     ]),
     BrowserAnimationsModule,
