@@ -30,6 +30,7 @@ export class LocalStorageService {
       if (key == 'ItemsToCart'){
         this.data = JSON.parse(this.dataStr);
         this._itemsToCart$.next(this.data);
+        console.log('itemsToCart$: ', this.itemsToCart$);
         return this._itemsToCart$;
       }
       else{
