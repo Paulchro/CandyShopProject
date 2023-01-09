@@ -24,16 +24,16 @@ export class TableComponent implements OnInit {
 
   constructor(public itemService: ItemService, 
     public localStorageService: LocalStorageService) {     
-      this.itemsToCart$.subscribe((data)=>{
+      this.itemsToCart$.subscribe((data:any)=>{
           this.dataSource.data = data;
       });
     }
 
-  totalAmount$ = this.localStorageService._totalAmount$;
-  itemsToCart$ = this.localStorageService._itemsToCart$;
+  totalAmount$:any = this.localStorageService._totalAmount$;
+  itemsToCart$:any = this.localStorageService._itemsToCart$;
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource<Item>(this.localStorageService.getDataFromLocalStorage('ItemsToCart')._value);
+    this.dataSource = new MatTableDataSource<Item>(this.itemsToCart$._value);
   }
 
   pay(){
@@ -43,6 +43,5 @@ export class TableComponent implements OnInit {
 
   deleteCartItem(item:Item){
     this.itemService.deleteCartItem(item);
-    this.itemsToCart$.next(this.localStorageService.getDataFromLocalStorage('ItemsToCart')._value);
   }
 }
