@@ -33,7 +33,9 @@ export class TableComponent implements OnInit {
   itemsToCart$:any = this.localStorageService._itemsToCart$;
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource<Item>(this.itemsToCart$._value);
+    // this.dataSource = new MatTableDataSource<Item>(this.itemsToCart$._value);
+    this.dataSource = new MatTableDataSource<Item>(this.localStorageService.getDataFromLocalStorage('ItemsToCart')._value);
+    this.itemsToCart$ = this.localStorageService.getDataFromLocalStorage('TotalAmount').getValue(); 
   }
 
   pay(){
@@ -43,5 +45,19 @@ export class TableComponent implements OnInit {
 
   deleteCartItem(item:Item){
     this.itemService.deleteCartItem(item);
+  }
+
+  updateQuantity(item: Item, action: string){
+    if (action == 'remove'){
+      // if (item.quantity > 0){
+        item.quantity -= 1;
+      // }else{
+      //   item.quantity = 0;
+      // }
+    }else{
+      item.quantity += 1;
+    }
+    this.localStorageService.setDataToLocalStorage('ItemsToCart', this.itemsToCart$._value);
+    this.itemService.updateTotalAmount(item, action);
   }
 }

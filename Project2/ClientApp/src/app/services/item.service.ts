@@ -62,12 +62,14 @@ export class ItemService {
   }
 
   updateTotalAmount(item:Item, action:string){
-    if (action == 'delete'){
-      const amount = item.quantity * item.price;
-      this.totalAmount = this.totalAmount$.getValue();
+    const amount = item.quantity * item.price;
+    this.totalAmount = this.totalAmount$.getValue();
+    if (action == 'delete' || action == 'remove'){     
       this.totalAmount = this.totalAmount - amount;
-      this.localStorageService.setDataToLocalStorage('TotalAmount', this.totalAmount);
+    }else{
+      this.totalAmount = this.totalAmount + amount;
     }
+    this.localStorageService.setDataToLocalStorage('TotalAmount', this.totalAmount);
   }
 
   openSnackBar(message: string){
