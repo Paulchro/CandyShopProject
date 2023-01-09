@@ -6,21 +6,21 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class CustomHttpInterceptor implements HttpInterceptor {
 
-     constructor(private spinnerService: LoaderService) { }
+     constructor(private loaderService: LoaderService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        this.spinnerService.show();
+        this.loaderService.show();
 
         return next.handle(req)
              .pipe(tap(
                 (event: HttpEvent<any>) => {
                     if (event instanceof HttpResponse) {
-                        this.spinnerService.hide();
+                        this.loaderService.hide();
                     }
                 }, 
                 (error) => {
-                    this.spinnerService.hide();
+                    this.loaderService.hide();
                 }));
     }
 }

@@ -9,13 +9,13 @@ import { LoaderService } from '../services/loader.service';
 })
 export class MatSpinnerOverlayComponent implements OnInit {
 
-  @Input() value : number = 100;
-  @Input() diameter: number = 100;
-  @Input() mode : any ="indeterminate";
-  @Input() strokeWidth : number = 10;
-  @Input() color: string = "accent";
+  value: number = 100;
+  diameter: number = 100;
+  mode : any ="indeterminate";
+  strokeWidth : number = 10;
+  color: string = "accent";
 
-  constructor( public spinnerService: LoaderService) { }
+  constructor( public loaderService: LoaderService) { }
 
   ngOnInit(): void {
   }
