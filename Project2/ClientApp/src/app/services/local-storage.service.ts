@@ -25,7 +25,7 @@ export class LocalStorageService {
     }
  }
 
- public getDataFromLocalStorage(key: string) {
+ public getDataFromLocalStorage(key: string): any{
     this.dataStr  = localStorage.getItem(key);
       if (key == 'ItemsToCart'){
         this.data = JSON.parse(this.dataStr);
@@ -35,9 +35,7 @@ export class LocalStorageService {
       else{
         this.data = Number(this.dataStr);
         this._totalAmount$.next(this.data);
-        console.log(this._totalAmount$)
-        return this.data;
-        // return this._totalAmount$
+        return this._totalAmount$;
     }
  }
 

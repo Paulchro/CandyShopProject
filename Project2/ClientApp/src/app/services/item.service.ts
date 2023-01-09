@@ -19,6 +19,7 @@ export class ItemService {
   durationInSeconds = 3;
   listofItems?: Observable<Item[]>;
   itemForm: any;
+  totalAmount$:any = this.localStorageService._totalAmount$;
 
   constructor(private http: HttpClient,
     public localStorageService: LocalStorageService,
@@ -63,7 +64,7 @@ export class ItemService {
   updateTotalAmount(item:Item, action:string){
     if (action == 'delete'){
       const amount = item.quantity * item.price;
-      this.totalAmount = this.localStorageService.getDataFromLocalStorage('TotalAmount');
+      this.totalAmount = this.totalAmount$.getValue();
       this.totalAmount = this.totalAmount - amount;
       this.localStorageService.setDataToLocalStorage('TotalAmount', this.totalAmount);
     }
