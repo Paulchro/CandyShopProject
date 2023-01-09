@@ -40,16 +40,12 @@ namespace Project2.Services
         public async Task<Product?> GetProductById(int productId)
         {
             Stream productsStream = GetJsonStream("JSON/Products.json");
-            Stream categoriesStream = GetJsonStream("JSON/Categories.json");
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
-            var categories = await JsonSerializer.DeserializeAsync<List<Category>>(categoriesStream);
-            foreach (var item in products)
-            {
-                item.CategoryId = categories?.FirstOrDefault(x => x.Id == item.CategoryId).Id;
-            }
+   
             var productToReturn = products.FirstOrDefault(x => x.Id == productId);
+
             productsStream.Close();
-            categoriesStream.Close();
+
             if (productToReturn != null)
             {
                 return productToReturn;
@@ -61,16 +57,15 @@ namespace Project2.Services
         public async Task<IEnumerable<Product>?> GetAllProductsAsync()
         {
             Stream productsStream = GetJsonStream("JSON/Products.json");
-            Stream categoriesStream = GetJsonStream("JSON/Categories.json");
+   
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
-            var categories = await JsonSerializer.DeserializeAsync<List<Category>>(categoriesStream);
-            foreach (var item in products)
-            {
-                item.CategoryId = categories?.FirstOrDefault(x => x.Id == item.CategoryId).Id;
-            }
+       
             productsStream.Close();
-            categoriesStream.Close();
-            return products.ToList();
+            if (products != null)
+            {
+                return products.ToList();
+            }
+            return null;
         }
 
         public async Task AddProduct(string filePath, Product product)
@@ -78,14 +73,11 @@ namespace Project2.Services
             Stream productsStream = GetJsonStream("JSON/Products.json");
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
         
-
-            // Add the new object to the list
             products.Add(product);
 
-            // Serialize the list of objects to JSON
             var serializedData = JsonSerializer.Serialize(products);
             productsStream.Close();
-            // Write the serialized JSON back to the file
+
             using var writer = new StreamWriter(filePath);
             await writer.WriteAsync(serializedData);
         }
