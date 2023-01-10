@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { BehaviorSubject } from 'rxjs';
 import { Item } from '../item/item';
 import { ItemService } from '../services/item.service';
 import { LocalStorageService } from '../services/local-storage.service';
@@ -35,7 +34,7 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     // this.dataSource = new MatTableDataSource<Item>(this.itemsToCart$._value);
     this.dataSource = new MatTableDataSource<Item>(this.localStorageService.getDataFromLocalStorage('ItemsToCart')._value);
-    this.itemsToCart$ = this.localStorageService.getDataFromLocalStorage('TotalAmount').getValue(); 
+    this.totalAmount$ = this.localStorageService.getDataFromLocalStorage('TotalAmount'); 
   }
 
   pay(){
@@ -48,16 +47,17 @@ export class TableComponent implements OnInit {
   }
 
   updateQuantity(item: Item, action: string){
-    if (action == 'remove'){
-      // if (item.quantity > 0){
+    if (action == 'remove'){  
+      if (item.quantity > 0){
         item.quantity -= 1;
-      // }else{
-      //   item.quantity = 0;
-      // }
-    }else{
-      item.quantity += 1;
+        this.itemService.updateTotalAmount(item, action);
+      }else{
+        item.quantity = 0;
+      }
+    }else{   
+      item.quantity += 1;   
+      this.itemService.updateTotalAmount(item, action);
     }
     this.localStorageService.setDataToLocalStorage('ItemsToCart', this.itemsToCart$._value);
-    this.itemService.updateTotalAmount(item, action);
   }
 }
