@@ -6,21 +6,27 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LoaderService {
 
-  isVisible: BehaviorSubject<number>;
+  isVisible: BehaviorSubject<boolean>;
   counter: number=0;
   constructor() {  
-    this.isVisible = new BehaviorSubject(0); 
+    this.isVisible = new BehaviorSubject(false); 
   }
 
   show() {
     this.counter += 1;
     console.log('show: ', this.counter)
-    this.isVisible.next(this.counter); 
+    if (this.counter>0){
+      console.log('here');
+      this.isVisible.next(true); 
+    }
   }
 
   hide() {
-      this.counter -= 1;
-      console.log('hide: ', this.counter);
-      this.isVisible.next(this.counter);
+    this.counter -= 1;
+    console.log('hide: ', this.counter);
+    if (this.counter<=0){  
+      console.log('here2');    
+      this.isVisible.next(false);
+    }
   }
 }

@@ -1,4 +1,4 @@
-<ng-container *ngIf="this.loaderService.isVisible.getValue() > 0">
+<ng-container *ngIf="this.loaderService.isVisible.getValue()">
     <div class="overlay"></div>
     <mat-progress-spinner [diameter]="diameter" [mode] = "mode" [color]="color" [strokeWidth]="strokeWidth" [value]="value" class = "center"></mat-progress-spinner>
 </ng-container>
