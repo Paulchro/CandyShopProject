@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { BehaviorSubject } from 'rxjs';
 import { Item } from '../item/item';
 import { ItemService } from '../services/item.service';
 import { LocalStorageService } from '../services/local-storage.service';
@@ -20,6 +21,8 @@ export class TableComponent implements OnInit {
 
   data?: Item[];
   public dataSource = new MatTableDataSource<Item>();
+  isCartUrl: boolean = false;
+  public isCartEmpty$ = new BehaviorSubject<boolean>(true);
 
   constructor(public itemService: ItemService, 
     public localStorageService: LocalStorageService) {     
@@ -34,16 +37,16 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
     // this.dataSource = new MatTableDataSource<Item>(this.itemsToCart$._value);
     this.dataSource = new MatTableDataSource<Item>(this.localStorageService.getDataFromLocalStorage('ItemsToCart')._value);
-    this.totalAmount$ = this.localStorageService.getDataFromLocalStorage('TotalAmount'); 
+    console.log(this.dataSource);
+    this.totalAmount$ = this.localStorageService.getDataFromLocalStorage('TotalAmount');
+    if ( this.totalAmount$.getValue() != 0 && this.itemsToCart$._value != null){
+      this.isCartEmpty$.next(false);
+    }
+   console.log(this.totalAmount$)  
   }
 
-  pay(){
-    this.localStorageService.clearDataFromLocalStorage('ItemsToCart');
-    this.localStorageService.clearDataFromLocalStorage('TotalAmount');
-  }
-
-  deleteCartItem(item:Item){
-    this.itemService.deleteCartItem(item);
+  deleteCartItem(item:Item, isCartEmpty$: BehaviorSubject<boolean>){
+    this.itemService.deleteCartItem(item, isCartEmpty$);
   }
 
   updateQuantity(item: Item, action: string){

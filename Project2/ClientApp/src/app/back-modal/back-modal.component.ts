@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { ItemService } from '../services/item.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 
 @Component({
@@ -12,20 +14,33 @@ export class BackModalComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<BackModalComponent>,
     public dialog: MatDialog,
-    private router: Router) { }
+    private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private localStorageService: LocalStorageService,
+    private itemService: ItemService) { }
 
   ngOnInit(): void {
 
   }
 
-  goToCart(){
-
+  confirm(action: string){
+    switch(action) { 
+      case 'back': { 
+        this.router.navigate(['/']); 
+        break; 
+      } 
+      case 'pay': { 
+        this.localStorageService.clearDataFromLocalStorage('ItemsToCart');
+        this.localStorageService.clearDataFromLocalStorage('TotalAmount');
+        this.router.navigate(['/']);
+        this.itemService.openSnackBar('Your order has been completed!'); 
+        break; 
+      } 
+    } 
   }
 
-  goToHome(){
-    this.router.navigate(['/']);
+  close(){
+    this.dialogRef.close();
   }
-
-
 }
 

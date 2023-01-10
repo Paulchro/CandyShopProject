@@ -1,12 +1,10 @@
-<h1 mat-dialog-title>Do you want to exit?</h1>
-<div mat-dialog-content>
-  Review your order
-</div>
-<div mat-dialog-actions>
-  <button mat-raised-button class = "btn-yellow" (click) = "goToCart()" mat-dialog-close>
-    <mat-icon>shopping_cart</mat-icon>
-    Go Cart</button>
-  <button mat-raised-button color = "accent" (click) = "goToHome()" mat-dialog-close>
-    <mat-icon>home</mat-icon>
-    Go Home</button>
+<h1 mat-dialog-title style="text-align: center;">{{data.title}}</h1>
+<div mat-dialog-content style="text-align: center;margin: 20px;">{{data.content}}</div>
+<div mat-dialog-actions align="center">
+  <button mat-raised-button color = "primary" (click) = "confirm(data.action)" mat-dialog-close>
+    <mat-icon>done</mat-icon>
+    Yes</button>
+  <button mat-raised-button color = "warn" (click) = "close()" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+    No</button>
 </div>

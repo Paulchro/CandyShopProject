@@ -37,3 +37,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin: auto !important;
   display: block !important;
 }
+
+.inline {
+  display: inline-flex; 
+  vertical-align: middle;
+}
