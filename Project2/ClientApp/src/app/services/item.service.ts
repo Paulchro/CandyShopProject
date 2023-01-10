@@ -62,12 +62,15 @@ export class ItemService {
   }
 
   updateTotalAmount(item:Item, action:string){
-    const amount = item.quantity * item.price;
     this.totalAmount = this.totalAmount$.getValue();
-    if (action == 'delete' || action == 'remove'){     
+    if (action == 'delete'){
+      const amount = item.quantity * item.price;     
       this.totalAmount = this.totalAmount - amount;
-    }else{
-      this.totalAmount = this.totalAmount + amount;
+    }else if (action == 'remove'){
+      this.totalAmount -= item.price;
+    }
+    else{
+      this.totalAmount += item.price;
     }
     this.localStorageService.setDataToLocalStorage('TotalAmount', this.totalAmount);
   }
