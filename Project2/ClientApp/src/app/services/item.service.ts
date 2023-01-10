@@ -16,6 +16,7 @@ export class ItemService {
   itemsToCartStr: any;
   productExistInCart?: Item | undefined;
   totalAmount: number = 0;
+  numberOfItems: number = 0;
   durationInSeconds = 3;
   listofItems?: Observable<Item[]>;
   itemForm: any;
@@ -47,9 +48,11 @@ export class ItemService {
     }else{
       this.productExistInCart.quantity += 1;
     }
-    this.totalAmount += item.price; 
+    this.totalAmount += item.price;
+    this.numberOfItems +=1; 
     this.localStorageService.setDataToLocalStorage('ItemsToCart', this.cartItemsList);
     this.localStorageService.setDataToLocalStorage('TotalAmount', this.totalAmount);
+    this.localStorageService.setDataToLocalStorage('NumberOfItems', this.numberOfItems);
   } 
 
   deleteCartItem(deletedItem:Item, isCartEmpty$: BehaviorSubject<boolean>){
@@ -69,13 +72,17 @@ export class ItemService {
     if (action == 'delete'){
       const amount = item.quantity * item.price;     
       this.totalAmount = this.totalAmount - amount;
+      this.numberOfItems = this.numberOfItems - item.quantity;
     }else if (action == 'remove'){
       this.totalAmount -= item.price;
+      this.numberOfItems -= 1;
     }
     else{
       this.totalAmount += item.price;
+      this.numberOfItems += 1;
     }
     this.localStorageService.setDataToLocalStorage('TotalAmount', this.totalAmount);
+    this.localStorageService.setDataToLocalStorage('NumberOfItems', this.numberOfItems);
   }
 
   openSnackBar(message: string){
