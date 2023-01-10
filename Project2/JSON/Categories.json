@@ -6,5 +6,9 @@
     {
         "Id": 2,
         "Name": "Vegan-Sweets"
-    }
+    },
+    {
+      "Id": 3,
+      "Name": "GlutenFree-Sweets"
+  }
 ]
