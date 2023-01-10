@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { BackModalComponent } from '../back-modal/back-modal.component';
 import { Item } from '../item/item';
 import { ItemService } from '../services/item.service';
 import { LocalStorageService } from '../services/local-storage.service';
@@ -20,6 +23,7 @@ export class TableComponent implements OnInit {
 
   data?: Item[];
   public dataSource = new MatTableDataSource<Item>();
+  isCartUrl: boolean = false;
 
   constructor(public itemService: ItemService, 
     public localStorageService: LocalStorageService) {     
@@ -35,11 +39,6 @@ export class TableComponent implements OnInit {
     // this.dataSource = new MatTableDataSource<Item>(this.itemsToCart$._value);
     this.dataSource = new MatTableDataSource<Item>(this.localStorageService.getDataFromLocalStorage('ItemsToCart')._value);
     this.totalAmount$ = this.localStorageService.getDataFromLocalStorage('TotalAmount'); 
-  }
-
-  pay(){
-    this.localStorageService.clearDataFromLocalStorage('ItemsToCart');
-    this.localStorageService.clearDataFromLocalStorage('TotalAmount');
   }
 
   deleteCartItem(item:Item){
