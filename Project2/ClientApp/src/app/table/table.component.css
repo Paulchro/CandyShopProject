@@ -1,17 +1,15 @@
 .table-header {
     font-size: 20px;
-    background-color: whitesmoke;
+    background-color: #ff4081;
     padding: 20px 24px 0;
-    margin-left: 10%;
-    margin-right: 10%;
-    height: 70px;
+    margin-top: 40px;
+    height: 50px;
     text-align: center;
-    color: darkslategray;
+    color: white;
   }
   
   table {
     width: 100%;
-    margin-top: 40px;
   }
   
   mat-paginator {
@@ -57,4 +55,23 @@
     background: white;
     font-size: 15px;
     font-weight: 550;
+  }
+
+  .is-empty-cart {
+    font-size: 15px;
+    background-color: #e470a72f;
+    padding: 20px 24px 50px;
+    height: 30px;
+    text-align: center;
+    color: rgba(21, 20, 20, 0.352);
+    margin-bottom: 20px;
+  }
+
+  .details{
+    font-size: 20px;
+    background-color: cadetblue;
+    padding: 20px 24px 40px;
+    height: 30px;
+    text-align: center;
+    color: white;
   }

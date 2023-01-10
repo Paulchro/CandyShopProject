@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Item } from '../item/item';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocalStorageService } from './local-storage.service';
@@ -52,13 +52,16 @@ export class ItemService {
     this.localStorageService.setDataToLocalStorage('TotalAmount', this.totalAmount);
   } 
 
-  deleteCartItem(deletedItem:Item){
+  deleteCartItem(deletedItem:Item, isCartEmpty$: BehaviorSubject<boolean>){
     this.cartItemsList = this.localStorageService.getDataFromLocalStorage('ItemsToCart')._value;
     console.log(this.cartItemsList);
     this.cartItemsList = this.cartItemsList.filter(item => item.id != deletedItem.id);
     console.log(this.cartItemsList);
     this.updateTotalAmount(deletedItem, 'delete');
     this.localStorageService.setDataToLocalStorage('ItemsToCart', this.cartItemsList);
+    if (this.cartItemsList.length == 0){
+      isCartEmpty$.next(true);
+    }
   }
 
   updateTotalAmount(item:Item, action:string){
