@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text.Json;
-using System.Threading.Tasks;
-using AutoMapper;
-using CandyShop2.DAL;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.DotNet.MSIdentity.Shared;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using Project2.Dto;
 using Project2.Interfaces;
 using Project2.Models;
-using Project2.Services;
 
 namespace Project2.Controllers
 {
@@ -23,15 +10,16 @@ namespace Project2.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-      
         private readonly IProductRepository _productRepository;
-    
+        private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
-   
-        public ProductsController( IProductRepository productRepository, IMapper mapper)
+        
+        public ProductsController( IProductRepository productRepository, ICategoryRepository categoryRepository, IMapper mapper)
         {
             _productRepository = productRepository ??
                 throw new ArgumentNullException(nameof(productRepository));
+            _categoryRepository = categoryRepository ??
+               throw new ArgumentNullException(nameof(categoryRepository));
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
         }
@@ -40,6 +28,7 @@ namespace Project2.Controllers
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
         {
             var products = await _productRepository.GetAllProductsAsync();
+          
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }
      
@@ -67,10 +56,17 @@ namespace Project2.Controllers
                 Quantity = productDto.Quantity,
                 CategoryId = productDto.CategoryId,
                 Image = productDto.Image
-
             };
-            await _productRepository.AddProduct("JSON/Products.json", _mapper.Map<Product>(product));
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            var products = await _productRepository.GetAllProductsAsync();
+            if (products != null && !products.Any(x=>x.Id == product.Id))
+            {
+                await _productRepository.AddProduct("JSON/Products.json", _mapper.Map<Product>(product));
+                return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            }
+            else
+            { 
+                return BadRequest(); 
+            }
         }
        
         // PUT: api/Products/5
