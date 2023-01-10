@@ -25,9 +25,14 @@ export class BackButtonComponent implements OnInit {
 
   public openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(BackModalComponent, {
-      width: '350px',
+      width: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
+      data: {
+        title: 'Corfirm your choice',
+        content: 'Do you want to leave this page?',
+        action: 'back'
+      }
     });
   }
 
