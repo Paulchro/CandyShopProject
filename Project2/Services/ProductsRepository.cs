@@ -13,11 +13,10 @@ namespace Project2.Services
 {
     public class ProductsRepository : IProductRepository
     {
-        private readonly CandyShopContext _context;
+      
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public ProductsRepository(CandyShopContext candyShopContext, IWebHostEnvironment webHostEnvironment)
+        public ProductsRepository(IWebHostEnvironment webHostEnvironment)
         {
-            _context = candyShopContext ?? throw new ArgumentNullException(nameof(candyShopContext));
             _webHostEnvironment = webHostEnvironment;
         }
         private Stream GetJsonStream(string path)
@@ -59,7 +58,7 @@ namespace Project2.Services
             Stream productsStream = GetJsonStream("JSON/Products.json");
    
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
-       
+     
             productsStream.Close();
             if (products != null)
             {
@@ -72,8 +71,9 @@ namespace Project2.Services
         {
             Stream productsStream = GetJsonStream("JSON/Products.json");
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
-        
+           
             products.Add(product);
+           
 
             var serializedData = JsonSerializer.Serialize(products);
             productsStream.Close();

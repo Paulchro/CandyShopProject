@@ -1,20 +1,23 @@
 ﻿using CandyShop2.DAL;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Project2.Interfaces;
 using Project2.Models;
+using System.Text.Json;
 
 namespace Project2.Services
 {
     public class CategoriesRepository : ICategoryRepository
     {
-        private readonly CandyShopContext _context;
-
-        public CategoriesRepository(CandyShopContext candyShopContext)
+        
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public CategoriesRepository( IWebHostEnvironment webHostEnvironment)
         {
-            _context = candyShopContext ?? throw new ArgumentNullException(nameof(candyShopContext));
+           
+            _webHostEnvironment = webHostEnvironment;
         }
 
-        public Task Add(Category category)
+        public Task AddCategory(string filePath, Category category)
         {
             throw new NotImplementedException();
         }
@@ -24,29 +27,34 @@ namespace Project2.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Category>> GetCategories()
+        public async Task<IEnumerable<Category>?> GetAllCategoriesAsync()
+        {
+            Stream categoriesStream = GetJsonStream("JSON/Categories.json");
+
+            var categories = await JsonSerializer.DeserializeAsync<List<Category>>(categoriesStream);
+
+            categoriesStream.Close();
+            if (categories != null)
+            {
+                return categories.ToList();
+            }
+            return null;
+        }
+
+        public Task<Category?> GetCategoryById(int categoryId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Category> GetCategoryById(int categoryId)
+        private Stream GetJsonStream(string path)
         {
-            throw new NotImplementedException();
+            string contentRootPath = _webHostEnvironment.ContentRootPath;
+            string completePath = "";
+            completePath = Path.Combine(contentRootPath, path);
+
+            return new FileStream(completePath, FileMode.Open, FileAccess.Read);
         }
 
-        public Task Remove(Category category)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> SaveChangesAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task Update(Category category)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
