@@ -6,3 +6,11 @@
     margin-left: auto; 
     margin-right: 0;
   }
+
+  .dot {
+    height: 35px;
+    width: 35px;
+    background-color: pink;
+    border-radius: 50%;
+    display: inline-block;
+  }

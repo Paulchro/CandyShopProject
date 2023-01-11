@@ -9,6 +9,7 @@ export class LocalStorageService {
 
   public _itemsToCart$ = new BehaviorSubject<Item[]>([]);
   public _totalAmount$ = new BehaviorSubject<number>(0);
+  public _numberOfItems$ = new BehaviorSubject<number>(0);
   public itemsToCart$ = this._itemsToCart$.asObservable();
   public totalAmount$ = this._totalAmount$.asObservable();
   public dataStr: any;
@@ -21,28 +22,51 @@ export class LocalStorageService {
     if (typeof value == 'object'){
       this._itemsToCart$.next(value)
     }else{
-      this._totalAmount$.next(value)
+      if (key == 'TotalAmount'){
+        this._totalAmount$.next(value)
+      }else{
+        this._numberOfItems$.next(value)
+      }   
     }
- }
+  }
 
  public getDataFromLocalStorage(key: string): any{
     this.dataStr  = localStorage.getItem(key);
-      if (key == 'ItemsToCart'){
+    switch(key) { 
+      case 'ItemsToCart': { 
         this.data = JSON.parse(this.dataStr);
         this._itemsToCart$.next(this.data);
         console.log('itemsToCart$: ', this.itemsToCart$);
         return this._itemsToCart$;
-      }
-      else{
+      } 
+      case 'TotalAmount': { 
         this.data = Number(this.dataStr);
         this._totalAmount$.next(this.data);
         return this._totalAmount$;
-    }
+      }
+      case 'NumberOfItems': { 
+        this.data = Number(this.dataStr);
+        this._numberOfItems$.next(this.data);
+        return this._numberOfItems$;
+      }  
+    } 
+    //   if (key == 'ItemsToCart'){
+    //     this.data = JSON.parse(this.dataStr);
+    //     this._itemsToCart$.next(this.data);
+    //     console.log('itemsToCart$: ', this.itemsToCart$);
+    //     return this._itemsToCart$;
+    //   }
+    //   else{
+    //     this.data = Number(this.dataStr);
+    //     this._totalAmount$.next(this.data);
+    //     return this._totalAmount$;
+    // }
  }
 
  public clearDataFromLocalStorage(key: string) {
     localStorage.removeItem(key)
     this._itemsToCart$.next([])
     this._totalAmount$.next(0)
+    this._numberOfItems$.next(0)
  }
 }

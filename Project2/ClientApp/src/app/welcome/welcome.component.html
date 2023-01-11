@@ -4,12 +4,12 @@
       <h1>CandyShop</h1>
       <span class="menu-spacer"></span>
       <div class = "align-right">
-        <a mat-button [routerLink]="'/'"> Home </a>
-        <a mat-button [routerLink]="'/sweets'"> Sweets </a>
-        <!-- <a mat-button [routerLink]="'/sweets/2'"> Vegan Sweets </a>
-        <a mat-button [routerLink]="'/allsweets'"> All Products </a> -->
-        <a mat-button [routerLink]="'/cart'"> Cart </a>
-        <a mat-button [routerLink]="'/admin'"> Admin </a>
+        <a mat-button [routerLink]="'/'"><mat-icon>home</mat-icon> Home </a>
+        <a mat-button [routerLink]="'/sweets'"><mat-icon>cake</mat-icon> Sweets </a>
+        <a mat-button [routerLink]="'/cart'"><mat-icon>shopping_cart</mat-icon> Cart 
+          <span class="dot">{{numberOfItems$ | async}}</span>
+        </a>
+        <a mat-button [routerLink]="'/admin'"><mat-icon>person</mat-icon> Admin </a>
       </div>
     </mat-toolbar-row>
 </mat-toolbar>
