@@ -92,12 +92,27 @@ export class ItemService {
 
   initializeItemForm() {
     this.itemForm = new FormGroup({
+      id: new FormControl(0, Validators.required),
       name: new FormControl('', Validators.required),
       quantity: new FormControl(0, Validators.required),
       price: new FormControl(0, Validators.required),
-      category: new FormControl('', Validators.required), 
+      categoryId: new FormControl(0, Validators.required), 
       image: new FormControl('', Validators.required) 
     });
     return this.itemForm ;
+  }
+
+  addProduct(item: Item){
+    console.log(item)
+    return this.http.post(environment.base_url + 'products',item).subscribe(
+      res => {
+        console.log(res);
+        this.openSnackBar('A new product has been added.'); 
+        this.initializeItemForm();
+      },
+      err => {
+        this.openSnackBar('Error on adding new product.');      
+      }
+    ); 
   }
 }
