@@ -23,11 +23,11 @@
 {"Id":23,"Name":"Gluten Free Cinnamon Rolls","Price":10,"Quantity":5,"CategoryId":3,"Image":"assets/images/glutenfreecinnamonrolls.jpg"},
 {"Id":24,"Name":"Gluten Creme Brulee","Price":15,"Quantity":5,"CategoryId":3,"Image":"assets/images/glutenfreecremebrulee.jpg"},
 {"Id":25,"Name":"Gluten Free CupCakes","Price":10,"Quantity":5,"CategoryId":3,"Image":"assets/images/glutenfreecupcakes.jpg"},
-{"Id":26,"Name":"Gluten Free Donuts","Price":5,"Quantity":5,"CategoryId":3,"Image":"assets/images/glutenfreeegandonuts.jpg"},
+{"Id":26,"Name":"Gluten Free Donuts","Price":5,"Quantity":5,"CategoryId":3,"Image":"assets/images/glutenfreedonuts.jpg"},
 {"Id":27,"Name":"Gluten Free Macarons","Price":3,"Quantity":10,"CategoryId":3,"Image":"assets/images/glutenfreemacarons.jpg"},
 {"Id":28,"Name":"Gluten Free CheeseCake","Price":15,"Quantity":5,"CategoryId":3,"Image":"assets/images/glutenfreeoreocheesecake.jpg"},
-{"Id":29,"Name":"Gluten Free Profiterol","Price":15,"Quantity":5,"CategoryId":3,"Image":"assets/images/glutenfeeprofiterol.jpg"},
+{"Id":29,"Name":"Gluten Free Profiterol","Price":15,"Quantity":5,"CategoryId":3,"Image":"assets/images/glutenfreeprofiterol.jpg"},
 {"Id":30,"Name":"Gluten Free Tart","Price":10,"Quantity":5,"CategoryId":3,"Image":"assets/images/glutenfreentart.jpg"},
-{"Id":0,"Name":"BirthDay Cake NEW","Price":20,"Quantity":5,"CategoryId":1,"Image":"assets/images/birthdaycake.jpg"},
-{"Id":22,"Name":"BirthDay Cake NEW2","Price":20,"Quantity":5,"CategoryId":1,"Image":"assets/images/birthdaycake.jpg"},
-{"Id":30,"Name":"Pavlos","Price":20,"Quantity":5,"CategoryId":1,"Image":"assets/images/birthdaycake.jpg"}]
+{"Id":0,"Name":"BirthDay Cake NEW","Price":20,"Quantity":5,"CategoryId":3,"Image":"assets/images/birthdaycake.jpg"},
+{"Id":22,"Name":"BirthDay Cake NEW2","Price":20,"Quantity":5,"CategoryId":3,"Image":"assets/images/birthdaycake.jpg"},
+{"Id":30,"Name":"Pavlos","Price":20,"Quantity":5,"CategoryId":3,"Image":"assets/images/birthdaycake.jpg"}]
