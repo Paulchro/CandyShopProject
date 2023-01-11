@@ -25,6 +25,7 @@ export class MainComponent implements OnInit {
     subtasks: [
       {id: 1, name: 'Sweets', completed: true, color: 'accent'},
       {id: 2, name: 'Vegan-Sweets', completed: true, color: 'accent'},
+      {id: 3, name: 'GlutenFree-Sweets', completed: true, color: 'accent'},
     ],
   };
 
@@ -59,7 +60,8 @@ export class MainComponent implements OnInit {
             (subtask:any) => {
               if (subtask.completed)
               {
-                this.items = this.allItems.filter(({categoryId}) => (categoryId == subtask.id));
+                this.items = [...this.allItems], this.allItems.filter(({categoryId}) => (categoryId == subtask.id)) 
+                //&& this.allItems.push({...items});
               }
             }
           )
