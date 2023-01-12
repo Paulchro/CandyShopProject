@@ -14,18 +14,14 @@ export class LoaderService {
 
   show() {
     this.counter += 1;
-    console.log('show: ', this.counter)
     if (this.counter>0){
-      console.log('here');
       this.isVisible.next(true); 
     }
   }
 
   hide() {
     this.counter -= 1;
-    console.log('hide: ', this.counter);
-    if (this.counter<=0){  
-      console.log('here2');    
+    if (this.counter<=0){     
       this.isVisible.next(false);
     }
   }
