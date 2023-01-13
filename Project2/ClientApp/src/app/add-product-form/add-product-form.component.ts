@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
 
@@ -12,6 +11,7 @@ export class AddProductFormComponent implements OnInit {
 
   itemForm: any;
   categoriesList: any;
+  fileName: string = '';
   
   constructor(private itemService: ItemService,
     private categoryService: CategoryService) { }
@@ -26,6 +26,7 @@ export class AddProductFormComponent implements OnInit {
   }
 
   submit(){
+    this.itemForm.controls['image'].setValue('assets/images/' + this.fileName);
     this.itemService.addProduct(this.itemForm.value);
   }
 
@@ -35,4 +36,10 @@ export class AddProductFormComponent implements OnInit {
     }
   }
 
+  onFileSelected(event: any) {
+    const file:File = event.target.files[0];
+    if (file) {
+      this.fileName = file.name;
+    }
+  }
 }
