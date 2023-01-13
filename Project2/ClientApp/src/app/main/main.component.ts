@@ -16,7 +16,7 @@ export class MainComponent implements OnInit {
   items: Item[]= [];
   allItems: Item[]= [];
   id: any;
-  items2: Item[] = [];
+  itemsFiltered: Item[] = [];
   task: Task = {
     id: 0,
     name: 'All Products',
@@ -56,12 +56,13 @@ export class MainComponent implements OnInit {
       }   
       else {
         if (this.someComplete()){
+          this.items = [];
           subtasks.forEach(
             (subtask:any) => {
               if (subtask.completed)
               {
-                this.items = [...this.allItems], this.allItems.filter(({categoryId}) => (categoryId == subtask.id)) 
-                //&& this.allItems.push({...items});
+                this.itemsFiltered = this.allItems.filter(({categoryId}) => (categoryId == subtask.id));            
+                this.items.push(...this.itemsFiltered);
               }
             }
           )

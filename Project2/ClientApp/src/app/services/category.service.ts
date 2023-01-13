@@ -15,8 +15,7 @@ export class CategoryService {
   getCategories(): Observable<Category[]> {
     return this.listofCategories = this.http.get<Category[]>(environment.base_url +'categories')
     .pipe(
-  tap(data => console.log('All: ' + JSON.stringify(data))),
-
+      tap(data => console.log('All: ' + JSON.stringify(data))),
 );   
 }
 }

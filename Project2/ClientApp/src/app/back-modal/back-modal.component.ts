@@ -32,6 +32,7 @@ export class BackModalComponent implements OnInit {
       case 'pay': { 
         this.localStorageService.clearDataFromLocalStorage('ItemsToCart');
         this.localStorageService.clearDataFromLocalStorage('TotalAmount');
+        this.localStorageService.clearDataFromLocalStorage('NumberOfItems');
         this.router.navigate(['/']);
         this.itemService.openSnackBar('Your order has been completed!'); 
         break; 
