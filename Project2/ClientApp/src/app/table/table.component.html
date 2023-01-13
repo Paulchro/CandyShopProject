@@ -19,11 +19,11 @@
     <ng-container matColumnDef="quantity">
         <th mat-header-cell *matHeaderCellDef> Quantity </th>
         <td mat-cell *matCellDef="let element; let i = index;">
-            <button mat-icon-button color="warn" (click) = "updateQuantity(element, 'remove')">
+            <button mat-icon-button color="warn" (click) = "updateProduct(element, 'remove')">
                 <mat-icon>remove</mat-icon>
             </button> 
             {{element.quantity}} 
-            <button mat-icon-button color="primary" (click) = "updateQuantity(element, 'add')">
+            <button mat-icon-button color="primary" (click) = "updateProduct(element, 'add')">
             <mat-icon>add</mat-icon>
             </button></td>
     </ng-container>
