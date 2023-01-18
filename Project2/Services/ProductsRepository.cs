@@ -13,7 +13,6 @@ namespace Project2.Services
 {
     public class ProductsRepository : IProductRepository
     {
-      
         private readonly IWebHostEnvironment _webHostEnvironment;
         public ProductsRepository(IWebHostEnvironment webHostEnvironment)
         {
