@@ -13,20 +13,12 @@ export class LoaderService {
   }
 
   show() {
-    this.counter += 1;
-    console.log('show: ', this.counter)
-    if (this.counter>0){
-      console.log('here');
-      this.isVisible.next(true); 
-    }
+    this.counter++;
+    this.isVisible.next(this.counter>0); 
   }
 
   hide() {
-    this.counter -= 1;
-    console.log('hide: ', this.counter);
-    if (this.counter<=0){  
-      console.log('here2');    
-      this.isVisible.next(false);
-    }
+    this.counter--;   
+    this.isVisible.next(this.counter>0);
   }
 }
