@@ -3,6 +3,11 @@
     <mat-card-content style="margin: 30px;">
       <form [formGroup]="itemForm">
         <p>
+          <mat-form-field>
+            <input type="number" matInput placeholder="Id" formControlName="id">
+          </mat-form-field>
+        </p>
+        <p>
           <mat-form-field >
             <input type="text" matInput placeholder="Name" formControlName="name">
           </mat-form-field>
@@ -17,15 +22,15 @@
               <input type="number" matInput placeholder="Price" formControlName="price">
             </mat-form-field>
         </p>
-        <!-- <p>
+        <p>
           <mat-form-field>
-            <mat-select formControlName="category" placeholder="Category">
+            <mat-select formControlName="categoryId" placeholder="categoryId">
               <mat-option (onSelectionChange)="changeCategory($event)" *ngFor="let category of categoriesList" [value] = "category.id">
                 {{ category.name }} 
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </p> -->
+        </p>
         <p>
             <mat-form-field >
               <input type="text" matInput placeholder="Image" formControlName="image">

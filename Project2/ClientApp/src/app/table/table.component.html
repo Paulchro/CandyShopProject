@@ -1,5 +1,5 @@
 <div class="table-header">Order Details</div>
-<table mat-table [dataSource]="dataSource " matSort class="mat-elevation-z8" [hidden] = "isCartEmpty$.getValue()">
+<table mat-table [dataSource]="dataSource " matSort class="mat-elevation-z8" [hidden] = "isCartEmpty$ | async">
     <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Id"> Id </th>
         <td mat-cell *matCellDef="let element; let i = index"> {{element.id}} </td>
@@ -19,11 +19,11 @@
     <ng-container matColumnDef="quantity">
         <th mat-header-cell *matHeaderCellDef> Quantity </th>
         <td mat-cell *matCellDef="let element; let i = index;">
-            <button mat-icon-button color="warn" (click) = "updateQuantity(element, 'remove')">
+            <button mat-icon-button color="warn" (click) = "updateProduct(element, 'remove')">
                 <mat-icon>remove</mat-icon>
             </button> 
             {{element.quantity}} 
-            <button mat-icon-button color="primary" (click) = "updateQuantity(element, 'add')">
+            <button mat-icon-button color="primary" (click) = "updateProduct(element, 'add')">
             <mat-icon>add</mat-icon>
             </button></td>
     </ng-container>
@@ -36,6 +36,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row  *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<div class="details" style="margin-bottom: 20px;text-align: right;" [hidden] = "isCartEmpty$.getValue()">Amount: {{totalAmount$ | async | currency:'EUR':true}}</div>
+<div class="details" style="margin-bottom: 20px;text-align: right;" [hidden] = "isCartEmpty$ | async">Amount: {{totalAmount$ | async | currency:'EUR':true}}</div>
 <div [hidden] = "!isCartEmpty$.getValue()" class = "is-empty-cart"><mat-icon class = "inline">sentiment_very_dissatisfied</mat-icon> Oops! The cart is empty... </div>
 

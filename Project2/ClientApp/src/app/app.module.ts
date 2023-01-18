@@ -35,6 +35,7 @@ import { CustomHttpInterceptor } from './http-interceptor';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatSpinnerOverlayComponent } from './mat-spinner-overlay/mat-spinner-overlay.component';
 import { AddProductFormComponent } from './add-product-form/add-product-form.component';
+import { SigninComponent } from './signin/signin.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { AddProductFormComponent } from './add-product-form/add-product-form.com
     MainComponent,
     BackButtonComponent,
     WelcomeComponent,
+    SigninComponent,
     ItemComponent,
     AdminAllproductsComponent,
     TableComponent,
