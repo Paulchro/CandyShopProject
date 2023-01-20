@@ -18,9 +18,9 @@
           </mat-form-field>
         </p>
         <p>
-            <mat-form-field>
-              <input type="number" matInput placeholder="Price" formControlName="price">
-            </mat-form-field>
+          <mat-form-field>
+            <input type="number" matInput placeholder="Price" formControlName="price">
+          </mat-form-field>
         </p>
         <p>
           <mat-form-field>
@@ -32,12 +32,18 @@
           </mat-form-field>
         </p>
         <p>
-            <mat-form-field >
-              <input type="text" matInput placeholder="Image" formControlName="image">
-            </mat-form-field>
+          <mat-form-field>
+            <div class="file-upload">
+              <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()" style="float: right;">
+                <mat-icon style="float: right;">cake</mat-icon>
+              </button>
+            </div>
+            <input type="text" matInput placeholder="Image" formControlName="image" [(ngModel)] = "fileName" >
+            <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload> 
+          </mat-form-field>        
           </p>
         <div class="button">
-          <button mat-raised-button color="primary" (click)="submit()" style="margin:10px;" [disabled]="!itemForm.valid">Submit</button>
+          <button mat-raised-button color="primary" (click)="submit()" style="margin:10px;" [disabled]="!itemForm.valid">Submit</button>         
         </div>
       </form>
     </mat-card-content>
