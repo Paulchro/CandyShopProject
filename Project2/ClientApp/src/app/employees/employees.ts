@@ -1,7 +1,7 @@
 export interface Employees {
     firstName: string;
     lastName: string;
-    username: string;
+    userName: string;
     age: number;
     email: string; 
     imageUrl: string;

@@ -1,13 +1,16 @@
 <p>Meet our Team!</p>
 
 <div *ngFor="let employees of listemployees">
-  <div class="card-wrapper" style="width:fit-content;">
-    <mat-card class="example-card">
+  <div fxLayout="row">
+    <mat-card class="example-card" fxLayout="row">
       <mat-card-header class = "center" >
         <mat-card-title style="color: gray;">{{employees.firstName}} {{employees.lastName}}</mat-card-title> 
       </mat-card-header>
       <img style="width: 130px;height: 110px;" class="center" src= " {{employees.imageUrl}}">
+      <mat-card-content class="center" style="text-align: center;color: gray;margin: 10px !important;">
+        <p>Meet in our shop {{employees.firstName}} {{employees.lastName}},who is {{employees.age}} years old. You can call our employee with the nickname {{employees.userName}} and you can send an email at {{employees.email}}</p>
+      </mat-card-content>
     </mat-card>
-  </div>
+</div>
 </div>
 
