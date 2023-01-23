@@ -19,7 +19,7 @@ import { MainComponent } from './main/main.component';
 import { BackButtonComponent } from './back-button/back-button.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ItemComponent } from './item/item.component';
-import {MatCardModule} from '@angular/material/card';
+import {MatCard, MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -36,6 +36,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatSpinnerOverlayComponent } from './mat-spinner-overlay/mat-spinner-overlay.component';
 import { AddProductFormComponent } from './add-product-form/add-product-form.component';
 import { SigninComponent } from './signin/signin.component';
+import { EmployeesComponent } from './employees/employees.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { SigninComponent } from './signin/signin.component';
     AdminAllproductsComponent,
     TableComponent,
     MatSpinnerOverlayComponent,
-    AddProductFormComponent
+    AddProductFormComponent,
+    EmployeesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -81,6 +83,7 @@ import { SigninComponent } from './signin/signin.component';
       { path: 'allsweets', component: AdminAllproductsComponent },
       { path: 'cart', component: CartComponent },
       { path: 'admin', component: AdminAllproductsComponent },
+      { path: 'employees', component: EmployeesComponent},
       { path: '**', component: WildcardComponent },
     ]),
     BrowserAnimationsModule,

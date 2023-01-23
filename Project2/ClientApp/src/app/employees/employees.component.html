@@ -1,0 +1,13 @@
+<p>Meet our Team!</p>
+
+<div *ngFor="let employees of listemployees">
+  <div class="card-wrapper" style="width:fit-content;">
+    <mat-card class="example-card">
+      <mat-card-header class = "center" >
+        <mat-card-title style="color: gray;">{{employees.firstName}} {{employees.lastName}}</mat-card-title> 
+      </mat-card-header>
+      <img style="width: 130px;height: 110px;" class="center" src= " {{employees.imageUrl}}">
+    </mat-card>
+  </div>
+</div>
+
