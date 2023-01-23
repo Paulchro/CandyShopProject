@@ -8,12 +8,14 @@ using System.Text.Json;
 using System.IO;
 using System.Reflection.Metadata.Ecma335;
 using Azure.Core.GeoJson;
+using System.Drawing.Printing;
 
 namespace Project2.Services
 {
     public class ProductsRepository : IProductRepository
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
+     
         public ProductsRepository(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
@@ -52,18 +54,28 @@ namespace Project2.Services
             return null;
         }
 
-        public async Task<IEnumerable<Product>?> GetAllProductsAsync()
+        public async Task<(IEnumerable<Product>?, PaginationMetadata)> GetAllProductsAsync(string? name, int pageNumber, int pageSize)
         {
             Stream productsStream = GetJsonStream("JSON/Products.json");
-   
+
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
-     
             productsStream.Close();
-            if (products != null)
+            if (!string.IsNullOrWhiteSpace(name) && products != null)
             {
-                return products.ToList();
+                name = name.Trim();
+                products = (List<Product>?)products.Where(c => c.Name == name);
             }
-            return null;
+           
+            var totalItemCount = products.Count();
+            var paginationMetadata = new PaginationMetadata(
+               totalItemCount, pageSize, pageNumber);
+            var productsToReturn =products.OrderBy(p=>p.Name.Trim()).Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToList();
+           
+            return (productsToReturn.ToList(), paginationMetadata);
+           
+        
         }
 
         public async Task AddProduct(string filePath, Product product)
