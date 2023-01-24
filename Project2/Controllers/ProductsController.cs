@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Project2.Dto;
 using Project2.Interfaces;
 using Project2.Models;
-using Project2.Services;
-using System.Drawing.Printing;
+using System.Text.Json;
 
 namespace Project2.Controllers
 {
@@ -27,14 +27,15 @@ namespace Project2.Controllers
         }
         // GET: api/Products
         [HttpGet(Name = "GetProducts")]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts(string? name,int pageNumber = 1, int pageSize = 10)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts([FromQuery(Name = "orderby")] string[] orderby, string? name, int pageNumber, int pageSize)
         {
             if (pageSize > maxProductPages)
             {
                 pageSize = maxProductPages;
             }
-            var (products, paginationMetadata) = await _productRepository.GetAllProductsAsync(name,pageNumber, pageSize);
-          
+            var (products, paginationMetadata) = await _productRepository.GetAllProductsAsync(orderby,name,pageNumber, pageSize);
+            Response.Headers.Add("X-Pagination",
+                 JsonSerializer.Serialize(paginationMetadata));
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }
      
@@ -63,95 +64,100 @@ namespace Project2.Controllers
                 CategoryId = productDto.CategoryId,
                 Image = productDto.Image
             };
-            var products = await _productRepository.GetAllProductsAsync("",1,1);
-            //products.to
-            //if (products != null && !products.Any(x=>x.Id == product.Id))
-            //{
-                await _productRepository.AddProduct("JSON/Products.json", _mapper.Map<Product>(product));
-                return CreatedAtAction("GetProduct", new { id = product.Id }, product);
-            //}
-            //else
-            //{ 
-            //    return BadRequest(); 
-            //}
+
+            await _productRepository.AddProduct("JSON/Products.json", _mapper.Map<Product>(product));
+            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
-       
+
         // PUT: api/Products/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{productid}")]
-        //public async Task<IActionResult> PutProduct(int productid, ProductForUpdateDto productDto)
-        //{
-         
-        //    var productToUpdate = await _productRepository.GetProductById(productid);
-        //    if(productToUpdate == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _mapper.Map(productDto, productToUpdate);
+        [HttpPut("{productid}")]
+        public async Task<IActionResult> PutProduct(int productid, ProductForUpdateDto productDto)
+        {
+            await _productRepository.UpdateProduct("JSON/Products.json", productid, _mapper.Map<Product>(productDto));
+            return NoContent();
+        }
+        [HttpPatch("{productid}")]
+        public async Task<ActionResult> PartiallyUpdateProduct(
+            int productid, 
+            JsonPatchDocument<ProductForUpdateDto> patchDocument)
+        {
+            if (!await _productRepository.ProductExist(productid))
+            {
+                return NotFound();
+            }
+            var product = await _productRepository.GetProductById(productid);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var productToPatch = _mapper.Map<ProductForUpdateDto>(
+                product);
+            patchDocument.ApplyTo(productToPatch, ModelState);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //    await _productRepository.Update(productToUpdate);
-        //    try
-        //    {
-        //        await _productRepository.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        return BadRequest();
-        //    }
+            if (!TryValidateModel(productToPatch))
+            {
+                return BadRequest(ModelState);
+            }
+            _mapper.Map(productToPatch, product);
+            //await _productRepository.SaveChangesAsync();
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
+            //// POST: api/Products
+            //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+            //[HttpPost]
+            //public async Task<ActionResult<ProductDto>> PostProduct(ProductDto productDto)
+            //{
+            //    Category category = await _categoryRepository.GetCategoryById(productDto.CategoryId);
+            //    Product product = new Product
+            //{
+            //        Name = productDto.Name,
+            //        Price = productDto.Price,
+            //        Quantity = productDto.Quantity,
+            //        Category = category
+            //    };
+            //    await _productRepository.Add(_mapper.Map<Product>(product));
+            //    try
+            //    {
+            //        await _productRepository.SaveChangesAsync();
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
+            //        if (!ProductExists(product.Id))
+            //        {
+            //            return NotFound();
+            //        }
+            //        else
+            //        {
+            //            throw;
+            //        }
+            //    }
+            //    return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            //}
 
-        //// POST: api/Products
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPost]
-        //public async Task<ActionResult<ProductDto>> PostProduct(ProductDto productDto)
-        //{
-        //    Category category = await _categoryRepository.GetCategoryById(productDto.CategoryId);
-        //    Product product = new Product
-        //{
-        //        Name = productDto.Name,
-        //        Price = productDto.Price,
-        //        Quantity = productDto.Quantity,
-        //        Category = category
-        //    };
-        //    await _productRepository.Add(_mapper.Map<Product>(product));
-        //    try
-        //    {
-        //        await _productRepository.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ProductExists(product.Id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
-        //    return CreatedAtAction("GetProduct", new { id = product.Id }, product);
-        //}
+            //// DELETE: api/Products/5
+            //[HttpDelete("{productid}")]
+            //public async Task<IActionResult> DeleteProduct(int productid)
+            //{
+            //    if (!await _productRepository.ProductExist(productid))
+            //    {
+            //        return NotFound();
+            //    }
+            //    var productToDelete = await _productRepository.GetProductById(productid);
+            //    if (productToDelete == null)
+            //    {
+            //        return NotFound();
+            //    }
+            //    _productRepository.DeleteProduct(productToDelete);
+            //    await _productRepository.SaveChangesAsync();
 
-        //// DELETE: api/Products/5
-        //[HttpDelete("{productid}")]
-        //public async Task<IActionResult> DeleteProduct(int productid)
-        //{
-        //    if (!await _productRepository.ProductExist(productid))
-        //    {
-        //        return NotFound();
-        //    }
-        //    var productToDelete = await _productRepository.GetProductById(productid);
-        //    if (productToDelete == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    _productRepository.DeleteProduct(productToDelete);
-        //    await _productRepository.SaveChangesAsync();
+            //    return NoContent();
+            //}
 
-        //    return NoContent();
-        //}
-
-    }
+        }
 }

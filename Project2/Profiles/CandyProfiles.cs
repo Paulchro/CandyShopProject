@@ -12,6 +12,7 @@ namespace Project2.Profiles
             CreateMap<Product, ProductDto>();
             CreateMap<ProductDto, Product>();
             CreateMap<ProductForUpdateDto, Product>();
+            CreateMap<Product, ProductForUpdateDto>();
             CreateMap<Category, CategoryDto>();
         }
     }
