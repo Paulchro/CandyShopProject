@@ -13,6 +13,9 @@
 
 .example-card {
   max-width: 250px;
-  background-color:transparent;
-  
+  background-color:transparent;  
+}
+
+.card-left {
+  margin-left: -300px;
 }
