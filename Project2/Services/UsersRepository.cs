@@ -46,7 +46,7 @@ namespace Project2.Services
         {
             Stream usersStream = GetJsonStream("JSON/Users.json");
             var users = await JsonSerializer.DeserializeAsync<List<User>>(usersStream);
-
+           
             var userToReturn = users.FirstOrDefault(x => x.UserId == userId);
             usersStream.Close();
 

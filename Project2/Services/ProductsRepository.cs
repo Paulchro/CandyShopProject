@@ -9,6 +9,10 @@ using System.IO;
 using System.Reflection.Metadata.Ecma335;
 using Azure.Core.GeoJson;
 using System.Drawing.Printing;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Reflection;
+using Project2.Dto;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace Project2.Services
 {
@@ -54,28 +58,40 @@ namespace Project2.Services
             return null;
         }
 
-        public async Task<(IEnumerable<Product>?, PaginationMetadata)> GetAllProductsAsync(string? name, int pageNumber, int pageSize)
+        public async Task<(IEnumerable<Product>?, PaginationMetadata)> GetAllProductsAsync(string[]? orderby,string? name, int pageNumber, int pageSize)
         {
             Stream productsStream = GetJsonStream("JSON/Products.json");
-
+            if(pageSize == 0 || pageNumber == 0)
+            {
+                pageSize = int.MaxValue;
+                pageNumber = 1;
+            }
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
             productsStream.Close();
             if (!string.IsNullOrWhiteSpace(name) && products != null)
             {
                 name = name.Trim();
-                products = (List<Product>?)products.Where(c => c.Name == name);
+                products = products.Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).OrderBy(p => p.Name.Trim()).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
             }
-           
-            var totalItemCount = products.Count();
+            var totalItemCount = products.Count;
             var paginationMetadata = new PaginationMetadata(
                totalItemCount, pageSize, pageNumber);
-            var productsToReturn =products.OrderBy(p=>p.Name.Trim()).Skip(pageSize * (pageNumber - 1))
-                .Take(pageSize)
-                .ToList();
-           
-            return (productsToReturn.ToList(), paginationMetadata);
-           
-        
+       
+            if (orderby != null)
+            {
+                foreach (var item in orderby)
+                {
+                    var propertyInfo = typeof(Product).GetProperty(item, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                    if (propertyInfo == null)
+                    {
+                        continue;
+                    }
+                    products = products.OrderBy(x => propertyInfo.GetValue(x, null)).Skip(pageSize * (pageNumber - 1))
+                    .Take(pageSize)
+                    .ToList();
+                }
+            }
+            return (products.ToList(), paginationMetadata);
         }
 
         public async Task AddProduct(string filePath, Product product)
@@ -92,5 +108,34 @@ namespace Project2.Services
             using var writer = new StreamWriter(filePath);
             await writer.WriteAsync(serializedData);
         }
+
+        public async Task UpdateProduct(string filePath, int ProductId, Product product)
+        {
+            Stream productsStream = GetJsonStream("JSON/Products.json");
+            var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
+
+            var productToUpdateIndex = products.FindIndex(x => x.Id == ProductId);
+            products[productToUpdateIndex] = product;
+            var serializedData = JsonSerializer.Serialize(products);
+            productsStream.Close();
+
+            using var writer = new StreamWriter(filePath);
+            await writer.WriteAsync(serializedData);
+         
+        }
+
+        //public async Task PartiallyUpdateProduct(string filePath, int ProductId, JsonPatchDocument<ProductForUpdateDto> patchObject)
+        //{
+        //    Stream productsStream = GetJsonStream("JSON/Products.json");
+        //    var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
+
+        //    var productToUpdateIndex = products.FindIndex(x => x.Id == ProductId);
+        //    products[productToUpdateIndex] = product;
+        //    var serializedData = JsonSerializer.Serialize(products);
+        //    productsStream.Close();
+
+        //    using var writer = new StreamWriter(filePath);
+        //    await writer.WriteAsync(serializedData);
+        //}
     }
 }
