@@ -1,17 +1,20 @@
-<mat-card style="text-align: center; margin-top: 30px;">
+<mat-card style="text-align: center; margin-top: 30px; width: fit-content !important;">
     <mat-card-title style="margin: 30px;">Add Product</mat-card-title>
     <mat-card-content style="margin: 30px;">
       <form [formGroup]="itemForm">
-        <p>
-          <mat-form-field>
-            <input type="number" matInput placeholder="Id" formControlName="id">
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field >
-            <input type="text" matInput placeholder="Name" formControlName="name">
-          </mat-form-field>
-        </p>
+        <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
+          <p>
+            <mat-form-field>
+              <input type="number" matInput placeholder="Id" formControlName="id">
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field >
+              <input type="text" matInput placeholder="Name" formControlName="name">
+            </mat-form-field>
+          </p>
+        </div>
+        <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
         <p>
           <mat-form-field>
             <input type="number" matInput placeholder="Quantity" formControlName="quantity">
@@ -22,10 +25,12 @@
             <input type="number" matInput placeholder="Price" formControlName="price">
           </mat-form-field>
         </p>
+      </div>
+      <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
         <p>
           <mat-form-field>
             <mat-select formControlName="categoryId" placeholder="categoryId">
-              <mat-option (onSelectionChange)="changeCategory($event)" *ngFor="let category of categoriesList" [value] = "category.id">
+              <mat-option *ngFor="let category of categoriesList" [value] = "category.id">
                 {{ category.name }} 
               </mat-option>
             </mat-select>
@@ -42,7 +47,29 @@
             <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload> 
           </mat-form-field>        
           </p>
+        </div>
+        <!-- <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
+          <p>
+            <mat-form-field>
+              <mat-label>Date from</mat-label>
+              <input matInput [matDatepicker]="dateFrom">
+              <mat-hint>DD/MM/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="dateFrom"></mat-datepicker-toggle>
+              <mat-datepicker #dateFrom></mat-datepicker>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field>
+              <mat-label>Date to</mat-label>
+              <input matInput [matDatepicker]="dateTo">
+              <mat-hint>DD/MM/YYYY</mat-hint>
+              <mat-datepicker-toggle matIconSuffix [for]="dateTo"></mat-datepicker-toggle>
+              <mat-datepicker #dateTo></mat-datepicker>
+            </mat-form-field>
+          </p>
+        </div> -->
         <div class="button">
+          <button mat-raised-button [mat-dialog-close]="false" (click)="closeDialog()" style="margin:10px;">Close</button>
           <button mat-raised-button color="primary" (click)="submit()" style="margin:10px;" [disabled]="!itemForm.valid">Submit</button>         
         </div>
       </form>
