@@ -1,1 +1,6 @@
-[{"UserId":1,"FirstName":"John","LastName":"Doe","UserName":"WeidMan","Age":35,"Email":"johndoe@hotmail.com","ImageUrl":"assets/images/johndoe.jpg","Role":"Admin"},{"UserId":2,"FirstName":"Mary","LastName":"Poppins","UserName":"MaryWithTheUmbrella","Age":2235,"Email":"mary@hotmail.com","ImageUrl":"assets/images/marypoppins.jpg","Role":"Employee"}]
+[{"UserId":1,"FirstName":"John","LastName":"Doe","UserName":"WeidMan","Age":35,"Email":"johndoe@hotmail.com","ImageUrl":"assets/images/johndoe.jpg","Role":"Admin"},
+{"UserId":2,"FirstName":"Mary","LastName":"Poppins","UserName":"MaryWithTheUmbrella","Age":2235,"Email":"mary@hotmail.com","ImageUrl":"assets/images/marypoppins.jpg","Role":"Employee"},
+{"UserId":3,"FirstName":"Sponge","LastName":"Bob","UserName":"SquarePants","Age":5,"Email":"spongbob@hotmail.com","ImageUrl":"assets/images/spongebob.jpg","Role":"Employee"},
+{"UserId":4,"FirstName":"The","LastName":"Grinch","UserName":"StoleTheChristmas","Age":45,"Email":"thegrinch@hotmail.com","ImageUrl":"assets/images/thegrinch.jpg","Role":"Admin"}
+
+]

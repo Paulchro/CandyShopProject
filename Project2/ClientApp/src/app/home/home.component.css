@@ -13,9 +13,6 @@
 
 .example-card {
   max-width: 250px;
-  background-color:transparent;  
-}
-
-.card-left {
-  margin-left: -300px;
+  background-color:transparent;
+  float: right;  
 }
