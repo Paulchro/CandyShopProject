@@ -1,0 +1,42 @@
+<button mat-icon-button color="accent" style = "float: right;" (click) = "enableDisableForm()"><mat-icon>edit</mat-icon></button> 
+<form [formGroup]="itemForm" style = "margin: 50px;">
+
+    <!-- <div (isEnabled)= "(isEnabled.getValue()) ? formEnabled() : formDisabled()"> -->
+    <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
+        <p>
+        <mat-form-field>
+            <input type="number" matInput placeholder="Id" formControlName="id">
+        </mat-form-field>
+        </p>
+        <p>
+        <mat-form-field >
+            <input type="text" matInput placeholder="Name" formControlName="name">
+        </mat-form-field>
+        </p>
+    </div>
+    <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
+        <p>
+        <mat-form-field>
+            <input type="number" matInput placeholder="Quantity" formControlName="quantity">
+        </mat-form-field>
+        </p>
+        <p>
+        <mat-form-field>
+            <input type="number" matInput placeholder="Price" formControlName="price">
+        </mat-form-field>
+        </p>
+    </div>
+    <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
+        <p>
+        <mat-form-field>
+            <mat-select formControlName="categoryId" placeholder="categoryId">
+            <mat-option (onSelectionChange)="changeCategory($event)" *ngFor="let category of categoriesList" [value] = "category.id">
+                {{ category.name }} 
+            </mat-option>
+            </mat-select>
+        </mat-form-field>
+        </p>   
+    </div> 
+</form>
+
+  

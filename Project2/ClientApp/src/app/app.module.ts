@@ -35,7 +35,12 @@ import { CustomHttpInterceptor } from './http-interceptor';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatSpinnerOverlayComponent } from './mat-spinner-overlay/mat-spinner-overlay.component';
 import { AddProductFormComponent } from './add-product-form/add-product-form.component';
-import { EmployeesComponent } from './employees/employees.component';
+import { SigninComponent } from './signin/signin.component';
+import { TableAdminComponent } from './table-admin/table-admin.component';
+import { EditProductFormComponent } from './edit-product-form/edit-product-form.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 @NgModule({
@@ -54,7 +59,9 @@ import { EmployeesComponent } from './employees/employees.component';
     TableComponent,
     MatSpinnerOverlayComponent,
     AddProductFormComponent,
-    EmployeesComponent
+    TableAdminComponent,
+    EditProductFormComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -75,8 +82,10 @@ import { EmployeesComponent } from './employees/employees.component';
     MatSelectModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
+    MatSidenavModule,
+    MatListModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'sweets', component: MainComponent },
       { path: 'allsweets', component: AdminAllproductsComponent },
       { path: 'cart', component: CartComponent },
