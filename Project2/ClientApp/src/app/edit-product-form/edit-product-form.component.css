@@ -1,0 +1,17 @@
+.example-container mat-form-field + mat-form-field {
+    margin-left: 8px;
+  }
+
+  .example-form-fields {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .file-input {
+    display: none;
+  }
+  
+.mat-form-field {
+  width: 300px;
+  height: fit-content;
+}
