@@ -35,12 +35,12 @@ import { CustomHttpInterceptor } from './http-interceptor';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatSpinnerOverlayComponent } from './mat-spinner-overlay/mat-spinner-overlay.component';
 import { AddProductFormComponent } from './add-product-form/add-product-form.component';
-import { SigninComponent } from './signin/signin.component';
 import { TableAdminComponent } from './table-admin/table-admin.component';
 import { EditProductFormComponent } from './edit-product-form/edit-product-form.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { EmployeesComponent } from './employees/employees.component';
 
 
 @NgModule({
@@ -61,7 +61,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     AddProductFormComponent,
     TableAdminComponent,
     EditProductFormComponent,
-    SidebarComponent
+    SidebarComponent,
+    EmployeesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
