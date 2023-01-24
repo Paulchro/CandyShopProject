@@ -15,7 +15,6 @@ export class EditProductFormComponent implements OnInit {
   categoriesList: any;
   fileName: string = '';
   @Input() item?: Item;
-  @Input() isEnabled= new BehaviorSubject<boolean>(false); 
   counter: number = 0;
   
   constructor(private itemService: ItemService,
@@ -23,14 +22,12 @@ export class EditProductFormComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    console.log (this.item)
     this.itemForm = this.itemService.initializeItemFormWithData(this.item);
     this.itemForm.disable();
     this.categoryService.getCategories().subscribe(
       categories => {      
         this.categoriesList = categories;
     });
-    console.log(' this.categoriesList',  this.categoriesList);
   }
 
   submit(){
