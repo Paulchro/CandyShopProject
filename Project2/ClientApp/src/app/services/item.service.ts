@@ -23,6 +23,9 @@ export class ItemService {
   itemForm: any;
   totalAmount$:any = this.localStorageService._totalAmount$;
   itemsToCart$:any = this.localStorageService._itemsToCart$;
+  public isEnabled= new BehaviorSubject<boolean>(true); 
+  counter: number = 0;
+  
 
   constructor(private http: HttpClient,
     public localStorageService: LocalStorageService,
@@ -105,6 +108,18 @@ export class ItemService {
     return this.itemForm ;
   }
 
+  initializeItemFormWithData(item: any) {
+    this.itemForm = new FormGroup({
+      id: new FormControl(item.id, Validators.required),
+      name: new FormControl(item.name, Validators.required),
+      quantity: new FormControl(item.quantity, Validators.required),
+      price: new FormControl(item.price, Validators.required),
+      categoryId: new FormControl(item.categoryId, Validators.required), 
+      image: new FormControl(item.image, Validators.required) 
+    });
+    return this.itemForm ;
+  }
+
   addProduct(item: Item){
     console.log(item)
     return this.http.post(environment.base_url + 'products',item).subscribe(
@@ -117,5 +132,16 @@ export class ItemService {
         this.openSnackBar('Error on adding new product.');      
       }
     ); 
+  }
+
+  enableDisableForm(){
+    this.counter++;   
+    if (this.counter%2 == 0){
+      this.itemForm.disable();
+    }
+    else{
+      this.itemForm.enable();
+    }
+    return this.itemForm;
   }
 }

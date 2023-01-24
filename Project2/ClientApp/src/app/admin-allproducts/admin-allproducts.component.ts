@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AddProductFormComponent } from '../add-product-form/add-product-form.component';
 
 @Component({
   selector: 'app-admin-allproducts',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminAllproductsComponent implements OnInit {
 
-  constructor() { }
+  constructor(  public dialog: MatDialog,) { }
 
   ngOnInit(): void {
   }
 
+  addProduct(){
+    const dialog = this.dialog.open(AddProductFormComponent, {
+      disableClose: true
+    });
+  }
 }
+
