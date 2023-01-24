@@ -10,3 +10,8 @@
   background-size: cover !important;
   background-repeat: no-repeat !important;
 }
+
+.example-card {
+  max-width: 300px;
+  background-color:beige;
+}

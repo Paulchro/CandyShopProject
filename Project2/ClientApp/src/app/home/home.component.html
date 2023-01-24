@@ -1,2 +1,13 @@
 <body  class="bg-img"></body>
-<app-signin></app-signin>
+
+  <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput type="text" formControlName="username" placeholder="Username">
+      <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="email" formControlName="email" placeholder="Email">
+      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <button mat-raised-button type="submit" [disabled]="signInForm.invalid">Sign In</button>
+  </form>

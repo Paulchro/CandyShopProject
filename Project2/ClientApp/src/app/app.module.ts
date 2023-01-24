@@ -19,7 +19,7 @@ import { MainComponent } from './main/main.component';
 import { BackButtonComponent } from './back-button/back-button.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ItemComponent } from './item/item.component';
-import {MatCardModule} from '@angular/material/card';
+import {MatCard, MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -54,7 +54,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     MainComponent,
     BackButtonComponent,
     WelcomeComponent,
-    SigninComponent,
     ItemComponent,
     AdminAllproductsComponent,
     TableComponent,
@@ -91,6 +90,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
       { path: 'allsweets', component: AdminAllproductsComponent },
       { path: 'cart', component: CartComponent },
       { path: 'admin', component: AdminAllproductsComponent },
+      { path: 'employees', component: EmployeesComponent},
       { path: '**', component: WildcardComponent },
     ]),
     BrowserAnimationsModule,

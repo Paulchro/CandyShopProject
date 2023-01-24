@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Project2.Dto;
 using Project2.Interfaces;
 using Project2.Models;
+using Project2.Services;
+using System.Drawing.Printing;
 
 namespace Project2.Controllers
 {
@@ -13,7 +15,7 @@ namespace Project2.Controllers
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
-        
+        const int maxProductPages = 20;
         public ProductsController( IProductRepository productRepository, ICategoryRepository categoryRepository, IMapper mapper)
         {
             _productRepository = productRepository ??
@@ -25,9 +27,13 @@ namespace Project2.Controllers
         }
         // GET: api/Products
         [HttpGet(Name = "GetProducts")]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts(string? name,int pageNumber = 1, int pageSize = 10)
         {
-            var products = await _productRepository.GetAllProductsAsync();
+            if (pageSize > maxProductPages)
+            {
+                pageSize = maxProductPages;
+            }
+            var (products, paginationMetadata) = await _productRepository.GetAllProductsAsync(name,pageNumber, pageSize);
           
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(products));
         }
@@ -57,16 +63,17 @@ namespace Project2.Controllers
                 CategoryId = productDto.CategoryId,
                 Image = productDto.Image
             };
-            var products = await _productRepository.GetAllProductsAsync();
-            if (products != null && !products.Any(x=>x.Id == product.Id))
-            {
+            var products = await _productRepository.GetAllProductsAsync("",1,1);
+            //products.to
+            //if (products != null && !products.Any(x=>x.Id == product.Id))
+            //{
                 await _productRepository.AddProduct("JSON/Products.json", _mapper.Map<Product>(product));
                 return CreatedAtAction("GetProduct", new { id = product.Id }, product);
-            }
-            else
-            { 
-                return BadRequest(); 
-            }
+            //}
+            //else
+            //{ 
+            //    return BadRequest(); 
+            //}
         }
        
         // PUT: api/Products/5
