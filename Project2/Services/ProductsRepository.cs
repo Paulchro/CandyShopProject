@@ -61,7 +61,11 @@ namespace Project2.Services
         public async Task<(IEnumerable<Product>?, PaginationMetadata)> GetAllProductsAsync(string[]? orderby,string? name, int pageNumber, int pageSize)
         {
             Stream productsStream = GetJsonStream("JSON/Products.json");
-          
+            if(pageSize == 0 || pageNumber == 0)
+            {
+                pageSize = int.MaxValue;
+                pageNumber = 1;
+            }
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
             productsStream.Close();
             if (!string.IsNullOrWhiteSpace(name) && products != null)
