@@ -42,7 +42,8 @@ import {MatListModule} from '@angular/material/list';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { EmployeesComponent } from './employees/employees.component';
 import {MatChipsModule} from '@angular/material/chips';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
@@ -89,8 +90,10 @@ import {MatChipsModule} from '@angular/material/chips';
     MatSidenavModule,
     MatListModule,
     MatChipsModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'sweets', component: MainComponent },
       { path: 'allsweets', component: AdminAllproductsComponent },
       { path: 'cart', component: CartComponent },
