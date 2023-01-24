@@ -23,10 +23,30 @@ export class TableAdminComponent implements OnInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
   items: Item[] =[];
-  displayedColumns: string[] = ['id', 'image', 'name', 'price'];
+  displayedColumns: string[] = ['id', 'image', 'name', 'price', 'status'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement?: Item | null;
   public dataSource:any = new MatTableDataSource<Item>();
+
+  // items:Item[] = [{
+  //   id: 1,
+  //   name: 'string',
+  //   price: 0,
+  //   quantity: 0,
+  //   categoryId: 1, 
+  //   category: 'string',
+  //   image: 'string'
+  // },
+  // {
+  //   id: 2,
+  //   name: 'string',
+  //   price: 0,
+  //   quantity: 1,
+  //   categoryId: 1, 
+  //   category: 'string',
+  //   image: 'string'
+  // }]
+ 
 
   public isEnabled= new BehaviorSubject<boolean>(false); 
 
