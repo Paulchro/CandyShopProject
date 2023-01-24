@@ -12,6 +12,7 @@
 }
 
 .example-card {
-  max-width: 300px;
-  background-color:beige;
+  max-width: 250px;
+  background-color:transparent;
+  
 }
