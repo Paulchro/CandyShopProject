@@ -90,7 +90,7 @@ import {MatChipsModule} from '@angular/material/chips';
     MatListModule,
     MatChipsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'sweets', component: MainComponent },
       { path: 'allsweets', component: AdminAllproductsComponent },
       { path: 'cart', component: CartComponent },
