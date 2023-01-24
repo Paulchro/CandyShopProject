@@ -41,6 +41,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatListModule} from '@angular/material/list';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { EmployeesComponent } from './employees/employees.component';
+import {MatChipsModule} from '@angular/material/chips';
+
+
 
 
 @NgModule({
@@ -85,6 +88,7 @@ import { EmployeesComponent } from './employees/employees.component';
     MatCheckboxModule,
     MatSidenavModule,
     MatListModule,
+    MatChipsModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'sweets', component: MainComponent },

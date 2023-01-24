@@ -137,13 +137,9 @@ export class ItemService {
   enableDisableForm(){
     this.counter++;   
     if (this.counter%2 == 0){
-      this.isEnabled.next(false);
       this.itemForm.disable();
-      console.log("here 1");
     }
     else{
-      this.isEnabled.next(true);
-      console.log("here 2");
       this.itemForm.enable();
     }
     return this.itemForm;
