@@ -44,6 +44,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AddEmployeeFormComponent } from './add-employee-form/add-employee-form.component';
 
 
 
@@ -66,7 +67,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     TableAdminComponent,
     EditProductFormComponent,
     SidebarComponent,
-    EmployeesComponent
+    EmployeesComponent,
+    AddEmployeeFormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
