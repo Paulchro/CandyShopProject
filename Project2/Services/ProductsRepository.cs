@@ -73,6 +73,10 @@ namespace Project2.Services
                 name = name.Trim();
                 products = products.Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).OrderBy(p => p.Name.Trim()).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
             }
+            else
+            {
+                products = products.OrderBy(p => p.Name.Trim()).Skip(pageSize * (pageNumber - 1)).Take(pageSize).ToList();
+            }
             var totalItemCount = products.Count;
             var paginationMetadata = new PaginationMetadata(
                totalItemCount, pageSize, pageNumber);
@@ -100,7 +104,6 @@ namespace Project2.Services
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
            
             products.Add(product);
-           
 
             var serializedData = JsonSerializer.Serialize(products);
             productsStream.Close();
@@ -115,12 +118,15 @@ namespace Project2.Services
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
 
             var productToUpdateIndex = products.FindIndex(x => x.Id == ProductId);
-            products[productToUpdateIndex] = product;
-            var serializedData = JsonSerializer.Serialize(products);
-            productsStream.Close();
+            if (productToUpdateIndex > 0)
+            {
+                products[productToUpdateIndex] = product;
+                var serializedData = JsonSerializer.Serialize(products);
+                productsStream.Close();
 
-            using var writer = new StreamWriter(filePath);
-            await writer.WriteAsync(serializedData);
+                using var writer = new StreamWriter(filePath);
+                await writer.WriteAsync(serializedData);
+            }
          
         }
 
