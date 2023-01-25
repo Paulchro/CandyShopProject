@@ -1,5 +1,5 @@
-<mat-card style="text-align: center; margin-top: 30px; width: fit-content !important;">
-     <mat-card-title style="margin: 30px;">Add Employee</mat-card-title>
+<mat-card>
+     <mat-card-title style="margin: 30px;">Add Product</mat-card-title>
     <mat-card-content style="margin: 30px;">
     <form [formGroup]="employeeForm">
           <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
@@ -40,17 +40,10 @@
     </div>
      <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
       <p>
-        
-          <mat-form-field>
-            <div class="file-upload">
-              <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()" style="float: right;">
-                <mat-icon style="float: right;">cake</mat-icon>
-              </button>
-            </div>
-            <input type="text" matInput placeholder="Image" formControlName="imageUrl" [(ngModel)] = "fileName" >
-            <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload> 
-          </mat-form-field>        
-          
+      <mat-form-field>
+        <input matInput placeholder="Image URL" formControlName="imageUrl" required>
+      </mat-form-field>
+      </p>
       <p>
       <mat-form-field>
         <input matInput placeholder="Role" formControlName="role" required>
@@ -58,8 +51,7 @@
       </p>
     </div>
       <div class="button">
-        <button mat-raised-button [mat-dialog-close]="false" (click)="closeDialog()" style="margin:10px;">Close</button>
-      <button mat-raised-button color="primary" (click)="createEmployee()" [disabled]="!employeeForm.valid">Submit</button>
+      <button mat-raised-button color="primary" (click)="createEmployee()">Create</button>
      </div>    
     </form>
         </mat-card-content>
