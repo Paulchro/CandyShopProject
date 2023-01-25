@@ -1,0 +1,59 @@
+<mat-card>
+     <mat-card-title style="margin: 30px;">Add Product</mat-card-title>
+    <mat-card-content style="margin: 30px;">
+    <form [formGroup]="employeeForm">
+          <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
+          <p>
+      <mat-form-field>
+        <input matInput placeholder="User ID" formControlName="userId" required>
+      </mat-form-field>
+      </p>
+          <p>
+      <mat-form-field>
+        <input matInput placeholder="First Name" formControlName="firstName" required>
+      </mat-form-field>
+          </p>
+          </div>
+        <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
+        <p>
+      <mat-form-field>
+        <input matInput placeholder="Last Name" formControlName="lastName" required>
+      </mat-form-field>
+      </p>
+      <p>
+      <mat-form-field>
+        <input matInput placeholder="Username" formControlName="username" required>
+      </mat-form-field>
+      </p>
+    </div>
+      <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
+     <p>
+      <mat-form-field>
+        <input matInput placeholder="Age" formControlName="age" required>
+      </mat-form-field>
+      </p>
+      <p>
+      <mat-form-field>
+        <input matInput placeholder="Email" formControlName="email" required>
+      </mat-form-field>
+      </p>
+    </div>
+     <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
+      <p>
+      <mat-form-field>
+        <input matInput placeholder="Image URL" formControlName="imageUrl" required>
+      </mat-form-field>
+      </p>
+      <p>
+      <mat-form-field>
+        <input matInput placeholder="Role" formControlName="role" required>
+      </mat-form-field>
+      </p>
+    </div>
+      <div class="button">
+      <button mat-raised-button color="primary" (click)="createEmployee()">Create</button>
+     </div>    
+    </form>
+        </mat-card-content>
+  </mat-card>
+  
