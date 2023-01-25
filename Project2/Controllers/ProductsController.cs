@@ -77,37 +77,38 @@ namespace Project2.Controllers
             await _productRepository.UpdateProduct("JSON/Products.json", productid, _mapper.Map<Product>(productDto));
             return NoContent();
         }
-        [HttpPatch("{productid}")]
-        public async Task<ActionResult> PartiallyUpdateProduct(
-            int productid, 
-            JsonPatchDocument<ProductForUpdateDto> patchDocument)
-        {
-            if (!await _productRepository.ProductExist(productid))
-            {
-                return NotFound();
-            }
-            var product = await _productRepository.GetProductById(productid);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            var productToPatch = _mapper.Map<ProductForUpdateDto>(
-                product);
-            patchDocument.ApplyTo(productToPatch, ModelState);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
-            if (!TryValidateModel(productToPatch))
-            {
-                return BadRequest(ModelState);
-            }
-            _mapper.Map(productToPatch, product);
-            //await _productRepository.SaveChangesAsync();
+        //[HttpPatch("{productid}")]
+        //public async Task<ActionResult> PartiallyUpdateProduct(
+        //    int productid, 
+        //    JsonPatchDocument<ProductForUpdateDto> patchDocument)
+        //{
+        //    if (!await _productRepository.ProductExist(productid))
+        //    {
+        //        return NotFound();
+        //    }
+        //    var product = await _productRepository.GetProductById(productid);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var productToPatch = _mapper.Map<ProductForUpdateDto>(
+        //        product);
+        //    patchDocument.ApplyTo(productToPatch, ModelState);
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            return NoContent();
-        }
+        //    if (!TryValidateModel(productToPatch))
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    _mapper.Map(productToPatch, product);
+        //    await _productRepository.UpdateProduct();
+
+        //    return NoContent();
+        //}
             //// POST: api/Products
             //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
             //[HttpPost]
