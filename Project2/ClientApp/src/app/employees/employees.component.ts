@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EmployeesService } from '../services/employees.service';
 import { MatDialog } from '@angular/material/dialog';
-
 import { Employees } from './employees';
+import { AddEmployeeFormComponent } from '../add-employee-form/add-employee-form.component';
 
 @Component({
   selector: 'app-employees',
@@ -10,8 +10,6 @@ import { Employees } from './employees';
   styleUrls: ['./employees.component.css']
 })
 export class EmployeesComponent implements OnInit {
-
-  
 
   listemployees: Employees[] =[]
 
@@ -29,11 +27,11 @@ export class EmployeesComponent implements OnInit {
     )
   }
 
-  // addProduct(){
-  //   const dialog = this.dialog.open(AddProductFormComponent, {
-  //     disableClose: true
-  //   });
-  // }
+  addEmployee(){
+    const dialog = this.dialog.open(AddEmployeeFormComponent, {
+      disableClose: true
+    });
+  }
   
 
 }
