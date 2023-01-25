@@ -19,7 +19,7 @@ namespace Project2.Services
     public class ProductsRepository : IProductRepository
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
-     
+        private string filePath = "JSON/Products.json";
         public ProductsRepository(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
@@ -35,7 +35,7 @@ namespace Project2.Services
 
         public async Task<bool> ProductExist(int productId)
         {
-            Stream productsStream = GetJsonStream("JSON/Products.json");
+            Stream productsStream = GetJsonStream(filePath);
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
             productsStream.Close();
             return products.Any(c => c.Id == productId);
@@ -43,7 +43,7 @@ namespace Project2.Services
 
         public async Task<Product?> GetProductById(int productId)
         {
-            Stream productsStream = GetJsonStream("JSON/Products.json");
+            Stream productsStream = GetJsonStream(filePath);
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
    
             var productToReturn = products.FirstOrDefault(x => x.Id == productId);
@@ -60,7 +60,7 @@ namespace Project2.Services
 
         public async Task<(IEnumerable<Product>?, PaginationMetadata)> GetAllProductsAsync(string[]? orderby,string? name, int pageNumber, int pageSize)
         {
-            Stream productsStream = GetJsonStream("JSON/Products.json");
+            Stream productsStream = GetJsonStream(filePath);
             if(pageSize == 0 || pageNumber == 0)
             {
                 pageSize = int.MaxValue;
@@ -98,9 +98,9 @@ namespace Project2.Services
             return (products.ToList(), paginationMetadata);
         }
 
-        public async Task AddProduct(string filePath, Product product)
+        public async Task AddProduct(Product product)
         {
-            Stream productsStream = GetJsonStream("JSON/Products.json");
+            Stream productsStream = GetJsonStream(filePath);
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
            
             products.Add(product);
@@ -112,14 +112,15 @@ namespace Project2.Services
             await writer.WriteAsync(serializedData);
         }
 
-        public async Task UpdateProduct(string filePath, int ProductId, Product product)
+        public async Task UpdateProduct( int ProductId, Product product)
         {
-            Stream productsStream = GetJsonStream("JSON/Products.json");
+            Stream productsStream = GetJsonStream(filePath);
             var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
 
             var productToUpdateIndex = products.FindIndex(x => x.Id == ProductId);
             if (productToUpdateIndex > 0)
             {
+                product.Id = ProductId;
                 products[productToUpdateIndex] = product;
                 var serializedData = JsonSerializer.Serialize(products);
                 productsStream.Close();
@@ -132,7 +133,7 @@ namespace Project2.Services
 
         //public async Task PartiallyUpdateProduct(string filePath, int ProductId, JsonPatchDocument<ProductForUpdateDto> patchObject)
         //{
-        //    Stream productsStream = GetJsonStream("JSON/Products.json");
+        //    Stream productsStream = GetJsonStream(filePath);
         //    var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
 
         //    var productToUpdateIndex = products.FindIndex(x => x.Id == ProductId);
