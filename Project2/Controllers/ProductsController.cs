@@ -75,7 +75,7 @@ namespace Project2.Controllers
         public async Task<IActionResult> PutProduct(int productid, ProductForUpdateDto productDto)
         {
             await _productRepository.UpdateProduct("JSON/Products.json", productid, _mapper.Map<Product>(productDto));
-            return NoContent();
+            return RedirectToAction("GetProduct", new { id = productid });
         }
 
         //[HttpPatch("{productid}")]
