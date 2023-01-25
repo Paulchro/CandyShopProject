@@ -55,12 +55,18 @@ namespace Project2.Controllers
         [HttpPost]
         public async Task<ActionResult<ProductDto>> PostProduct(ProductDto productDto)
         {
-            if (await _productRepository.ProductExist(productDto.Id))
+            Product product = new Product
             {
-                return BadRequest();
-            }
-            await _productRepository.AddProduct(_mapper.Map<Product>(_mapper.Map<Product>(productDto)));
-            return CreatedAtAction("GetProduct", new { id = productDto.Id }, productDto);
+                Id = productDto.Id,
+                Name = productDto.Name,
+                Price = productDto.Price,
+                Quantity = productDto.Quantity,
+                CategoryId = productDto.CategoryId,
+                Image = productDto.Image
+            };
+
+            await _productRepository.AddProduct("JSON/Products.json", _mapper.Map<Product>(product));
+            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
 
         // PUT: api/Products/5
@@ -68,7 +74,7 @@ namespace Project2.Controllers
         [HttpPut("{productid}")]
         public async Task<IActionResult> PutProduct(int productid, ProductForUpdateDto productDto)
         {
-            await _productRepository.UpdateProduct( productid, _mapper.Map<Product>(productDto));
+            await _productRepository.UpdateProduct("JSON/Products.json", productid, _mapper.Map<Product>(productDto));
             return NoContent();
         }
 
