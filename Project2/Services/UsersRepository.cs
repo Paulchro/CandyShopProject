@@ -58,6 +58,20 @@ namespace Project2.Services
             return null;
         }
 
+        public async Task<IEnumerable<UserRole>?> GetAllUserRoles()
+        {
+            Stream userRolesStream = GetJsonStream("JSON/UserRoles.json");
+
+            var userRolesList = await JsonSerializer.DeserializeAsync<List<UserRole>>(userRolesStream);
+
+            userRolesStream.Close();
+            if (userRolesList != null)
+            {
+                return userRolesList.ToList();
+            }
+            return null;
+        }
+
         public async Task RemoveUser(string filePath, User user)
         {
             Stream usersStream = GetJsonStream("JSON/Users.json");

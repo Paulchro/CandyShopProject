@@ -1,16 +1,16 @@
 [
   {
-    "Id": "1",
+    "Id": 1,
     "Name": "Admin",
     "Description": ""
   },
   {
-    "Id": "2",
+    "Id": 2,
     "Name": "Employee",
     "Description": ""
   },
   {
-    "Id": "3",
+    "Id": 3,
     "Name": "User",
     "Description": ""
   }
