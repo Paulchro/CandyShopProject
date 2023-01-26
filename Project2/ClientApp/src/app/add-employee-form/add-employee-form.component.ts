@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { EmployeesService } from '../services/employees.service';
 
 
 @Component({
@@ -10,24 +12,45 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class AddEmployeeFormComponent implements OnInit {
 
   employeeForm!: FormGroup;
+  fileName: string = '';
 
-  constructor(private fb: FormBuilder) { }
+
+  constructor(
+    public dialogRef: MatDialogRef<AddEmployeeFormComponent>,
+    private employeeService: EmployeesService
+    ) { }
 
   ngOnInit(): void {
-    this.employeeForm = this.fb.group({
-      userId: [''],
-      firstName: [''],
-      lastName: [''],
-      username: [''],
-      age: [''],
-      email: [''],
-      imageUrl: [''],
-      role: ['']
-    });
+    this.employeeForm = this.employeeService.initializeItemForm();
+
+    // this.employeeForm = this.fb.group({
+    //   userId: [''],
+    //   firstName: [''],
+    //   lastName: [''],
+    //   username: [''],
+    //   age: [''],
+    //   email: [''],
+    //   imageUrl: [''],
+    //   role: ['']
+    // });
   }
 
   createEmployee() {
+    this.employeeForm.controls['imageUrl'].setValue('assets/images/' + this.fileName);
+    this.employeeService.addEmployee(this.employeeForm.value);
+    this.dialogRef.close();
     console.log(this.employeeForm.value);
 
+}
+
+onFileSelected(event: any) {
+  const file:File = event.target.files[0]; //pairnei file
+  if (file) {
+    this.fileName = file.name;  //name
+  }
+}
+
+closeDialog() {
+  this.dialogRef.close();
 }
 }

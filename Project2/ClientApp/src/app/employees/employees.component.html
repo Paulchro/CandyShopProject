@@ -10,10 +10,18 @@
       <mat-card-content class="center" style="text-align: center;color: gray;margin: 10px !important;">
         <p>Meet in our shop {{employees.firstName}} {{employees.lastName}},who is {{employees.age}} years old. You can call our employee with the nickname {{employees.userName}} and you can send an email at {{employees.email}}</p>
       </mat-card-content>
+      <div class="example-button-container">
+        <button mat-fab color="accent" aria-label="Example icon button with a delete icon" (click)="deleteEmployee(employees.userId)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
     </mat-card>
+
 </div>
 </div>
-<button mat-raised-button class="btn-green"  style="margin: 15px;float: right;" (click) = "addEmployee()"><mat-icon>add</mat-icon>Add</button>
+
+<button mat-raised-button class="btn-green"  style="margin: 15px;float: right;" (click) = "addEmployee">
+  <mat-icon>add</mat-icon>Add</button>
 
 <app-mat-spinner-overlay></app-mat-spinner-overlay>
 
