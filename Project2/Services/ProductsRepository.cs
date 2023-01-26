@@ -123,7 +123,20 @@ namespace Project2.Services
             await writer.WriteAsync(serializedData);
          
         }
+        public async Task DeleteProduct(string filePath, int ProductId)
+        {
+            Stream productsStream = GetJsonStream("JSON/Products.json");
+            var products = await JsonSerializer.DeserializeAsync<List<Product>>(productsStream);
 
+            var productToDeleteIndex = products.FindIndex(x => x.Id == ProductId);
+            products.RemoveAt(productToDeleteIndex);
+            var serializedData = JsonSerializer.Serialize(products);
+            productsStream.Close();
+
+            using var writer = new StreamWriter(filePath);
+            await writer.WriteAsync(serializedData);
+
+        }
         //public async Task PartiallyUpdateProduct(string filePath, int ProductId, JsonPatchDocument<ProductForUpdateDto> patchObject)
         //{
         //    Stream productsStream = GetJsonStream("JSON/Products.json");

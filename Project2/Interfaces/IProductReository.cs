@@ -11,5 +11,6 @@ namespace Project2
         Task<(IEnumerable<Product>?, PaginationMetadata)> GetAllProductsAsync(string[]? orderby, string? name,int pageNumber, int pageSize);
         Task AddProduct(string filePath, Product product);
         Task UpdateProduct(string filePath,int ProductId, Product product);
+        Task DeleteProduct(string filePath, int ProductId);
     }
 }
