@@ -1,4 +1,4 @@
-<button mat-icon-button color="accent" style = "float: right;" (click) = "enableDisableForm()"><mat-icon>edit</mat-icon></button> 
+<button mat-icon-button color="accent" style = "float: right;" (click) = "enableDisableForm(item)"><mat-icon>edit</mat-icon></button> 
 <form [formGroup]="itemForm" style = "margin: 50px;">
     <div fxLayout="row" fxFlexFill fxLayout.lt-sm="column" fxLayoutGap="70px">
         <p>
@@ -28,12 +28,24 @@
         <p>
         <mat-form-field>
             <mat-select formControlName="categoryId" placeholder="categoryId">
-            <mat-option (onSelectionChange)="changeCategory($event)" *ngFor="let category of categoriesList" [value] = "category.id">
+            <mat-option *ngFor="let category of categoriesList" [value] = "category.id">
                 {{ category.name }} 
             </mat-option>
             </mat-select>
         </mat-form-field>
-        </p>   
+        </p>  
+        
+        <p>
+            <mat-form-field>
+              <div class="file-upload">
+                <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()" style="float: right;">
+                  <mat-icon style="float: right;">cake</mat-icon>
+                </button>
+              </div>
+              <input type="text" matInput placeholder="Image" formControlName="image" [(ngModel)] = "fileName" >
+              <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload> 
+            </mat-form-field>        
+            </p>
     </div> 
 </form>
 

@@ -30,17 +30,16 @@ export class EditProductFormComponent implements OnInit {
     });
   }
 
-  submit(){
-    // this.itemService.editProduct(this.itemForm.value);
+  enableDisableForm(item: any){
+    this.itemForm.controls['image'].setValue('assets/images/' + this.fileName);
+    this.itemForm = this.itemService.enableDisableForm(item);
   }
 
-  changeCategory(event: any){
-    if (event.isUserInput) {  
-      console.log('You have selected a category!');
-    }
-  }
 
-  enableDisableForm(){
-    this.itemForm = this.itemService.enableDisableForm();
+onFileSelected(event: any) {
+  const file:File = event.target.files[0];
+  if (file) {
+    this.fileName = file.name;
   }
+}
 }
