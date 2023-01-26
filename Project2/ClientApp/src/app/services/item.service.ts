@@ -22,8 +22,7 @@ export class ItemService {
   listofItems?: Observable<Item[]>;
   itemForm: any;
   totalAmount$:any = this.localStorageService._totalAmount$;
-  itemsToCart$:any = this.localStorageService._itemsToCart$;
-  public isEnabled= new BehaviorSubject<boolean>(true); 
+  itemsToCart$:any = this.localStorageService._itemsToCart$; 
   counter: number = 0;
   
 
@@ -31,9 +30,14 @@ export class ItemService {
     public localStorageService: LocalStorageService,
     private _snackBar: MatSnackBar) { }
 
-    getItems(): Observable<Item[]> {
-        return this.listofItems = this.http.get<Item[]>(environment.base_url +'products')
-        .pipe(//  tap(data => console.log('All: ' + JSON.stringify(data))),
+    getItems(currentPage: number, pageSize: number): Observable<Item[]> {
+      return this.listofItems = this.http.get<Item[]>(environment.base_url +'products',
+      {params: {
+          pageNumber: currentPage,
+          pageSize: pageSize
+        }
+      }).pipe(  
+        // tap(data => console.log('All: ' + JSON.stringify(data))),
       );    
     }
 
@@ -121,10 +125,8 @@ export class ItemService {
   }
 
   addProduct(item: Item){
-    console.log(item)
     return this.http.post(environment.base_url + 'products',item).subscribe(
       res => {
-        console.log(res);
         this.openSnackBar('A new product has been added.'); 
         this.initializeItemForm();
       },
@@ -134,14 +136,52 @@ export class ItemService {
     ); 
   }
 
-  enableDisableForm(){
+  enableDisableForm(item: any){
+    this.initializeItemFormWithData(item);
     this.counter++;   
     if (this.counter%2 == 0){
       this.itemForm.disable();
+      this.updateForm(item);
     }
     else{
       this.itemForm.enable();
     }
     return this.itemForm;
+  }
+
+  
+  updateForm(item: Item){
+    const productid = item.id;
+    return this.http.put(environment.base_url + `products/${productid}`,item).subscribe(
+      res => {
+        this.openSnackBar('A product has been updated.'); 
+        console.log(res);
+      },
+      err => {
+        this.openSnackBar('Error on updating a product.');      
+      }
+    ); 
+  }
+
+  deleteItem(item: Item){
+    const productid = item.id;
+    return this.http.delete(environment.base_url + `products/${productid}`).subscribe(
+      res => {
+        this.openSnackBar('A product has been deleted.'); 
+        console.log(res);
+      },
+      err => {
+        this.openSnackBar('Error on deleting a product.');      
+      }
+    ); 
+  }
+
+  onChanges(): void {
+    const initialValue = this.itemForm.value;
+    this.itemForm.valueChanges.subscribe((value:any) => {
+      console.log(value);
+       const hasChange = Object.keys(initialValue).some(key => value.value[key] != initialValue[key])
+        console.log('sas', hasChange);
+    });
   }
 }
