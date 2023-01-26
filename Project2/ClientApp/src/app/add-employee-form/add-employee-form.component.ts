@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { EmployeesService } from '../services/employees.service';
 
@@ -15,7 +15,7 @@ export class AddEmployeeFormComponent implements OnInit {
   fileName: string = '';
 
 
-  constructor(private fb: FormBuilder,
+  constructor(
     public dialogRef: MatDialogRef<AddEmployeeFormComponent>,
     private employeeService: EmployeesService
     ) { }
@@ -36,7 +36,7 @@ export class AddEmployeeFormComponent implements OnInit {
   }
 
   createEmployee() {
-    this.employeeForm.controls['image'].setValue('assets/images/' + this.fileName);
+    this.employeeForm.controls['imageUrl'].setValue('assets/images/' + this.fileName);
     this.employeeService.addEmployee(this.employeeForm.value);
     this.dialogRef.close();
     console.log(this.employeeForm.value);
@@ -44,9 +44,9 @@ export class AddEmployeeFormComponent implements OnInit {
 }
 
 onFileSelected(event: any) {
-  const file:File = event.target.files[0];
+  const file:File = event.target.files[0]; //pairnei file
   if (file) {
-    this.fileName = file.name;
+    this.fileName = file.name;  //name
   }
 }
 

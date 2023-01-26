@@ -52,10 +52,18 @@ initializeItemForm() {
     age: new FormControl(0, Validators.required), 
     email: new FormControl('', Validators.required),
     imageUrl: new FormControl('', Validators.required),
-    role: new FormControl(0, Validators.required) 
+    roleId: new FormControl(0, Validators.required) 
 
   });
   return this.employeeForm ;
 }
+
+deleteEmployee(userId: number) {
+  this.http.delete(environment.base_url +`users/${userId}`).subscribe(data => {
+    console.log(data);
+      console.log('user deleted');
+  
+    });
+  }
 
 }

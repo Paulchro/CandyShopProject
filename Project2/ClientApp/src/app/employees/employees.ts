@@ -5,6 +5,6 @@ export interface Employees {
     age: number;
     email: string; 
     imageUrl: string;
-    role: string;
-    userid: number;
+    roleId: number;
+    userId: number;
 }
