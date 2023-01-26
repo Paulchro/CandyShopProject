@@ -9,5 +9,6 @@ namespace Project2.Interfaces
         Task<IEnumerable<User>?> GetAllUsersAsync();
         Task AddUser(string filePath, User user);
         Task RemoveUser(string filePath, User user);
+        Task<IEnumerable<UserRole>?> GetAllUserRoles();
     }
 }
