@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject } from 'rxjs';
 import { Item } from '../item/item';
@@ -23,42 +23,43 @@ export class TableAdminComponent implements OnInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
   items: Item[] =[];
-  displayedColumns: string[] = ['id', 'image', 'name', 'price', 'status'];
+  displayedColumns: string[] = ['id', 'image', 'name', 'price', 'status', 'delete'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
-  expandedElement?: Item | null;
+  expandedElement?: Item | null | undefined;
   public dataSource:any = new MatTableDataSource<Item>();
+  pageSizeOptions = [5,10,15];
 
-  // items:Item[] = [{
-  //   id: 1,
-  //   name: 'string',
-  //   price: 0,
-  //   quantity: 0,
-  //   categoryId: 1, 
-  //   category: 'string',
-  //   image: 'string'
-  // },
-  // {
-  //   id: 2,
-  //   name: 'string',
-  //   price: 0,
-  //   quantity: 1,
-  //   categoryId: 1, 
-  //   category: 'string',
-  //   image: 'string'
-  // }]
- 
-
-  public isEnabled= new BehaviorSubject<boolean>(false); 
+  totalRows = 0;
+  pageSize = 5;
+  currentPage = 0;
 
   constructor(public itemService: ItemService) { }
 
   ngOnInit(): void {
-    this.itemService.getItems().subscribe(
-      items => {      
+    this.loadData();
+  }
+
+  pageChanged(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.loadData();
+  }
+
+  loadData(){
+    console.log(this.currentPage);
+    console.log(this.pageSize);
+    this.itemService.getItems(this.currentPage, this.pageSize).subscribe(
+      items => {
+        this.items = [];      
         this.items = items;
+        console.log(this.items);
         this.dataSource = new MatTableDataSource<Item>(this.items);
         this.dataSource.paginator = this.paginator;
       },
     );
+  }
+
+  deleteItem(item: Item){
+    this.itemService.deleteItem(item);
   }
 }
