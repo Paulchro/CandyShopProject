@@ -78,6 +78,12 @@ namespace Project2.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{productid}")]
+        public async Task<IActionResult> DeleteProduct(int productid)
+        {
+            await _productRepository.DeleteProduct("JSON/Products.json", productid);
+            return NoContent();
+        }
         //[HttpPatch("{productid}")]
         //public async Task<ActionResult> PartiallyUpdateProduct(
         //    int productid, 
@@ -109,56 +115,56 @@ namespace Project2.Controllers
 
         //    return NoContent();
         //}
-            //// POST: api/Products
-            //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-            //[HttpPost]
-            //public async Task<ActionResult<ProductDto>> PostProduct(ProductDto productDto)
-            //{
-            //    Category category = await _categoryRepository.GetCategoryById(productDto.CategoryId);
-            //    Product product = new Product
-            //{
-            //        Name = productDto.Name,
-            //        Price = productDto.Price,
-            //        Quantity = productDto.Quantity,
-            //        Category = category
-            //    };
-            //    await _productRepository.Add(_mapper.Map<Product>(product));
-            //    try
-            //    {
-            //        await _productRepository.SaveChangesAsync();
-            //    }
-            //    catch (DbUpdateConcurrencyException)
-            //    {
-            //        if (!ProductExists(product.Id))
-            //        {
-            //            return NotFound();
-            //        }
-            //        else
-            //        {
-            //            throw;
-            //        }
-            //    }
-            //    return CreatedAtAction("GetProduct", new { id = product.Id }, product);
-            //}
+        //// POST: api/Products
+        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPost]
+        //public async Task<ActionResult<ProductDto>> PostProduct(ProductDto productDto)
+        //{
+        //    Category category = await _categoryRepository.GetCategoryById(productDto.CategoryId);
+        //    Product product = new Product
+        //{
+        //        Name = productDto.Name,
+        //        Price = productDto.Price,
+        //        Quantity = productDto.Quantity,
+        //        Category = category
+        //    };
+        //    await _productRepository.Add(_mapper.Map<Product>(product));
+        //    try
+        //    {
+        //        await _productRepository.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!ProductExists(product.Id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+        //    return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+        //}
 
-            //// DELETE: api/Products/5
-            //[HttpDelete("{productid}")]
-            //public async Task<IActionResult> DeleteProduct(int productid)
-            //{
-            //    if (!await _productRepository.ProductExist(productid))
-            //    {
-            //        return NotFound();
-            //    }
-            //    var productToDelete = await _productRepository.GetProductById(productid);
-            //    if (productToDelete == null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    _productRepository.DeleteProduct(productToDelete);
-            //    await _productRepository.SaveChangesAsync();
+        //// DELETE: api/Products/5
+        //[HttpDelete("{productid}")]
+        //public async Task<IActionResult> DeleteProduct(int productid)
+        //{
+        //    if (!await _productRepository.ProductExist(productid))
+        //    {
+        //        return NotFound();
+        //    }
+        //    var productToDelete = await _productRepository.GetProductById(productid);
+        //    if (productToDelete == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    _productRepository.DeleteProduct(productToDelete);
+        //    await _productRepository.SaveChangesAsync();
 
-            //    return NoContent();
-            //}
+        //    return NoContent();
+        //}
 
         }
 }
