@@ -24,7 +24,8 @@ export class ItemService {
   totalAmount$:any = this.localStorageService._totalAmount$;
   itemsToCart$:any = this.localStorageService._itemsToCart$; 
   counter: number = 0;
-  
+  public isUpdated$ = new BehaviorSubject<boolean>(false);  
+  deletedItem?: Item; 
 
   constructor(private http: HttpClient,
     public localStorageService: LocalStorageService,
@@ -100,44 +101,20 @@ export class ItemService {
       duration: this.durationInSeconds * 1000});
   }
 
-  initializeItemForm() {
+  initializeItemForm(item:any) {
     this.itemForm = new FormGroup({
-      id: new FormControl(0, Validators.required),
-      name: new FormControl('', Validators.required),
-      quantity: new FormControl(0, Validators.required),
-      price: new FormControl(0, Validators.required),
-      categoryId: new FormControl(0, Validators.required), 
-      image: new FormControl('', Validators.required) 
+      id: new FormControl(item == null ? 0 : item.id, Validators.required),
+      name: new FormControl(item == null ? '' : item.name, Validators.required),
+      quantity: new FormControl(item == null ? 0 : item.quantity, Validators.required),
+      price: new FormControl(item == null ? 0 : item.price, Validators.required),
+      categoryId: new FormControl(item == null ? 0 : item.categoryId, Validators.required), 
+      image: new FormControl(item == null ? '' : item.image, Validators.required) 
     });
     return this.itemForm ;
-  }
-
-  initializeItemFormWithData(item: any) {
-    this.itemForm = new FormGroup({
-      id: new FormControl(item.id, Validators.required),
-      name: new FormControl(item.name, Validators.required),
-      quantity: new FormControl(item.quantity, Validators.required),
-      price: new FormControl(item.price, Validators.required),
-      categoryId: new FormControl(item.categoryId, Validators.required), 
-      image: new FormControl(item.image, Validators.required) 
-    });
-    return this.itemForm ;
-  }
-
-  addProduct(item: Item){
-    return this.http.post(environment.base_url + 'products',item).subscribe(
-      res => {
-        this.openSnackBar('A new product has been added.'); 
-        this.initializeItemForm();
-      },
-      err => {
-        this.openSnackBar('Error on adding new product.');      
-      }
-    ); 
   }
 
   enableDisableForm(item: any){
-    this.initializeItemFormWithData(item);
+    this.initializeItemForm(item);
     this.counter++;   
     if (this.counter%2 == 0){
       this.itemForm.disable();
@@ -149,10 +126,21 @@ export class ItemService {
     return this.itemForm;
   }
 
+  addProduct(item: Item){
+    return this.http.post(environment.base_url + 'products',item).subscribe(
+      res => {
+        this.openSnackBar('A new product has been added.'); 
+        this.initializeItemForm(item);
+      },
+      err => {
+        this.openSnackBar('Error on adding new product.');      
+      }
+    ); 
+  }
   
   updateForm(item: Item){
     const productid = item.id;
-    return this.http.put(environment.base_url + `products/${productid}`,item).subscribe(
+    return this.http.put<Item>(environment.base_url + `products/${productid}`,item).subscribe(
       res => {
         this.openSnackBar('A product has been updated.'); 
         console.log(res);
@@ -164,10 +152,10 @@ export class ItemService {
   }
 
   deleteItem(item: Item){
-    const productid = item.id;
-    return this.http.delete(environment.base_url + `products/${productid}`).subscribe(
+    const productid = item.id; 
+    return this.http.delete<Item>(environment.base_url + `products/${productid}`).subscribe(
       res => {
-        this.openSnackBar('A product has been deleted.'); 
+        this.openSnackBar('A product has been deleted.');
         console.log(res);
       },
       err => {
