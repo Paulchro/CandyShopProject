@@ -26,14 +26,20 @@ export class TableAdminComponent implements OnInit {
   displayedColumns: string[] = ['id', 'image', 'name', 'price', 'status', 'delete'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedElement?: Item | null | undefined;
-  public dataSource:any = new MatTableDataSource<Item>();
+  public dataSource:any = new MatTableDataSource<Item>(); 
   pageSizeOptions = [5,10,15];
+
+  public items$ = new BehaviorSubject<Item[]>([]); 
 
   totalRows = 0;
   pageSize = 5;
   currentPage = 0;
 
-  constructor(public itemService: ItemService) { }
+  constructor(public itemService: ItemService) { 
+    this.items$.subscribe((data:any)=>{
+      this.dataSource.data = data;
+    });
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -49,8 +55,7 @@ export class TableAdminComponent implements OnInit {
     console.log(this.currentPage);
     console.log(this.pageSize);
     this.itemService.getItems(this.currentPage, this.pageSize).subscribe(
-      items => {
-        this.items = [];      
+      items => {      
         this.items = items;
         console.log(this.items);
         this.dataSource = new MatTableDataSource<Item>(this.items);
@@ -61,5 +66,6 @@ export class TableAdminComponent implements OnInit {
 
   deleteItem(item: Item){
     this.itemService.deleteItem(item);
+    this.loadData();
   }
 }

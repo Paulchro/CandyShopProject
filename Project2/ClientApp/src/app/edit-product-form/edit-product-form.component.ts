@@ -22,7 +22,7 @@ export class EditProductFormComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.itemForm = this.itemService.initializeItemFormWithData(this.item);
+    this.itemForm = this.itemService.initializeItemForm(this.item);
     this.itemForm.disable();
     this.categoryService.getCategories().subscribe(
       categories => {      
