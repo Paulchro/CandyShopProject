@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
@@ -11,8 +11,7 @@ export class FormComponent implements OnInit {
   public formData: any;
   public registerForm?: any;
 
-  constructor(private httpClient: HttpClient,
-    private fb: FormBuilder){
+  constructor(private httpClient: HttpClient){
   }
 
   ngOnInit(){
