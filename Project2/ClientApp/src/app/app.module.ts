@@ -45,6 +45,10 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AddEmployeeFormComponent } from './add-employee-form/add-employee-form.component';
+import { FormComponent } from './form/form.component';
+import { MatFormField, MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 
@@ -68,7 +72,8 @@ import { AddEmployeeFormComponent } from './add-employee-form/add-employee-form.
     EditProductFormComponent,
     SidebarComponent,
     EmployeesComponent,
-    AddEmployeeFormComponent
+    AddEmployeeFormComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -79,7 +84,6 @@ import { AddEmployeeFormComponent } from './add-employee-form/add-employee-form.
     ReactiveFormsModule,
     MatDialogModule,
     MatCardModule,
-    MatInputModule,
     MatSnackBarModule,
     FlexLayoutModule,
     MatTableModule,
@@ -94,6 +98,10 @@ import { AddEmployeeFormComponent } from './add-employee-form/add-employee-form.
     MatChipsModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatSliderModule,
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent, pathMatch: 'full' },
       { path: 'sweets', component: MainComponent },

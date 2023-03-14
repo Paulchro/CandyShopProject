@@ -1,0 +1,30 @@
+<form [formGroup]="registerForm" style = "margin: 50px;">
+  <ng-container *ngFor="let field of formData">
+    <div [ngSwitch]="field.type">
+        <div *ngSwitchCase="'text'">
+          <mat-form-field>
+            <input type="{{field.type}}" matInput placeholder="{{field.label}}"  formControlName="{{field.name}}">
+          </mat-form-field>
+        </div>
+        <div *ngSwitchCase="'checkbox'">
+            <section>
+              <mat-checkbox>{{field.label}}</mat-checkbox>
+            </section>
+        </div>
+        <div *ngSwitchCase="'toggle'">
+          <mat-slide-toggle>{{field.label}}</mat-slide-toggle>
+      </div>
+      <div *ngSwitchCase="'textarea'">
+        <mat-form-field>
+          <textarea type="{{field.type}}" matInput placeholder="{{field.label}}"  formControlName="{{field.name}}"></textarea>
+        </mat-form-field>
+      </div>
+      <div *ngSwitchCase="'range'">
+        <label>{{field.label}}</label>
+        <mat-slider>
+          <input matSliderThumb> 
+        </mat-slider>
+      </div>
+    </div> 
+  </ng-container>
+</form>
