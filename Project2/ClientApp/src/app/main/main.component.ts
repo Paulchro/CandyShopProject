@@ -37,7 +37,7 @@ export class MainComponent implements OnInit {
     }
     
   ngOnInit(): void {
-    this.itemService.getItems().subscribe(
+    this.itemService.getItems(0,0).subscribe(
       items => {      
         this.items = items;
         this.allItems = this.items;

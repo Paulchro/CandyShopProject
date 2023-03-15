@@ -23,7 +23,7 @@ export class AddProductFormComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.itemForm = this.itemService.initializeItemForm();
+    this.itemForm = this.itemService.initializeItemForm(null);
    this.categoryService.getCategories().subscribe(
       categories => {      
         this.categoriesList = categories;
