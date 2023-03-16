@@ -52,12 +52,9 @@ export class TableAdminComponent implements OnInit {
   }
 
   loadData(){
-    console.log(this.currentPage);
-    console.log(this.pageSize);
     this.itemService.getItems(this.currentPage, this.pageSize).subscribe(
       items => {      
         this.items = items;
-        console.log(this.items);
         this.dataSource = new MatTableDataSource<Item>(this.items);
         this.dataSource.paginator = this.paginator;
       },
