@@ -1,0 +1,51 @@
+<div class="container">
+        <!--Table-->
+        <table class="table table-hover" data-click-to-select="true" data-toggle="table">
+            <!--Table head-->
+            <thead class="table-light">
+                <tr>
+                    <!-- <th data-field="state" data-checkbox="true"> -->
+                      <th scope="col">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                        </div> 
+                    </th> 
+                    <th>#</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <!--Table head-->
+            <!--Table body-->
+            <tbody>
+                <tr *ngFor="let item of items">
+                    <th scope="col">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                        </div>
+                    </th>
+                    <td>{{item.id}}</td>
+                    <td><img style="width: 35px;height: 35px;" src= " {{item.image}} "></td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.price}}</td>
+                    <td><div *ngIf="item.quantity>0; then inStock else outOfStock"></div></td>
+                </tr>
+            </tbody>
+            <!--Table body-->
+        </table>
+        <!--Table-->
+    </div>
+
+<ng-template #inStock>
+    <mat-chip-list>
+        <mat-chip selected>In stock</mat-chip>
+    </mat-chip-list>
+</ng-template>
+<ng-template #outOfStock>
+    <mat-chip-list>
+        <mat-chip color="warn" selected>Out of stock</mat-chip>
+    </mat-chip-list>
+</ng-template>
+
