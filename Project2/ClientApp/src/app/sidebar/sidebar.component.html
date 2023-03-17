@@ -6,19 +6,19 @@
     </mat-toolbar-row>
 </mat-toolbar>
   
-<mat-sidenav-container class="sidenav-container" >
+<mat-sidenav-container class="sidenav-container">
     <mat-sidenav #drawer class="sidenav" [attr.role]="(isHandset) ? 'dialog' : 'navigation'" [mode]="(isHandset) ? 'over' : 'side'" [opened]="isMenuOpen">
         <img class="avatar mat-elevation-z8 center" src="assets/shop.png" style="margin-top:20px !important;margin-bottom:20px !important;"/>
         <h4 style="text-align: center;">CandyShop</h4>
         <p style="text-align: center;">A perfect place...</p>
-    <mat-divider></mat-divider>
-        <mat-nav-list >
+        <mat-nav-list>
         <a [routerLink]="['/home']" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">home</mat-icon><span class="ml-2" > Home </span></a>
         <a [routerLink]="['/sweets']" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">cake</mat-icon><span class="ml-2" > Sweets</span></a>
         <a [routerLink]="['/cart']" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">shopping_cart</mat-icon><span class="ml-2" > Cart</span></a>
         <a [routerLink]="['/employees']" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">perm_identity</mat-icon><span class="ml-2" > Employees</span></a>    
-        <a [routerLink]="['/admin']" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">person</mat-icon><span class="ml-2" > Admin</span></a>
-        <a [routerLink]="['/other']" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">where_to_vote</mat-icon><span class="ml-2" > Other</span></a>    
+        <a [routerLink]="['/admin']" *ngIf="isAdmin$ | async" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">person</mat-icon><span class="ml-2" > Admin</span></a>
+        <a [routerLink]="['/other']" *ngIf="isAdmin$ | async" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">where_to_vote</mat-icon><span class="ml-2" > Other</span></a>    
+        <a [routerLink]="['/logout']" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">where_to_vote</mat-icon><span class="ml-2" > Log Out</span></a>    
     </mat-nav-list>
     </mat-sidenav> 
     <mat-sidenav-content  [ngStyle]="{ 'margin-left.px': contentMargin }" >

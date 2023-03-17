@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthGuardService } from '../services/auth-guard.service';
+import { AuthService } from '../services/authentication.service';
 import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
@@ -14,5 +16,4 @@ export class WelcomeComponent implements OnInit {
   ngOnInit(): void {
     this.numberOfItems$ = this.localStorageService.getDataFromLocalStorage('NumberOfItems');
   }
-
 }
