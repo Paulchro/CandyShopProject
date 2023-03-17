@@ -1,0 +1,24 @@
+<body *ngIf = "!isAuthenticated$.value" style="background-color: indianred;">
+    <mat-card >       
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTYyOGEzMzdiM2Y5YTE0OWFjZmVjMDQxN2U3NzhmYWM2ODI5MmRlMiZjdD1n/l46CaoX1z3sbImAWQ/giphy.gif" width="160" height="170">
+        <mat-card-title style = "text-align: center; margin: 20px">Sign in</mat-card-title>
+        <mat-card-content>
+            <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" style = "text-align: center;">
+            <mat-form-field style = "margin:20px">
+                <input matInput type="text" formControlName="username" placeholder="Username">
+                <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <mat-form-field style = "margin:20px">
+                <input matInput type="password" formControlName="password" placeholder="Password">
+                <mat-error *ngIf="password.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" type="submit" [disabled]="signInForm.invalid">Sign In</button>
+            </mat-card-actions>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</body>
+  
+<app-sidebar *ngIf = "isAuthenticated$ | async"></app-sidebar>
+<router-outlet></router-outlet>
