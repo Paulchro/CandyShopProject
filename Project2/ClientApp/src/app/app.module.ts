@@ -49,6 +49,8 @@ import { FormComponent } from './form/form.component';
 import { MatFormField, MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSliderModule} from '@angular/material/slider';
+import { GridTableBootstrapComponent } from './grid-table-bootstrap/grid-table-bootstrap.component';
+import { OtherComponent } from './other/other.component';
 
 
 
@@ -73,7 +75,9 @@ import {MatSliderModule} from '@angular/material/slider';
     SidebarComponent,
     EmployeesComponent,
     AddEmployeeFormComponent,
-    FormComponent
+    FormComponent,
+    GridTableBootstrapComponent,
+    OtherComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -109,6 +113,7 @@ import {MatSliderModule} from '@angular/material/slider';
       { path: 'cart', component: CartComponent },
       { path: 'admin', component: AdminAllproductsComponent },
       { path: 'employees', component: EmployeesComponent},
+      { path: 'other', component: OtherComponent},
       { path: '**', component: WildcardComponent },
     ]),
     BrowserAnimationsModule,
