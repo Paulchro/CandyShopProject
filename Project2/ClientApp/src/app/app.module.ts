@@ -51,6 +51,10 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSliderModule} from '@angular/material/slider';
 import { GridTableBootstrapComponent } from './grid-table-bootstrap/grid-table-bootstrap.component';
 import { OtherComponent } from './other/other.component';
+import { AuthGuard } from './guards/auth.guard';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { LogOutComponent } from './log-out/log-out.component';
+
 
 
 
@@ -77,7 +81,9 @@ import { OtherComponent } from './other/other.component';
     AddEmployeeFormComponent,
     FormComponent,
     GridTableBootstrapComponent,
-    OtherComponent
+    OtherComponent,
+    SignInComponent,
+    LogOutComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -107,13 +113,15 @@ import { OtherComponent } from './other/other.component';
     MatSlideToggleModule,
     MatSliderModule,
     RouterModule.forRoot([
-      { path: 'home', component: HomeComponent, pathMatch: 'full' },
+      { path: 'signin', component: SignInComponent},
+      { path: 'home', component: HomeComponent},
       { path: 'sweets', component: MainComponent },
       { path: 'allsweets', component: AdminAllproductsComponent },
       { path: 'cart', component: CartComponent },
-      { path: 'admin', component: AdminAllproductsComponent },
-      { path: 'employees', component: EmployeesComponent},
-      { path: 'other', component: OtherComponent},
+      { path: 'admin', component: AdminAllproductsComponent, canActivate: [AuthGuard] },
+      { path: 'employees', component: EmployeesComponent,canActivate: [AuthGuard]},
+      { path: 'other', component: OtherComponent,canActivate: [AuthGuard]},
+      { path: 'logout', component: LogOutComponent,canActivate: [AuthGuard]},
       { path: '**', component: WildcardComponent },
     ]),
     BrowserAnimationsModule,

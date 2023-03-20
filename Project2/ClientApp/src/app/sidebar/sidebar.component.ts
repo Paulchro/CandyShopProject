@@ -3,6 +3,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { AuthGuardService } from '../services/auth-guard.service';
+import { AuthService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,8 +14,9 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
 
+  public isAdmin = false;
   public loading?: boolean;
-  public isAuthenticated?: boolean;
+  public isAuthenticated?: boolean = false;
   public title?: string;
 
   public isBypass?: boolean;
@@ -21,12 +25,15 @@ export class SidebarComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router,
-              private _snackBar: MatSnackBar) { }
+              private _snackBar: MatSnackBar,
+              public authService: AuthService,
+              public authGuardService: AuthGuardService) { }
 
     private sidenav?: MatSidenav;
 
     public isMenuOpen = true;
     public contentMargin = 240;
+    public isAdmin$ = new BehaviorSubject<boolean>(false);
 
     get isHandset(): boolean {
       return this.breakpointObserver.isMatched(Breakpoints.Handset);
@@ -36,6 +43,8 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.isMenuOpen = true;  // Open side menu by default
     this.title = 'CandyShop';
+    var connectedUser = sessionStorage.getItem('connectedUser');
+    this.isAdmin$ = this.authService.checkIsAdmin(connectedUser);
   }
 
   ngDoCheck() {
@@ -58,17 +67,5 @@ export class SidebarComponent implements OnInit {
   public onSelectOption(option: any): void {
     const msg = `Chose option ${option}`;
     this.openSnackBar(msg);
-
-    /* To route to another page from here */
-    // this.router.navigate(['/home']);
   }
-
-//   ngDoCheck() {
-//     if (this.isHandset) {
-//       this.isMenuOpen = false;
-//     } else {
-//       this.isMenuOpen = true;
-//     }      
-// }
-
 }

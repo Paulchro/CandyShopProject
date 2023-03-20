@@ -1,0 +1,19 @@
+mat-card{
+    width: 50%;
+    height: 70%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 69%);
+    font-weight: 400 !important;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+
+.mat-form-field {
+    width: 300px;
+    height: fit-content;
+  }
