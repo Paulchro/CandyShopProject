@@ -18,7 +18,7 @@
         <a [routerLink]="['/employees']" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">perm_identity</mat-icon><span class="ml-2" > Employees</span></a>    
         <a [routerLink]="['/admin']" *ngIf="isAdmin$ | async" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">person</mat-icon><span class="ml-2" > Admin</span></a>
         <a [routerLink]="['/other']" *ngIf="isAdmin$ | async" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">where_to_vote</mat-icon><span class="ml-2" > Other</span></a>    
-        <a [routerLink]="['/logout']" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">where_to_vote</mat-icon><span class="ml-2" > Log Out</span></a>    
+        <a [routerLink]="['/logout']" mat-list-item href="#" routerLinkActive="active"><mat-icon routerLinkActive="active-icon">logout</mat-icon><span class="ml-2" > Log Out</span></a>    
     </mat-nav-list>
     </mat-sidenav> 
     <mat-sidenav-content  [ngStyle]="{ 'margin-left.px': contentMargin }" >

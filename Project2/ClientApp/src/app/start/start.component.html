@@ -1,0 +1,14 @@
+<app-sign-in *ngIf = "!isAuthenticated$.value"> </app-sign-in> 
+
+<app-sidebar *ngIf = "isAuthenticated$ | async">
+    <router-outlet></router-outlet>
+</app-sidebar> 
+
+
+<!-- <ng-container *ngIf="isAuthenticated$ | async; let active; else inactive">
+    <router-outlet></router-outlet>
+    <app-sidebar></app-sidebar>
+</ng-container>
+<ng-template #inactive>
+    <app-sign-in></app-sign-in> 
+</ng-template> -->

@@ -1,4 +1,4 @@
-<body *ngIf = "!isAuthenticated$.value" style="background-color: indianred;">
+<body style="background-color: indianred;">
     <mat-card >       
         <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTYyOGEzMzdiM2Y5YTE0OWFjZmVjMDQxN2U3NzhmYWM2ODI5MmRlMiZjdD1n/l46CaoX1z3sbImAWQ/giphy.gif" width="160" height="170">
         <mat-card-title style = "text-align: center; margin: 20px">Sign in</mat-card-title>
@@ -19,6 +19,3 @@
         </mat-card-content>
     </mat-card>
 </body>
-  
-<app-sidebar *ngIf = "isAuthenticated$ | async"></app-sidebar>
-<router-outlet></router-outlet>

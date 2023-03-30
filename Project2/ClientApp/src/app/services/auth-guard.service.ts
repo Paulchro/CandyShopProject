@@ -14,14 +14,14 @@ export class AuthGuardService implements CanActivate{
   canActivate(connectedUser: any): BehaviorSubject<boolean> {
     if (connectedUser != null && connectedUser != undefined){
       if (!this.auth.isAuthenticated(connectedUser)) { 
-        this.router.navigate(['/signin']);
+        this.router.navigate(['/start']);
         this.isAuthenticated$.next(false);
       }else{
         this.router.navigate(['/home']);
         this.isAuthenticated$.next(true); 
       }
     }else{
-      this.router.navigate(['/signin']);
+      this.router.navigate(['/start']);
       this.isAuthenticated$.next(false);
     }
     return this.isAuthenticated$;
