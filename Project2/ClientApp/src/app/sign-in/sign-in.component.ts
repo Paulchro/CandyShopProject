@@ -46,7 +46,5 @@ export class SignInComponent implements OnInit {
     if (this.password.hasError('required')) {
       return 'You must enter a value';
     }
-
-    // return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 }
