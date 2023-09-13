@@ -2,6 +2,9 @@
 
 /* Provide sufficient contrast against white background */
 
+
+
+
 @import "~bootstrap/dist/css/bootstrap.css";
 
 a {
@@ -21,7 +24,7 @@ code {
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.btn-green{
+/* .btn-green{
   color: white;
   background-color: green;
 }
@@ -34,7 +37,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .btn-purple{
   color: white;
   background-color:#a829c3;
-}
+} */
 
 .center {
   margin: auto !important;
